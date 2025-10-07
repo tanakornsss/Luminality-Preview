@@ -1,0 +1,29 @@
+package dev.tanakornsss.luminality.ui.screen
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Devices.PIXEL_9
+import androidx.compose.ui.tooling.preview.Preview
+import dev.tanakornsss.luminality.ui.theme.LuminalityTheme
+
+@Composable
+fun LandingScreen() {
+    LuminalityTheme {
+        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+            Column(modifier = Modifier.padding(innerPadding)) {
+
+            }
+        }
+    }
+}
+
+@Composable
+@Preview(device = PIXEL_9, showSystemUi = true)
+fun LandingScreenPreview() {
+    LandingScreen()
+}
+
