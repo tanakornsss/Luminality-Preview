@@ -8,9 +8,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -36,14 +38,13 @@ fun LandingScreen() {
     val formattedDate = localDateTime.format(
         DateTimeFormatter.ofPattern("dd-MM-yyyy"))
 
-
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         Column(modifier = Modifier
             .padding(innerPadding)
             .padding(horizontal = 16.dp)
             .fillMaxSize()
         ) {
-            Column(modifier = Modifier.fillMaxSize()) {
+            Column {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceAround,
@@ -68,13 +69,36 @@ fun LandingScreen() {
                 Spacer(modifier = Modifier.padding(vertical = 16.dp))
                 Text("Current date time $formattedDate")
             }
+            MessageSlider()
         }
     }
 }
 
 @Composable
+private fun MessageSlider() {
+    Spacer(modifier = Modifier.height(20.dp))
+    HorizontalDivider(modifier = Modifier.fillMaxWidth())
+    Spacer(modifier = Modifier.height(20.dp))
+    LazyColumn {
+        items(5) {
+            MessageCard()
+        }
+    }
+}
+
+@Composable
+private fun MessageCard() {
+    Column(
+        modifier = Modifier.fillMaxWidth()
+            .height(24.dp)
+    ) {
+        Text("Some message over here")
+    }
+}
+
+@Composable
 @Preview(device = PIXEL_9, showSystemUi = true)
-fun LandingScreenPreview() {
+private fun LandingScreenPreview() {
     LandingScreen()
 }
 
