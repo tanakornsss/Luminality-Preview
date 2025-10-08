@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId = "dev.tanakornsss.luminality"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 36
         versionCode = 1
         versionName = "internal-0.0.1"
