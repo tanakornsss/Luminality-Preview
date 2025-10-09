@@ -14,7 +14,7 @@ class JournalRepository(context: Context) {
         file.writeText(jsonString)
     }
 
-    fun editJournal(date: String, message: String): Journal {
+    fun addEntry(date: String, message: String): Journal {
         val current = loadJournal()
         val updatedEntries = current.entries.toMutableMap()
 
