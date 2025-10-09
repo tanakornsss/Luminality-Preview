@@ -31,4 +31,11 @@ class JournalViewModel(context: Context): ViewModel() {
             _journal.value = updated
         }
     }
+
+    fun deleteMessage(date: String, message: String) {
+        viewModelScope.launch {
+            val updated = repository.deleteEntry(date, message)
+            _journal.value = updated
+        }
+    }
 }

@@ -27,12 +27,31 @@ class JournalRepository(context: Context) {
         return updatedJournal
     }
 
+    fun deleteEntry(date: String, message: String): Journal {
+        val current = loadJournal()
+        val updatedEntries = current.entries.toMutableMap()
+
+        updatedEntries[date]?.let { messages ->
+            val mutableMessages = messages.toMutableList()
+            mutableMessages.remove(message)
+            if (mutableMessages.isEmpty()) {
+                updatedEntries.remove(date)
+            } else {
+                updatedEntries[date] = mutableMessages
+            }
+        }
+
+        val updatedJournal = current.copy(entries = updatedEntries)
+        saveJournal(updatedJournal)
+        return updatedJournal
+    }
+
     fun loadJournal(): Journal {
         if (file.exists()) {
             val jsonString = file.readText()
-            val res = JsonUtil.json
+            val journal = JsonUtil.json
                 .decodeFromString(Journal.serializer(), jsonString)
-            return res
+            return journal
         }
         else return Journal()
     }

@@ -35,7 +35,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun LandingScreen(viewModel: JournalViewModel) {
+fun JournalScreen(viewModel: JournalViewModel) {
     var textFieldValue by remember { mutableStateOf("") }
 
     val localDateTime = LocalDateTime.now()
@@ -96,14 +96,18 @@ private fun MessageSlider(viewModel: JournalViewModel) {
                 Spacer(modifier = Modifier.height(24.dp))
             }
             items(messages) { msg ->
-                MessageCard(msg)
+                MessageCard(viewModel, msg, date)
             }
         }
     }
 }
 
 @Composable
-private fun MessageCard(message: String) {
+private fun MessageCard(
+    viewModel: JournalViewModel,
+    message: String,
+    date: String
+) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -115,7 +119,7 @@ private fun MessageCard(message: String) {
             text = message,
             style = MaterialTheme.typography.bodyLarge
         )
-        IconButton(onClick = { }) {
+        IconButton(onClick = { viewModel.deleteMessage(date, message) }) {
             Icon(Icons.Outlined.Delete, null)
         }
     }
