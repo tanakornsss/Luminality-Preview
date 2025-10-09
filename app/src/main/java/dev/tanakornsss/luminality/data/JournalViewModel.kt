@@ -21,7 +21,7 @@ class JournalViewModel(context: Context): ViewModel() {
         }
     }
 
-    private fun addTodayMessage(message: String) {
+    fun addMessage(message: String) {
         viewModelScope.launch {
             val localDateTime = LocalDateTime.now()
             val today = localDateTime.format(

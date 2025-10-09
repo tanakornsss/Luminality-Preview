@@ -9,30 +9,33 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Devices.PIXEL_9
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import dev.tanakornsss.luminality.data.JournalViewModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun LandingScreen() {
+fun LandingScreen(viewModel: JournalViewModel) {
     var textFieldValue by remember { mutableStateOf("") }
 
     val localDateTime = LocalDateTime.now()
@@ -61,7 +64,11 @@ fun LandingScreen() {
                         },
                     )
                     Button(
-                        onClick = { },
+                        onClick = {
+                            viewModel.addMessage(textFieldValue)
+                            textFieldValue = ""
+                        },
+                        enabled = textFieldValue.isNotBlank(),
                         modifier = Modifier.height(56.dp)
                     ) {
                         Icon(Icons.Filled.Add, contentDescription = null)
@@ -70,44 +77,46 @@ fun LandingScreen() {
                 Spacer(modifier = Modifier.padding(vertical = 16.dp))
                 Text("Current date time $formattedDate")
             }
-            MessageSlider()
+            MessageSlider(viewModel)
         }
     }
 }
 
 @Composable
-private fun MessageSlider() {
+private fun MessageSlider(viewModel: JournalViewModel) {
+    val journal by viewModel.journal.collectAsState()
+
     Spacer(modifier = Modifier.height(20.dp))
     HorizontalDivider(modifier = Modifier.fillMaxWidth())
     Spacer(modifier = Modifier.height(20.dp))
     LazyColumn {
-        items(5) {
-            MessageCard()
+        journal.entries.forEach { (date, messages) ->
+            item {
+                Text(date, style = MaterialTheme.typography.titleMedium)
+                Spacer(modifier = Modifier.height(24.dp))
+            }
+            items(messages) { msg ->
+                MessageCard(msg)
+            }
         }
     }
 }
 
 @Composable
-private fun MessageCard() {
-    Column(
-        modifier = Modifier.fillMaxWidth()
-            .height(112.dp)
+private fun MessageCard(message: String) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(48.dp)
     ) {
         Text(
-            text = "Message",
-            style = MaterialTheme.typography.titleLarge
-        )
-        Spacer(modifier = Modifier.height(12.dp))
-        Text(
-            text = "Date",
+            text = message,
             style = MaterialTheme.typography.bodyLarge
         )
+        IconButton(onClick = { }) {
+            Icon(Icons.Outlined.Delete, null)
+        }
     }
 }
-
-@Composable
-@Preview(device = PIXEL_9, showSystemUi = true)
-private fun LandingScreenPreview() {
-    LandingScreen()
-}
-
