@@ -14,6 +14,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -90,9 +91,17 @@ private fun MessageSlider() {
 private fun MessageCard() {
     Column(
         modifier = Modifier.fillMaxWidth()
-            .height(24.dp)
+            .height(112.dp)
     ) {
-        Text("Some message over here")
+        Text(
+            text = "Message",
+            style = MaterialTheme.typography.titleLarge
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+        Text(
+            text = "Date",
+            style = MaterialTheme.typography.bodyLarge
+        )
     }
 }
 
