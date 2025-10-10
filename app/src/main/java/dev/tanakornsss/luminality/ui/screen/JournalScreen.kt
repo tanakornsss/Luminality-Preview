@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -31,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.tanakornsss.luminality.data.JournalViewModel
+import dev.tanakornsss.luminality.ui.component.CustomAlertDialog
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -41,6 +43,28 @@ fun JournalScreen(viewModel: JournalViewModel) {
     val localDateTime = LocalDateTime.now()
     val formattedDate = localDateTime.format(
         DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+
+    var showDeleteDialog by remember { mutableStateOf(false) }
+
+    var pendingDeleteMessage by remember { mutableStateOf<String?>(null) }
+    var pendingDeleteDate by remember { mutableStateOf<String?>(null) }
+
+    if (showDeleteDialog) {
+        DeleteAlertDialog(
+            onDismiss = {
+                showDeleteDialog = false
+            },
+            onConfirm = {
+                viewModel.deleteMessage(
+                    pendingDeleteDate ?: "",
+                    pendingDeleteMessage ?: ""
+                )
+                pendingDeleteDate = null
+                pendingDeleteMessage = null
+                showDeleteDialog = false
+            }
+        )
+    }
 
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         Column(modifier = Modifier
@@ -77,13 +101,17 @@ fun JournalScreen(viewModel: JournalViewModel) {
                 Spacer(modifier = Modifier.padding(vertical = 16.dp))
                 Text("Current date time $formattedDate")
             }
-            MessageSlider(viewModel)
+            MessageSlider(viewModel) { date, message ->
+                showDeleteDialog = true
+                pendingDeleteDate = date
+                pendingDeleteMessage = message
+            }
         }
     }
 }
 
 @Composable
-private fun MessageSlider(viewModel: JournalViewModel) {
+private fun MessageSlider(viewModel: JournalViewModel, onDelete: (String, String) -> Unit) {
     val journal by viewModel.journal.collectAsState()
 
     Spacer(modifier = Modifier.height(20.dp))
@@ -96,7 +124,9 @@ private fun MessageSlider(viewModel: JournalViewModel) {
                 Spacer(modifier = Modifier.height(12.dp))
             }
             items(messages) { msg ->
-                MessageCard(viewModel, msg, date)
+                MessageCard(msg) {
+                    onDelete(date, msg)
+                }
             }
             item {
                 Spacer(modifier = Modifier.height(24.dp))
@@ -107,9 +137,9 @@ private fun MessageSlider(viewModel: JournalViewModel) {
 
 @Composable
 private fun MessageCard(
-    viewModel: JournalViewModel,
     message: String,
-    date: String
+    onDelete: () -> Unit
+
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -122,8 +152,21 @@ private fun MessageCard(
             text = message,
             style = MaterialTheme.typography.bodyLarge
         )
-        IconButton(onClick = { viewModel.deleteMessage(date, message) }) {
+        IconButton(onClick = { onDelete() }) {
             Icon(Icons.Outlined.Delete, null)
         }
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun DeleteAlertDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
+    CustomAlertDialog(
+        onDismissRequest = { onDismiss() },
+        onConfirmation = { onConfirm() },
+        dialogTitle = "Delete selected journal?",
+        dialogText = "Your journal will be permanently deleted",
+        dismissText = "Cancel",
+        confirmText = "Delete",
+    )
 }
