@@ -45,7 +45,6 @@ fun JournalScreen(viewModel: JournalViewModel) {
         DateTimeFormatter.ofPattern("dd-MM-yyyy"))
 
     var showDeleteDialog by remember { mutableStateOf(false) }
-
     var pendingDeleteMessage by remember { mutableStateOf<String?>(null) }
     var pendingDeleteDate by remember { mutableStateOf<String?>(null) }
 
