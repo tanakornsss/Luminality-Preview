@@ -16,33 +16,19 @@ fun CustomAlertDialog(
     confirmText: String = "Confirm"
 ) {
     AlertDialog(
-        title = {
-            Text(text = dialogTitle)
-        },
-        text = {
-            Text(text = dialogText)
-        },
-        onDismissRequest = {
-            onDismissRequest()
-        },
+        title = { Text(text = dialogTitle) },
+        text = { Text(text = dialogText) },
+        onDismissRequest = { onDismissRequest() },
         confirmButton = {
             TextButton(
-                onClick = {
-                    onConfirmation()
-                }
-            ) {
-                Text(confirmText)
-            }
+                onClick = { onConfirmation() }
+            ) { Text(confirmText) }
         },
         dismissButton = {
             if (showDismiss) {
                 TextButton(
-                    onClick = {
-                        onDismissRequest()
-                    }
-                ) {
-                    Text(dismissText)
-                }
+                    onClick = { onDismissRequest() }
+                ) { Text(dismissText) }
             }
         }
     )
