@@ -93,10 +93,13 @@ private fun MessageSlider(viewModel: JournalViewModel) {
         journal.entries.forEach { (date, messages) ->
             item {
                 Text(date, style = MaterialTheme.typography.titleMedium)
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(12.dp))
             }
             items(messages) { msg ->
                 MessageCard(viewModel, msg, date)
+            }
+            item {
+                Spacer(modifier = Modifier.height(24.dp))
             }
         }
     }
