@@ -10,6 +10,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
+import dev.tanakornsss.luminality.BuildConfig
 import java.util.Calendar
 
 object NotificationScheduler {
@@ -42,8 +43,11 @@ object NotificationScheduler {
             add(Calendar.MINUTE, 1) // Test
         }
 
-        Log.d(TAG, "Scheduling alarm for: ${calendar.time} (ms=${calendar.timeInMillis})")
-        Toast.makeText(context, "Scheduling alarm for: ${calendar.time}", Toast.LENGTH_SHORT).show()
+        if (BuildConfig.LOGGING) {
+            Log.d(TAG, "Scheduling alarm for: ${calendar.time} (ms=${calendar.timeInMillis})")
+            Toast.makeText(context, "Scheduling alarm for: ${calendar.time}", Toast.LENGTH_SHORT)
+                .show()
+        }
 
 //        if (calendar.timeInMillis < System.currentTimeMillis()) {
 //            calendar.add(Calendar.DAY_OF_YEAR, 1)
@@ -55,7 +59,7 @@ object NotificationScheduler {
                 data = ("package:" + context.packageName).toUri()
             }
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            Log.d(TAG, "Requesting exact alarm permission UI")
+            if (BuildConfig.LOGGING) Log.d(TAG, "Requesting exact alarm permission UI")
             context.startActivity(intent)
             return
         }
@@ -64,7 +68,13 @@ object NotificationScheduler {
             calendar.timeInMillis,
             pendingIntent
         )
-        Log.d(TAG, "Alarm setExactAndAllowWhileIdle called")
-        Toast.makeText(context, "Alarm set (1 min test)", Toast.LENGTH_SHORT).show()
+        if (BuildConfig.LOGGING) {
+            Log.d(TAG, "Alarm setExactAndAllowWhileIdle called")
+            Toast.makeText(
+                context,
+                "Alarm set (1 min test)",
+                Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 }
