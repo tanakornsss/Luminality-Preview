@@ -1,5 +1,9 @@
 package dev.tanakornsss.luminality.ui.screen
 
+import android.Manifest
+import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,6 +27,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,22 +36,32 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
 import dev.tanakornsss.luminality.data.JournalViewModel
+import dev.tanakornsss.luminality.notification.NotificationHandler
 import dev.tanakornsss.luminality.ui.component.CustomAlertDialog
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun JournalScreen(viewModel: JournalViewModel) {
+fun JournalScreen(viewModel: JournalViewModel, context: Context) {
     var textFieldValue by remember { mutableStateOf("") }
-
-    val localDateTime = LocalDateTime.now()
-    val formattedDate = localDateTime.format(
-        DateTimeFormatter.ofPattern("dd-MM-yyyy"))
 
     var showDeleteDialog by remember { mutableStateOf(false) }
     var pendingDeleteMessage by remember { mutableStateOf<String?>(null) }
     var pendingDeleteDate by remember { mutableStateOf<String?>(null) }
+
+    val postNotificationPermission =
+        rememberPermissionState(Manifest.permission.POST_NOTIFICATIONS)
+    val notificationHandler = NotificationHandler(context)
+
+    LaunchedEffect(true) {
+        if (!postNotificationPermission.status.isGranted) {
+            postNotificationPermission.launchPermissionRequest()
+        }
+    }
 
     if (showDeleteDialog) {
         DeleteAlertDialog(
@@ -98,7 +113,9 @@ fun JournalScreen(viewModel: JournalViewModel) {
                     }
                 }
                 Spacer(modifier = Modifier.padding(vertical = 16.dp))
-                Text("Current date time $formattedDate")
+                Button(onClick = { notificationHandler.showNotification("Hello", "Hello") }) {
+                    Text("Show notification")
+                }
             }
             MessageSlider(viewModel) { date, message ->
                 showDeleteDialog = true
