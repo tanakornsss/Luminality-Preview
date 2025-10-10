@@ -41,6 +41,7 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import dev.tanakornsss.luminality.data.JournalViewModel
 import dev.tanakornsss.luminality.notification.NotificationHandler
+import dev.tanakornsss.luminality.notification.NotificationScheduler
 import dev.tanakornsss.luminality.ui.component.CustomAlertDialog
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -115,6 +116,11 @@ fun JournalScreen(viewModel: JournalViewModel, context: Context) {
                 Spacer(modifier = Modifier.padding(vertical = 16.dp))
                 Button(onClick = { notificationHandler.showNotification("Hello", "Hello") }) {
                     Text("Show notification")
+                }
+                Button(onClick = {
+                    NotificationScheduler.scheduleDailyNotification(context)
+                }) {
+                    Text("Schedule notification")
                 }
             }
             MessageSlider(viewModel) { date, message ->
