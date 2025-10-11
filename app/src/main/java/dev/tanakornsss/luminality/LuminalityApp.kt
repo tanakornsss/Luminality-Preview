@@ -12,6 +12,7 @@ import dev.tanakornsss.luminality.data.JournalViewModel
 import dev.tanakornsss.luminality.data.JournalViewModelFactory
 import dev.tanakornsss.luminality.ui.LuminalityScreen
 import dev.tanakornsss.luminality.ui.screen.JournalScreen
+import dev.tanakornsss.luminality.ui.screen.NewJournalScreen
 import dev.tanakornsss.luminality.ui.theme.LuminalityTheme
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -25,10 +26,13 @@ fun LuminalityApp(context: Context) {
     LuminalityTheme {
         NavHost(
             navController = navController,
-            startDestination = LuminalityScreen.TestLanding.name
+            startDestination = LuminalityScreen.NewJournal.name
         ) {
-            composable(LuminalityScreen.TestLanding.name) {
+            composable(LuminalityScreen.Journal.name) {
                 JournalScreen(journalViewModel, context)
+            }
+            composable(LuminalityScreen.NewJournal.name) {
+                NewJournalScreen()
             }
         }
     }

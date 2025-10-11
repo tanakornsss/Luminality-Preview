@@ -114,7 +114,8 @@ fun JournalScreen(viewModel: JournalViewModel, context: Context) {
                     }
                 }
                 Spacer(modifier = Modifier.padding(vertical = 16.dp))
-                Button(onClick = { notificationHandler.showNotification("Hello", "Hello") }) {
+                Button(onClick = {
+                    notificationHandler.showNotification("Hello", "Hello") }) {
                     Text("Show notification")
                 }
                 Button(onClick = {
