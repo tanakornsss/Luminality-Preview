@@ -38,23 +38,7 @@ fun NewJournalScreen() {
             .padding(innerPadding)
             .fillMaxSize()
         ) {
-            LazyRow(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()) {
-                // Current color is for placeholder only
-                items(7) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(12.dp))
-                            .background(Color(0xFFEFB8C8))
-                            .padding(vertical = 10.dp, horizontal = 14.dp)
-                    ) {
-                        Text("1")
-                        Text("Day")
-                    }
-                }
-            }
+           CalendarRow()
             Column(
                 verticalArrangement = Arrangement.Bottom,
                 horizontalAlignment = Alignment.End,
@@ -64,6 +48,28 @@ fun NewJournalScreen() {
                 FloatingActionButton(onClick = { }) {
                     Icon(Icons.Filled.Add, contentDescription = null)
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun CalendarRow() {
+    LazyRow(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        // Current color is for placeholder only
+        items(7) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(Color(0xFFEFB8C8))
+                    .padding(vertical = 10.dp, horizontal = 14.dp)
+            ) {
+                Text("1")
+                Text("Day")
             }
         }
     }
