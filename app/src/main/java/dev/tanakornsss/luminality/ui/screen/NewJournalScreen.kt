@@ -39,7 +39,7 @@ import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewJournalScreen() {
+fun NewJournalScreen(onNavigateCreateJournal: () -> Unit) {
     var selectedDate by remember { mutableStateOf(LocalDate.now()) }
 
     Scaffold(
@@ -58,9 +58,15 @@ fun NewJournalScreen() {
                 horizontalAlignment = Alignment.End,
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 12.dp)
+                    .padding(
+                        horizontal = 20.dp,
+                        vertical = 16.dp
+                    )
             ) {
-                FloatingActionButton(onClick = { }) {
+                FloatingActionButton(onClick = {
+                    onNavigateCreateJournal()
+                }
+                ) {
                     Icon(Icons.Filled.Add, contentDescription = null)
                 }
             }
@@ -118,6 +124,6 @@ private fun CalendarRow(
 @Preview(device = PIXEL_9, showSystemUi = true)
 fun NewJournalScreenPreview() {
     LuminalityTheme {
-        NewJournalScreen()
+        NewJournalScreen { }
     }
 }

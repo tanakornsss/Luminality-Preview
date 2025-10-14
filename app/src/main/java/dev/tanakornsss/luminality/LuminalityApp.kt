@@ -11,6 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import dev.tanakornsss.luminality.data.JournalViewModel
 import dev.tanakornsss.luminality.data.JournalViewModelFactory
 import dev.tanakornsss.luminality.ui.LuminalityScreen
+import dev.tanakornsss.luminality.ui.screen.CreateJournalScreen
 import dev.tanakornsss.luminality.ui.screen.JournalScreen
 import dev.tanakornsss.luminality.ui.screen.NewJournalScreen
 import dev.tanakornsss.luminality.ui.theme.LuminalityTheme
@@ -32,7 +33,14 @@ fun LuminalityApp(context: Context) {
                 JournalScreen(journalViewModel, context)
             }
             composable(LuminalityScreen.NewJournal.name) {
-                NewJournalScreen()
+                NewJournalScreen {
+                    navController.navigate(LuminalityScreen.CreateJournal.name)
+                }
+            }
+            composable(LuminalityScreen.CreateJournal.name) {
+                CreateJournalScreen {
+                    navController.popBackStack()
+                }
             }
         }
     }
