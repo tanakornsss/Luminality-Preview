@@ -1,6 +1,8 @@
 package dev.tanakornsss.luminality.ui.screen
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,7 +12,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
@@ -18,6 +22,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -29,8 +34,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.tooling.preview.Devices.PIXEL_9
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import dev.tanakornsss.luminality.ui.theme.LuminalityTheme
 import java.time.LocalDate
@@ -42,6 +50,8 @@ fun CreateJournalScreen(onNavigateBack: () -> Unit) {
     val localDate = LocalDate.now()
     val formattedDate = localDate
         .format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+
+    val isDarkMode = isSystemInDarkTheme()
 
     var pendingSaveJournal by remember { mutableStateOf<List<String>>(emptyList()) }
 
@@ -78,7 +88,8 @@ fun CreateJournalScreen(onNavigateBack: () -> Unit) {
         ) {
             AddJournalCard(
                 formattedDate = formattedDate,
-                pendingListSize = pendingSaveJournal.size
+                pendingList = pendingSaveJournal,
+                isDarkMode = isDarkMode
             )
         }
     }
@@ -87,8 +98,15 @@ fun CreateJournalScreen(onNavigateBack: () -> Unit) {
 @Composable
 private fun AddJournalCard(
     formattedDate: String,
-    pendingListSize: Int,
+    pendingList: List<String>,
+    isDarkMode: Boolean
 ) {
+    val color = if (isDarkMode) Color.White else Color.Black
+    // Make lineHeight unspecified to avoid baseline mismatch with cursor
+    val textStyle = MaterialTheme.typography.bodyLarge.copy(lineHeight = TextUnit.Unspecified)
+
+    var textFieldState by remember { mutableStateOf("") }
+
     Card(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier.fillMaxSize()
@@ -97,8 +115,35 @@ private fun AddJournalCard(
             Text("Date: $formattedDate")
             Spacer(modifier = Modifier.height(12.dp))
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(5) {
-                    BulletedText("Input here")
+                items(pendingList) { msg ->
+                    BulletedText(msg)
+                }
+                item {
+                    BasicTextField(
+                        value = textFieldState,
+                        onValueChange = { textFieldState = it },
+                        textStyle = textStyle,
+                        cursorBrush = SolidColor(color),
+                        singleLine = true,
+                        decorationBox = { innerTextField ->
+                            Box(
+                                modifier = Modifier.fillMaxWidth(),
+                                contentAlignment = Alignment.CenterStart
+                            ) {
+                                if (textFieldState.isEmpty()) {
+                                    Text(
+                                        text = "Enter text",
+                                        style = textStyle,
+                                        color = Color.Gray
+                                    )
+                                }
+                                innerTextField()
+                            }
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(50.dp)
+                    )
                 }
             }
         }
