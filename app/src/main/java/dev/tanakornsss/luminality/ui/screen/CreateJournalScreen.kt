@@ -15,6 +15,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
@@ -36,6 +38,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.type
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Devices.PIXEL_9
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
@@ -101,8 +109,6 @@ private fun AddJournalCard(
     pendingList: List<String>,
     isDarkMode: Boolean
 ) {
-    var textFieldState by remember { mutableStateOf("") }
-
     Card(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier.fillMaxSize()
@@ -117,10 +123,10 @@ private fun AddJournalCard(
                 item {
                     BulletedInputField(
                         isDarkMode = isDarkMode,
-                        textFieldState = textFieldState
-                    ) { msg ->
-                        textFieldState = msg
-                    }
+                        onNewItem = {
+
+                        }
+                    )
                 }
             }
         }
@@ -140,18 +146,19 @@ private fun BulletedText(content: String) {
 @Composable
 private fun BulletedInputField(
     isDarkMode: Boolean,
-    textFieldState: String,
-    onValueChange: (String) -> Unit,
+    onNewItem: (String) -> Unit
 ) {
     val color = if (isDarkMode) Color.White else Color.Black
     val textStyle = MaterialTheme.typography.bodyLarge.copy(lineHeight = TextUnit.Unspecified)
+
+    var textFieldState by remember { mutableStateOf("") }
 
     Row(verticalAlignment = Alignment.Top) {
         Text("•")
         Spacer(modifier = Modifier.width(8.dp))
         BasicTextField(
             value = textFieldState,
-            onValueChange = { onValueChange(it) },
+            onValueChange = { textFieldState = it },
             textStyle = textStyle,
             cursorBrush = SolidColor(color),
             // Allow multiline by not forcing single line and allowing many lines
@@ -171,7 +178,31 @@ private fun BulletedInputField(
                     innerTextField()
                 }
             },
-            modifier = Modifier.fillMaxWidth()
+            keyboardOptions = KeyboardOptions.Default.copy(
+                imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = {
+                    if (textFieldState.isNotBlank()) {
+                        onNewItem(textFieldState)
+                        // Clear input field
+                        textFieldState = ""
+                    }
+                }
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .onKeyEvent { event ->
+                    if (event.type == KeyEventType.KeyUp && event.key == Key.Enter) {
+                        if (textFieldState.isNotBlank()) {
+                            onNewItem(textFieldState)
+                            textFieldState = ""
+                        }
+                        true
+                    } else {
+                        false
+                    }
+                }
         )
     }
 }
