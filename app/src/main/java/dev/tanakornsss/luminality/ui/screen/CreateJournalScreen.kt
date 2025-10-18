@@ -101,10 +101,6 @@ private fun AddJournalCard(
     pendingList: List<String>,
     isDarkMode: Boolean
 ) {
-    val color = if (isDarkMode) Color.White else Color.Black
-    // Make lineHeight unspecified to avoid baseline mismatch with cursor
-    val textStyle = MaterialTheme.typography.bodyLarge.copy(lineHeight = TextUnit.Unspecified)
-
     var textFieldState by remember { mutableStateOf("") }
 
     Card(modifier = Modifier.fillMaxSize()) {
@@ -119,31 +115,12 @@ private fun AddJournalCard(
                     BulletedText(msg)
                 }
                 item {
-                    BasicTextField(
-                        value = textFieldState,
-                        onValueChange = { textFieldState = it },
-                        textStyle = textStyle,
-                        cursorBrush = SolidColor(color),
-                        singleLine = true,
-                        decorationBox = { innerTextField ->
-                            Box(
-                                modifier = Modifier.fillMaxWidth(),
-                                contentAlignment = Alignment.CenterStart
-                            ) {
-                                if (textFieldState.isEmpty()) {
-                                    Text(
-                                        text = "Enter text",
-                                        style = textStyle,
-                                        color = Color.Gray
-                                    )
-                                }
-                                innerTextField()
-                            }
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(50.dp)
-                    )
+                    BulletedInputField(
+                        isDarkMode = isDarkMode,
+                        textFieldState = textFieldState
+                    ) { msg ->
+                        textFieldState = msg
+                    }
                 }
             }
         }
@@ -153,10 +130,49 @@ private fun AddJournalCard(
 
 @Composable
 private fun BulletedText(content: String) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(verticalAlignment = Alignment.Top) {
         Text("•")
         Spacer(modifier = Modifier.width(8.dp))
         Text(content)
+    }
+}
+
+@Composable
+private fun BulletedInputField(
+    isDarkMode: Boolean,
+    textFieldState: String,
+    onValueChange: (String) -> Unit,
+) {
+    val color = if (isDarkMode) Color.White else Color.Black
+    val textStyle = MaterialTheme.typography.bodyLarge.copy(lineHeight = TextUnit.Unspecified)
+
+    Row(verticalAlignment = Alignment.Top) {
+        Text("•")
+        Spacer(modifier = Modifier.width(8.dp))
+        BasicTextField(
+            value = textFieldState,
+            onValueChange = { onValueChange(it) },
+            textStyle = textStyle,
+            cursorBrush = SolidColor(color),
+            // Allow multiline by not forcing single line and allowing many lines
+            maxLines = 3,
+            decorationBox = { innerTextField ->
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.CenterStart
+                ) {
+                    if (textFieldState.isEmpty()) {
+                        Text(
+                            text = "Enter text",
+                            style = textStyle,
+                            color = Color.Gray
+                        )
+                    }
+                    innerTextField()
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }
 
