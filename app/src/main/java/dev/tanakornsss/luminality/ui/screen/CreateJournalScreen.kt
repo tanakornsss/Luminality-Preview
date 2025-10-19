@@ -156,7 +156,10 @@ private fun BulletedInputField(
     onNewItem: (String) -> Unit
 ) {
     val color = if (isDarkMode) Color.White else Color.Black
-    val textStyle = MaterialTheme.typography.bodyLarge.copy(lineHeight = TextUnit.Unspecified)
+    val textStyle = MaterialTheme.typography.bodyLarge.copy(
+        lineHeight = TextUnit.Unspecified,
+        color = color
+    )
 
     var textFieldState by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
