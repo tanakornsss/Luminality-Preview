@@ -29,6 +29,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,6 +37,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.input.key.Key
@@ -156,6 +159,7 @@ private fun BulletedInputField(
     val textStyle = MaterialTheme.typography.bodyLarge.copy(lineHeight = TextUnit.Unspecified)
 
     var textFieldState by remember { mutableStateOf("") }
+    val focusRequester = remember { FocusRequester() }
 
     Row(verticalAlignment = Alignment.Top) {
         Text("•")
@@ -191,16 +195,20 @@ private fun BulletedInputField(
                         onNewItem(textFieldState)
                         // Clear input field
                         textFieldState = ""
+                        focusRequester.requestFocus()
                     }
                 }
             ),
             modifier = Modifier
                 .fillMaxWidth()
+                .focusRequester(focusRequester)
                 .onKeyEvent { event ->
                     if (event.type == KeyEventType.KeyUp && event.key == Key.Enter) {
                         if (textFieldState.isNotBlank()) {
-                            onNewItem(textFieldState)
+                            // Remove blank space at the end
+                            onNewItem(textFieldState.trim())
                             textFieldState = ""
+                            focusRequester.requestFocus()
                         }
                         true
                     } else {
@@ -208,6 +216,9 @@ private fun BulletedInputField(
                     }
                 }
         )
+    }
+    LaunchedEffect(Unit) {
+        focusRequester.requestFocus()
     }
 }
 
