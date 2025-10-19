@@ -23,7 +23,7 @@ jobs:
         run: chmod +x gradlew
 
       - name: Decode Keystore
-        run: base64 --decode > $GITHUB_WORKSPACE/debug.keystore
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > $GITHUB_WORKSPACE/debug.keystore
 
       - name: Build Debug APK
         run: |
