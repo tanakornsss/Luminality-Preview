@@ -97,7 +97,10 @@ fun CreateJournalScreen(onNavigateBack: () -> Unit) {
             AddJournalCard(
                 formattedDate = formattedDate,
                 pendingList = pendingSaveJournal,
-                isDarkMode = isDarkMode
+                isDarkMode = isDarkMode,
+                onNewItem = { msg ->
+                    pendingSaveJournal += msg
+                }
             )
         }
     }
@@ -107,6 +110,7 @@ fun CreateJournalScreen(onNavigateBack: () -> Unit) {
 private fun AddJournalCard(
     formattedDate: String,
     pendingList: List<String>,
+    onNewItem: (String) -> Unit,
     isDarkMode: Boolean
 ) {
     Card(modifier = Modifier.fillMaxSize()) {
@@ -123,8 +127,8 @@ private fun AddJournalCard(
                 item {
                     BulletedInputField(
                         isDarkMode = isDarkMode,
-                        onNewItem = {
-
+                        onNewItem = { msg ->
+                            onNewItem(msg)
                         }
                     )
                 }
