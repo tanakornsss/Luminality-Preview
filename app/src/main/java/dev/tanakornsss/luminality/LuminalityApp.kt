@@ -14,6 +14,7 @@ import dev.tanakornsss.luminality.ui.LuminalityScreen
 import dev.tanakornsss.luminality.ui.screen.CreateJournalScreen
 import dev.tanakornsss.luminality.ui.screen.JournalScreen
 import dev.tanakornsss.luminality.ui.screen.NewJournalScreen
+import dev.tanakornsss.luminality.ui.screen.SettingsScreen
 import dev.tanakornsss.luminality.ui.theme.LuminalityTheme
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -41,6 +42,9 @@ fun LuminalityApp(context: Context) {
                 CreateJournalScreen {
                     navController.popBackStack()
                 }
+            }
+            composable(LuminalityScreen.Settings.name) {
+                SettingsScreen()
             }
         }
     }
