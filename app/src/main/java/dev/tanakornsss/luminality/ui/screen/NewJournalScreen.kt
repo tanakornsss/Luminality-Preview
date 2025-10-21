@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,6 +16,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -30,9 +33,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Devices.PIXEL_9
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import dev.tanakornsss.luminality.ui.theme.LuminalityTheme
 import java.time.DayOfWeek
 import java.time.LocalDate
@@ -42,33 +49,81 @@ import java.time.LocalDate
 fun NewJournalScreen(onNavigateCreateJournal: () -> Unit) {
     var selectedDate by remember { mutableStateOf(LocalDate.now()) }
 
+    val navController = rememberNavController()
+
     Scaffold(
         topBar = { TopAppBar(title = { Text("App logo placeholder") }) },
+        bottomBar = {
+            
+        },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
-        Box(modifier = Modifier
-            .padding(innerPadding)
-            .fillMaxSize()
+        NavHost(
+            navController = navController,
+            startDestination = BottomBarNavRoute.Home.name
         ) {
-           CalendarRow(selectedDate) {
-                selectedDate = it
-           }
-            Column(
-                verticalArrangement = Arrangement.Bottom,
-                horizontalAlignment = Alignment.End,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(
-                        horizontal = 20.dp,
-                        vertical = 16.dp
-                    )
+            composable(BottomBarNavRoute.Home.name) {
+                JournalHome(
+                    innerPadding = innerPadding,
+                    selectedDate = selectedDate,
+                    onUpdateSelectedDate = {
+                        selectedDate = it
+                    },
+                    onNavigateCreateJournal = {
+                        onNavigateCreateJournal()
+                    }
+                )
+            }
+        }
+    }
+}
+
+private enum class BottomBarNavRoute(
+    screenName: String,
+    screenIcon: ImageVector,
+    description: String
+) {
+    Home(
+        "Home",
+        Icons.Filled.Home,
+        ""
+    ),
+    Settings(
+        "Settings",
+        Icons.Filled.Settings,
+        ""
+    ),
+}
+
+@Composable
+private fun JournalHome(
+    innerPadding: PaddingValues,
+    selectedDate: LocalDate,
+    onUpdateSelectedDate: (LocalDate) -> Unit,
+    onNavigateCreateJournal: () -> Unit
+) {
+    Box(modifier = Modifier
+        .padding(innerPadding)
+        .fillMaxSize()
+    ) {
+        CalendarRow(selectedDate) {
+            onUpdateSelectedDate(it)
+        }
+        Column(
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.End,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(
+                    horizontal = 20.dp,
+                    vertical = 16.dp
+                )
+        ) {
+            FloatingActionButton(onClick = {
+                onNavigateCreateJournal()
+            }
             ) {
-                FloatingActionButton(onClick = {
-                    onNavigateCreateJournal()
-                }
-                ) {
-                    Icon(Icons.Filled.Add, contentDescription = null)
-                }
+                Icon(Icons.Filled.Add, contentDescription = null)
             }
         }
     }
