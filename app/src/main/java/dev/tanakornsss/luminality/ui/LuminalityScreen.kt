@@ -4,5 +4,4 @@ enum class LuminalityScreen {
     Journal,
     NewJournal,
     CreateJournal,
-    Settings
 }

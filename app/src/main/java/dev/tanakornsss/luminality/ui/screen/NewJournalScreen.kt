@@ -21,13 +21,17 @@ import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,11 +54,32 @@ fun NewJournalScreen(onNavigateCreateJournal: () -> Unit) {
     var selectedDate by remember { mutableStateOf(LocalDate.now()) }
 
     val navController = rememberNavController()
+    val startDestination = BottomBarNavRoute.Home
+    var selectedDestination by rememberSaveable {
+        mutableIntStateOf(startDestination.ordinal)
+    }
 
     Scaffold(
         topBar = { TopAppBar(title = { Text("App logo placeholder") }) },
         bottomBar = {
-            
+            NavigationBar {
+                BottomBarNavRoute.entries.forEachIndexed { idx, dest ->
+                    NavigationBarItem(
+                        selected = selectedDestination == idx,
+                        onClick = {
+                            navController.navigate(dest.name)
+                            selectedDestination = idx
+                        },
+                        icon = {
+                            Icon(
+                                dest.icon,
+                                contentDescription = dest.description
+                            )
+                        },
+                        label = { Text(dest.label) }
+                    )
+                }
+            }
         },
         modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
@@ -66,22 +91,21 @@ fun NewJournalScreen(onNavigateCreateJournal: () -> Unit) {
                 JournalHome(
                     innerPadding = innerPadding,
                     selectedDate = selectedDate,
-                    onUpdateSelectedDate = {
-                        selectedDate = it
-                    },
-                    onNavigateCreateJournal = {
-                        onNavigateCreateJournal()
-                    }
+                    onUpdateSelectedDate = { selectedDate = it },
+                    onNavigateCreateJournal = { onNavigateCreateJournal() }
                 )
+            }
+            composable(BottomBarNavRoute.Settings.name) {
+                SettingsScreen()
             }
         }
     }
 }
 
 private enum class BottomBarNavRoute(
-    screenName: String,
-    screenIcon: ImageVector,
-    description: String
+    val label: String,
+    val icon: ImageVector,
+    val description: String
 ) {
     Home(
         "Home",
@@ -125,6 +149,15 @@ private fun JournalHome(
             ) {
                 Icon(Icons.Filled.Add, contentDescription = null)
             }
+        }
+    }
+}
+
+@Composable
+private fun SettingsScreen() {
+    Scaffold { innerPadding ->
+        Column(modifier = Modifier.padding(innerPadding)) {
+
         }
     }
 }
