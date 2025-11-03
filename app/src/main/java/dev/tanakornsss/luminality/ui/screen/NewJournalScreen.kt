@@ -63,10 +63,10 @@ fun NewJournalScreen(onNavigateCreateJournal: () -> Unit) {
         topBar = {
             TopAppBar(
                 title = {
-                when (selectedDestination) {
-                    BottomBarNavRoute.Home.ordinal -> Text("App logo here")
-                    BottomBarNavRoute.Settings.ordinal -> Text("Settings")
-                }
+                    when (selectedDestination) {
+                        BottomBarNavRoute.Home.ordinal -> Text("App logo here")
+                        BottomBarNavRoute.Settings.ordinal -> Text("Settings")
+                    }
                 }
             )
         },
@@ -105,7 +105,7 @@ fun NewJournalScreen(onNavigateCreateJournal: () -> Unit) {
                 )
             }
             composable(BottomBarNavRoute.Settings.name) {
-                SettingsScreen()
+                SettingsScreen(innerPadding)
             }
         }
     }
@@ -135,9 +135,10 @@ private fun JournalHome(
     onUpdateSelectedDate: (LocalDate) -> Unit,
     onNavigateCreateJournal: () -> Unit
 ) {
-    Box(modifier = Modifier
-        .padding(innerPadding)
-        .fillMaxSize()
+    Box(
+        modifier = Modifier
+            .padding(innerPadding)
+            .fillMaxSize()
     ) {
         CalendarRow(selectedDate) {
             onUpdateSelectedDate(it)
@@ -163,11 +164,12 @@ private fun JournalHome(
 }
 
 @Composable
-private fun SettingsScreen() {
-    Scaffold { innerPadding ->
-        Column(modifier = Modifier.padding(innerPadding)) {
-
-        }
+private fun SettingsScreen(innerPadding: PaddingValues) {
+    Column(modifier = Modifier
+        .padding(innerPadding)
+        .fillMaxSize()
+    ) {
+        Text("Hello")
     }
 }
 
@@ -190,8 +192,7 @@ private fun CalendarRow(
             val isSelected = (day == selectedDate)
             val bgColor = if (isSelected) {
                 Color(0xFFEFB8C8)
-            }
-            else {
+            } else {
                 Color(0xFFF1D2D9)
             }
 
@@ -208,9 +209,10 @@ private fun CalendarRow(
                     }
             ) {
                 Text(day.dayOfMonth.toString())
-                Text(day.dayOfWeek.name.take(3)
-                    .lowercase()
-                    .replaceFirstChar { it.uppercase() }
+                Text(
+                    day.dayOfWeek.name.take(3)
+                        .lowercase()
+                        .replaceFirstChar { it.uppercase() }
                 )
             }
         }
