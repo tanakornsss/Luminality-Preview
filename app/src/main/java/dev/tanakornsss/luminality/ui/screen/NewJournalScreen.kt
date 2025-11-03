@@ -60,7 +60,16 @@ fun NewJournalScreen(onNavigateCreateJournal: () -> Unit) {
     }
 
     Scaffold(
-        topBar = { TopAppBar(title = { Text("App logo placeholder") }) },
+        topBar = {
+            TopAppBar(
+                title = {
+                when (selectedDestination) {
+                    BottomBarNavRoute.Home.ordinal -> Text("App logo here")
+                    BottomBarNavRoute.Settings.ordinal -> Text("Settings")
+                }
+                }
+            )
+        },
         bottomBar = {
             NavigationBar {
                 BottomBarNavRoute.entries.forEachIndexed { idx, dest ->
