@@ -6,11 +6,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,6 +26,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -54,7 +57,7 @@ fun NewJournalScreen(onNavigateCreateJournal: () -> Unit) {
     var selectedDate by remember { mutableStateOf(LocalDate.now()) }
 
     val navController = rememberNavController()
-    val startDestination = BottomBarNavRoute.Home
+    val startDestination = BottomBarNavRoute.HOME
     var selectedDestination by rememberSaveable {
         mutableIntStateOf(startDestination.ordinal)
     }
@@ -64,8 +67,8 @@ fun NewJournalScreen(onNavigateCreateJournal: () -> Unit) {
             TopAppBar(
                 title = {
                     when (selectedDestination) {
-                        BottomBarNavRoute.Home.ordinal -> Text("App logo here")
-                        BottomBarNavRoute.Settings.ordinal -> Text("Settings")
+                        BottomBarNavRoute.HOME.ordinal -> Text("App logo here")
+                        BottomBarNavRoute.SETTINGS.ordinal -> Text("Settings")
                     }
                 }
             )
@@ -94,9 +97,9 @@ fun NewJournalScreen(onNavigateCreateJournal: () -> Unit) {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = BottomBarNavRoute.Home.name
+            startDestination = BottomBarNavRoute.HOME.name
         ) {
-            composable(BottomBarNavRoute.Home.name) {
+            composable(BottomBarNavRoute.HOME.name) {
                 JournalHome(
                     innerPadding = innerPadding,
                     selectedDate = selectedDate,
@@ -104,7 +107,7 @@ fun NewJournalScreen(onNavigateCreateJournal: () -> Unit) {
                     onNavigateCreateJournal = { onNavigateCreateJournal() }
                 )
             }
-            composable(BottomBarNavRoute.Settings.name) {
+            composable(BottomBarNavRoute.SETTINGS.name) {
                 SettingsScreen(innerPadding)
             }
         }
@@ -116,12 +119,12 @@ private enum class BottomBarNavRoute(
     val icon: ImageVector,
     val description: String
 ) {
-    Home(
+    HOME(
         "Home",
         Icons.Filled.Home,
         ""
     ),
-    Settings(
+    SETTINGS(
         "Settings",
         Icons.Filled.Settings,
         ""
@@ -167,10 +170,60 @@ private fun JournalHome(
 private fun SettingsScreen(innerPadding: PaddingValues) {
     Column(modifier = Modifier
         .padding(innerPadding)
+        .padding(horizontal = 16.dp)
         .fillMaxSize()
     ) {
-        Text("Hello")
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            items(SettingItems.entries.toList()) { settings ->
+                SettingsRow(
+                    checked = settings.state,
+                    onCheckedChange = { settings.onClick },
+                    label = settings.label
+                )
+            }
+        }
     }
+}
+
+@Composable
+private fun SettingsRow(
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    label: String
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(label)
+        Switch(
+            checked = checked,
+            onCheckedChange = { onCheckedChange(it) },
+        )
+    }
+}
+
+private enum class SettingItems(
+    val label: String,
+    val onClick: () -> Unit,
+    val state: Boolean
+) {
+    NOTIFICATIONS(
+        label = "Enable notifications",
+        onClick = {
+
+        },
+        state = true // Placeholder, will be in a separate ViewModel
+    ),
+    DARK_MODE(
+        label = "Enable dark mode",
+        onClick = {
+
+        },
+        state = true // Placeholder, will be in a separate ViewModel
+    ),
+
 }
 
 @Composable
