@@ -13,7 +13,7 @@ import dev.tanakornsss.luminality.data.JournalViewModelFactory
 import dev.tanakornsss.luminality.ui.LuminalityScreen
 import dev.tanakornsss.luminality.ui.screen.CreateJournalScreen
 import dev.tanakornsss.luminality.ui.screen.JournalScreen
-import dev.tanakornsss.luminality.ui.screen.NewJournalScreen
+import dev.tanakornsss.luminality.ui.screen.home.NewJournalScreen
 import dev.tanakornsss.luminality.ui.theme.LuminalityTheme
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
