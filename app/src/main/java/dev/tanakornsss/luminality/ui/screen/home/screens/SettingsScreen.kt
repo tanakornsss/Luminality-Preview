@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import dev.tanakornsss.luminality.setting.SettingItems
 
 @Composable
 fun SettingsScreen(innerPadding: PaddingValues) {
@@ -52,26 +53,4 @@ private fun SettingsRow(
             onCheckedChange = { onCheckedChange(it) },
         )
     }
-}
-
-private enum class SettingItems(
-    val label: String,
-    val onClick: () -> Unit,
-    val state: Boolean
-) {
-    NOTIFICATIONS(
-        label = "Enable notifications",
-        onClick = {
-
-        },
-        state = true // Placeholder, will be in a separate ViewModel
-    ),
-    DARK_MODE(
-        label = "Enable dark mode",
-        onClick = {
-
-        },
-        state = true // Placeholder, will be in a separate ViewModel
-    ),
-
 }
