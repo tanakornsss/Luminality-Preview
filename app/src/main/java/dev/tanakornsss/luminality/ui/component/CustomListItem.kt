@@ -16,7 +16,7 @@ private const val LIST_HEIGHT = 50
 fun CustomListItem(
     modifier: Modifier = Modifier,
     label: String,
-    trailingContent: @Composable () -> Unit
+    trailingContent: @Composable () -> Unit = { }
 ) {
     Row(
         modifier = modifier
