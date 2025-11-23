@@ -1,5 +1,6 @@
 package dev.tanakornsss.luminality.ui.screen.home
 
+import android.content.Context
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -20,19 +21,19 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.tooling.preview.Devices.PIXEL_9
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dev.tanakornsss.luminality.ui.screen.home.screens.JournalHome
 import dev.tanakornsss.luminality.ui.screen.home.screens.SettingsScreen
-import dev.tanakornsss.luminality.ui.theme.LuminalityTheme
 import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewJournalScreen(onNavigateCreateJournal: () -> Unit) {
+fun NewJournalScreen(
+    context: Context,
+    onNavigateCreateJournal: () -> Unit
+) {
     var selectedDate by remember { mutableStateOf(LocalDate.now()) }
 
     val navController = rememberNavController()
@@ -87,7 +88,10 @@ fun NewJournalScreen(onNavigateCreateJournal: () -> Unit) {
                 )
             }
             composable(BottomBarNavRoute.SETTINGS.name) {
-                SettingsScreen(innerPadding)
+                SettingsScreen(
+                    context = context,
+                    innerPadding = innerPadding
+                )
             }
         }
     }
@@ -108,12 +112,4 @@ private enum class BottomBarNavRoute(
         Icons.Filled.Settings,
         ""
     ),
-}
-
-@Composable
-@Preview(device = PIXEL_9, showSystemUi = true)
-fun NewJournalScreenPreview() {
-    LuminalityTheme {
-        NewJournalScreen { }
-    }
 }

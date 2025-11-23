@@ -37,9 +37,12 @@ fun LuminalityApp(context: Context) {
                 JournalScreen(journalViewModel, context)
             }
             composable(LuminalityScreen.NewJournal.name) {
-                NewJournalScreen {
-                    navController.navigate(LuminalityScreen.CreateJournal.name)
-                }
+                NewJournalScreen(
+                    context = context,
+                    onNavigateCreateJournal = {
+                        navController.navigate(LuminalityScreen.CreateJournal.name)
+                    }
+                )
             }
             composable(LuminalityScreen.CreateJournal.name) {
                 CreateJournalScreen {

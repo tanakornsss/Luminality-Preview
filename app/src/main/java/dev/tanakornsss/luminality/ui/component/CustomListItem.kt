@@ -30,3 +30,12 @@ fun CustomListItem(
         trailingContent()
     }
 }
+
+@Composable
+fun OverlayingListItem(
+    modifier: Modifier = Modifier,
+    label: String,
+    trailingContent: @Composable () -> Unit = { }
+) {
+
+}

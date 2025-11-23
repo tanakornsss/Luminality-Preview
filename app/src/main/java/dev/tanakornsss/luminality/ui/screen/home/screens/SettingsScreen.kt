@@ -1,5 +1,9 @@
 package dev.tanakornsss.luminality.ui.screen.home.screens
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -19,7 +23,10 @@ import dev.tanakornsss.luminality.setting.SettingItems
 import dev.tanakornsss.luminality.ui.component.CustomListItem
 
 @Composable
-fun SettingsScreen(innerPadding: PaddingValues) {
+fun SettingsScreen(
+    context: Context,
+    innerPadding: PaddingValues
+) {
     Column(modifier = Modifier
         .padding(innerPadding)
         .padding(horizontal = 16.dp)
@@ -31,14 +38,28 @@ fun SettingsScreen(innerPadding: PaddingValues) {
             items(SettingItems.entries.toList()) { settings ->
                 when (settings) {
                     SettingItems.NOTIFICATIONS -> {
-                        CustomListItem(label = settings.label) {
-                            Switch(
-                                checked = enableNotification,
-                                onCheckedChange = {
-                                    enableNotification = it
-                                },
-                            )
-                        }
+                        CustomListItem(
+                            label = settings.label,
+                            modifier = Modifier.clickable(
+                                onClick = {
+                                    val intent = Intent(
+                                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                        Uri.fromParts(
+                                            "package",
+                                            context.packageName,
+                                            null
+                                        )
+                                    )
+                                    context.startActivity(intent)
+                                }
+                            ),
+                            trailingContent = {
+                                Switch(
+                                    checked = enableNotification,
+                                    onCheckedChange = { },
+                                )
+                            }
+                        )
                     }
                     SettingItems.THEME_PREFS -> {
                         CustomListItem(
