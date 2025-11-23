@@ -11,12 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Switch
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import dev.tanakornsss.luminality.setting.SettingItems
@@ -32,32 +27,22 @@ fun SettingsScreen(
         .padding(horizontal = 16.dp)
         .fillMaxSize()
     ) {
-        var enableNotification by remember { mutableStateOf(false) }
-
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(SettingItems.entries.toList()) { settings ->
                 when (settings) {
                     SettingItems.NOTIFICATIONS -> {
                         CustomListItem(
                             label = settings.label,
-                            modifier = Modifier.clickable(
-                                onClick = {
-                                    val intent = Intent(
-                                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                                        Uri.fromParts(
-                                            "package",
-                                            context.packageName,
-                                            null
-                                        )
+                            onClick = {
+                                val intent = Intent(
+                                    Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                                    Uri.fromParts(
+                                        "package",
+                                        context.packageName,
+                                        null
                                     )
-                                    context.startActivity(intent)
-                                }
-                            ),
-                            trailingContent = {
-                                Switch(
-                                    checked = enableNotification,
-                                    onCheckedChange = { },
                                 )
+                                context.startActivity(intent)
                             }
                         )
                     }

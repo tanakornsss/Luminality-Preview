@@ -1,5 +1,6 @@
 package dev.tanakornsss.luminality.ui.component
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,12 +17,14 @@ private const val LIST_HEIGHT = 50
 fun CustomListItem(
     modifier: Modifier = Modifier,
     label: String,
+    onClick: () -> Unit = { },
     trailingContent: @Composable () -> Unit = { }
 ) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .height(LIST_HEIGHT.dp)
+            .clickable { onClick() }
         ,
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
@@ -29,13 +32,4 @@ fun CustomListItem(
         Text(label)
         trailingContent()
     }
-}
-
-@Composable
-fun OverlayingListItem(
-    modifier: Modifier = Modifier,
-    label: String,
-    trailingContent: @Composable () -> Unit = { }
-) {
-
 }
