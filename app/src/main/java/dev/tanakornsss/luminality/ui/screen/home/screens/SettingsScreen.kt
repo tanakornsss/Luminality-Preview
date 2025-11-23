@@ -40,7 +40,7 @@ fun SettingsScreen(innerPadding: PaddingValues) {
                             )
                         }
                     }
-                    SettingItems.DARK_MODE -> {
+                    SettingItems.THEME_PREFS -> {
                         CustomListItem(
                             label = settings.label,
                             modifier = Modifier

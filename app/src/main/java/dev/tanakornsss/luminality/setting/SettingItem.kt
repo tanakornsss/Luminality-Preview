@@ -2,5 +2,5 @@ package dev.tanakornsss.luminality.setting
 
 enum class SettingItems(val label: String) {
     NOTIFICATIONS(label = "Enable notifications",),
-    DARK_MODE(label = "Change theme preferences"),
+    THEME_PREFS(label = "Change theme preferences"),
 }
