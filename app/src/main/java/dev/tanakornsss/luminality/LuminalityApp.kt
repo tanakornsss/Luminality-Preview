@@ -10,6 +10,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import dev.tanakornsss.luminality.data.JournalViewModel
 import dev.tanakornsss.luminality.data.JournalViewModelFactory
+import dev.tanakornsss.luminality.setting.SettingViewModel
+import dev.tanakornsss.luminality.setting.SettingViewModelFactory
 import dev.tanakornsss.luminality.ui.LuminalityScreen
 import dev.tanakornsss.luminality.ui.screen.CreateJournalScreen
 import dev.tanakornsss.luminality.ui.screen.JournalScreen
@@ -21,6 +23,8 @@ import dev.tanakornsss.luminality.ui.theme.LuminalityTheme
 fun LuminalityApp(context: Context) {
     val journalViewModel: JournalViewModel =
         viewModel(factory = JournalViewModelFactory(context))
+    val settingViewModel: SettingViewModel =
+        viewModel(factory = SettingViewModelFactory(context))
 
     val navController = rememberNavController()
 
