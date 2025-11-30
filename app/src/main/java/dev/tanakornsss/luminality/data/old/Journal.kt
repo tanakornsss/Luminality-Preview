@@ -1,4 +1,4 @@
-package dev.tanakornsss.luminality.data
+package dev.tanakornsss.luminality.data.old
 
 import kotlinx.serialization.Serializable
 
