@@ -75,12 +75,6 @@ fun JournalScreen(
                 showDeleteDialog = false
             },
             onConfirm = {
-                journalViewModel.deleteMessage(
-                    pendingDeleteDate ?: "",
-                    pendingDeleteMessage ?: ""
-                )
-                pendingDeleteDate = null
-                pendingDeleteMessage = null
                 showDeleteDialog = false
             }
         )
@@ -109,7 +103,7 @@ fun JournalScreen(
                     )
                     Button(
                         onClick = {
-                            journalViewModel.addMessage(textFieldValue)
+                            journalViewModelNew.addEntry(textFieldValue)
                             textFieldValue = ""
                         },
                         enabled = textFieldValue.isNotBlank(),
@@ -129,32 +123,38 @@ fun JournalScreen(
                     Text("Schedule notification")
                 }
             }
-            MessageSlider(journalViewModel) { date, message ->
-                showDeleteDialog = true
-                pendingDeleteDate = date
-                pendingDeleteMessage = message
-            }
+            MessageSlider(
+                journalViewModel = journalViewModel,
+                journalViewModelNew = journalViewModelNew,
+                onDelete = { }
+            )
         }
     }
 }
 
 @Composable
-private fun MessageSlider(viewModel: JournalViewModel, onDelete: (String, String) -> Unit) {
-    val journal by viewModel.journal.collectAsState()
+private fun MessageSlider(
+    journalViewModel: JournalViewModel,
+    journalViewModelNew: JournalViewModelNew,
+    onDelete: () -> Unit
+) {
+    val journal by journalViewModel.journal.collectAsState()
+    val journalNew by journalViewModelNew.entries.collectAsState()
 
     Spacer(modifier = Modifier.height(20.dp))
     HorizontalDivider(modifier = Modifier.fillMaxWidth())
     Spacer(modifier = Modifier.height(20.dp))
     LazyColumn {
-        journal.entries.forEach { (date, messages) ->
+        journalNew.forEach { entry ->
             item {
-                Text(date, style = MaterialTheme.typography.titleMedium)
+                Text(entry.createdAt.toString())
                 Spacer(modifier = Modifier.height(12.dp))
             }
-            items(messages) { msg ->
-                MessageCard(msg) {
-                    onDelete(date, msg)
-                }
+            items(journalNew) {
+                MessageCard(
+                    message = entry.text,
+                    onDelete = { onDelete() },
+                )
             }
             item {
                 Spacer(modifier = Modifier.height(24.dp))
