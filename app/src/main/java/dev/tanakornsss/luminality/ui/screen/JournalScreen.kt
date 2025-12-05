@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import dev.tanakornsss.luminality.data.JournalViewModelNew
 import dev.tanakornsss.luminality.data.old.JournalViewModel
 import dev.tanakornsss.luminality.notification.NotificationHandler
 import dev.tanakornsss.luminality.notification.NotificationScheduler
@@ -47,7 +48,11 @@ import dev.tanakornsss.luminality.ui.component.CustomAlertDialog
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun JournalScreen(viewModel: JournalViewModel, context: Context) {
+fun JournalScreen(
+    journalViewModel: JournalViewModel,
+    journalViewModelNew: JournalViewModelNew,
+    context: Context
+) {
     var textFieldValue by remember { mutableStateOf("") }
 
     var showDeleteDialog by remember { mutableStateOf(false) }
@@ -70,7 +75,7 @@ fun JournalScreen(viewModel: JournalViewModel, context: Context) {
                 showDeleteDialog = false
             },
             onConfirm = {
-                viewModel.deleteMessage(
+                journalViewModel.deleteMessage(
                     pendingDeleteDate ?: "",
                     pendingDeleteMessage ?: ""
                 )
@@ -104,7 +109,7 @@ fun JournalScreen(viewModel: JournalViewModel, context: Context) {
                     )
                     Button(
                         onClick = {
-                            viewModel.addMessage(textFieldValue)
+                            journalViewModel.addMessage(textFieldValue)
                             textFieldValue = ""
                         },
                         enabled = textFieldValue.isNotBlank(),
@@ -124,7 +129,7 @@ fun JournalScreen(viewModel: JournalViewModel, context: Context) {
                     Text("Schedule notification")
                 }
             }
-            MessageSlider(viewModel) { date, message ->
+            MessageSlider(journalViewModel) { date, message ->
                 showDeleteDialog = true
                 pendingDeleteDate = date
                 pendingDeleteMessage = message
