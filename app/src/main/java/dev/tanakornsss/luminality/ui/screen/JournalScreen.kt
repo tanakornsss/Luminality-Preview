@@ -44,6 +44,8 @@ import dev.tanakornsss.luminality.data.old.JournalViewModel
 import dev.tanakornsss.luminality.notification.NotificationHandler
 import dev.tanakornsss.luminality.notification.NotificationScheduler
 import dev.tanakornsss.luminality.ui.component.CustomAlertDialog
+import java.time.Instant
+import java.time.ZoneId
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalPermissionsApi::class)
@@ -144,15 +146,22 @@ private fun MessageSlider(
     Spacer(modifier = Modifier.height(20.dp))
     HorizontalDivider(modifier = Modifier.fillMaxWidth())
     Spacer(modifier = Modifier.height(20.dp))
+
+    val grouped = journalNew.groupBy { entries ->
+        Instant.ofEpochMilli(entries.createdAt)
+            .atZone(ZoneId.systemDefault())
+            .toLocalDate()
+    }
+
     LazyColumn {
-        journalNew.forEach { entry ->
+        grouped.forEach { (date, entriesOfDay) ->
             item {
-                Text(entry.createdAt.toString())
+                Text(date.toString())
                 Spacer(modifier = Modifier.height(12.dp))
             }
-            items(journalNew) {
+            items(entriesOfDay) { entries ->
                 MessageCard(
-                    message = entry.text,
+                    message = entries.text,
                     onDelete = { onDelete() },
                 )
             }
