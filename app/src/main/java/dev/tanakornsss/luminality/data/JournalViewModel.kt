@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
-class JournalViewModelNew(private val journalRepositoryNew: JournalRepositoryNew) : ViewModel() {
-    val entries = journalRepositoryNew.entries.stateIn(
+class JournalViewModel(private val journalRepository: JournalRepository) : ViewModel() {
+    val entries = journalRepository.entries.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(),
         emptyList()
@@ -15,19 +15,19 @@ class JournalViewModelNew(private val journalRepositoryNew: JournalRepositoryNew
 
     fun addEntry(text: String) {
         viewModelScope.launch {
-            journalRepositoryNew.addEntry(text)
+            journalRepository.addEntry(text)
         }
     }
 
     fun deleteEntry(entries: JournalEntries) {
         viewModelScope.launch {
-            journalRepositoryNew.deleteEntry(entries)
+            journalRepository.deleteEntry(entries)
         }
     }
 
     fun updateEntry(entries: JournalEntries) {
         viewModelScope.launch {
-            journalRepositoryNew.updateEntry(entries)
+            journalRepository.updateEntry(entries)
         }
     }
 }

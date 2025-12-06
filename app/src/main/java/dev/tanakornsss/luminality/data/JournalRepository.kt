@@ -2,7 +2,7 @@ package dev.tanakornsss.luminality.data
 
 import kotlinx.coroutines.flow.Flow
 
-class JournalRepositoryNew(private val dao: JournalDao) {
+class JournalRepository(private val dao: JournalDao) {
     val entries: Flow<List<JournalEntries>> = dao.getAllEntries()
 
     suspend fun addEntry(text: String) {

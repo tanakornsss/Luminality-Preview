@@ -8,8 +8,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import dev.tanakornsss.luminality.data.JournalViewModelFactoryNew
-import dev.tanakornsss.luminality.data.JournalViewModelNew
+import dev.tanakornsss.luminality.data.JournalViewModel
+import dev.tanakornsss.luminality.data.JournalViewModelFactory
 import dev.tanakornsss.luminality.setting.SettingViewModel
 import dev.tanakornsss.luminality.setting.SettingViewModelFactory
 import dev.tanakornsss.luminality.ui.LuminalityScreen
@@ -21,8 +21,8 @@ import dev.tanakornsss.luminality.ui.theme.LuminalityTheme
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun LuminalityApp(context: Context) {
-    val journalViewModelNew: JournalViewModelNew =
-        viewModel(factory = JournalViewModelFactoryNew(context))
+    val journalViewModel: JournalViewModel =
+        viewModel(factory = JournalViewModelFactory(context))
     val settingViewModel: SettingViewModel =
         viewModel(factory = SettingViewModelFactory(context))
 
@@ -35,7 +35,7 @@ fun LuminalityApp(context: Context) {
         ) {
             composable(LuminalityScreen.Journal.name) {
                 JournalScreen(
-                    journalViewModelNew = journalViewModelNew,
+                    journalViewModel = journalViewModel,
                     context = context
                 )
             }

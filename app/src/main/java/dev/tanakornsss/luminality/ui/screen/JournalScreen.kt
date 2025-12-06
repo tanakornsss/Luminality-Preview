@@ -40,7 +40,7 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import dev.tanakornsss.luminality.data.JournalEntries
-import dev.tanakornsss.luminality.data.JournalViewModelNew
+import dev.tanakornsss.luminality.data.JournalViewModel
 import dev.tanakornsss.luminality.notification.NotificationHandler
 import dev.tanakornsss.luminality.notification.NotificationScheduler
 import dev.tanakornsss.luminality.ui.component.CustomAlertDialog
@@ -51,7 +51,7 @@ import java.time.ZoneId
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun JournalScreen(
-    journalViewModelNew: JournalViewModelNew,
+    journalViewModel: JournalViewModel,
     context: Context
 ) {
     var textFieldValue by remember { mutableStateOf("") }
@@ -76,7 +76,7 @@ fun JournalScreen(
             },
             onConfirm = {
                 pendingDeleteEntries?.let { entry ->
-                    journalViewModelNew.deleteEntry(entry)
+                    journalViewModel.deleteEntry(entry)
                 }
                 showDeleteDialog = false
             }
@@ -106,7 +106,7 @@ fun JournalScreen(
                     )
                     Button(
                         onClick = {
-                            journalViewModelNew.addEntry(textFieldValue)
+                            journalViewModel.addEntry(textFieldValue)
                             textFieldValue = ""
                         },
                         enabled = textFieldValue.isNotBlank(),
@@ -127,7 +127,7 @@ fun JournalScreen(
                 }
             }
             MessageSlider(
-                journalViewModelNew = journalViewModelNew,
+                journalViewModel = journalViewModel,
                 onDelete = { entries ->
                     showDeleteDialog = true
                     pendingDeleteEntries = entries
@@ -139,10 +139,10 @@ fun JournalScreen(
 
 @Composable
 private fun MessageSlider(
-    journalViewModelNew: JournalViewModelNew,
+    journalViewModel: JournalViewModel,
     onDelete: (JournalEntries) -> Unit
 ) {
-    val journalNew by journalViewModelNew.entries.collectAsState()
+    val journalNew by journalViewModel.entries.collectAsState()
 
     Spacer(modifier = Modifier.height(20.dp))
     HorizontalDivider(modifier = Modifier.fillMaxWidth())
