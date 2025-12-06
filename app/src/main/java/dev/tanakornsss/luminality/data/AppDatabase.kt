@@ -6,10 +6,20 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import dev.tanakornsss.luminality.data.journal.Journal
 import dev.tanakornsss.luminality.data.journal.JournalDao
+import dev.tanakornsss.luminality.data.streak.Streak
+import dev.tanakornsss.luminality.data.streak.StreakDao
 
-@Database(entities = [Journal::class], version = 1)
+@Database(
+    entities = [
+        Journal::class,
+        Streak::class
+    ],
+    version = 2,
+    exportSchema = false
+)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun journalDao(): JournalDao
+    abstract fun streakDao(): StreakDao
 
     companion object {
         @Volatile private var INSTANCE: AppDatabase? = null
@@ -20,7 +30,9 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "app_db"
-                ).build().also { INSTANCE = it }
+                )
+                .fallbackToDestructiveMigration(false)
+                .build().also { INSTANCE = it }
             }
     }
 }

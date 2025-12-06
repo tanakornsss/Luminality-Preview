@@ -7,7 +7,7 @@ import androidx.room.Query
 @Dao
 interface StreakDao {
     @Query("SELECT * FROM streak_table WHERE id = 1")
-    suspend fun getStreak(): Streak
+    suspend fun getStreak(): Streak?
 
     @Insert
     suspend fun insertOrUpdate(streak: Streak)
