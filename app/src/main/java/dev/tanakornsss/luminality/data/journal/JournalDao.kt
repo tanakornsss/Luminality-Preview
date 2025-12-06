@@ -10,14 +10,14 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface JournalDao {
     @Query("SELECT * FROM journal_table ORDER BY createdAt DESC")
-    fun getAllEntries(): Flow<List<JournalEntries>>
+    fun getAllEntries(): Flow<List<Journal>>
 
     @Insert
-    suspend fun insertEntry(entry: JournalEntries)
+    suspend fun insertEntry(entry: Journal)
 
     @Delete
-    suspend fun deleteEntry(entry: JournalEntries)
+    suspend fun deleteEntry(entry: Journal)
 
     @Update
-    suspend fun updateEntry(entry: JournalEntries)
+    suspend fun updateEntry(entry: Journal)
 }

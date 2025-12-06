@@ -39,7 +39,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
-import dev.tanakornsss.luminality.data.journal.JournalEntries
+import dev.tanakornsss.luminality.data.journal.Journal
 import dev.tanakornsss.luminality.data.journal.JournalViewModel
 import dev.tanakornsss.luminality.notification.NotificationHandler
 import dev.tanakornsss.luminality.notification.NotificationScheduler
@@ -57,7 +57,7 @@ fun JournalScreen(
     var textFieldValue by remember { mutableStateOf("") }
 
     var showDeleteDialog by remember { mutableStateOf(false) }
-    var pendingDeleteEntries by remember { mutableStateOf<JournalEntries?>(null) }
+    var pendingDeleteEntries by remember { mutableStateOf<Journal?>(null) }
 
     val postNotificationPermission =
         rememberPermissionState(Manifest.permission.POST_NOTIFICATIONS)
@@ -140,7 +140,7 @@ fun JournalScreen(
 @Composable
 private fun MessageSlider(
     journalViewModel: JournalViewModel,
-    onDelete: (JournalEntries) -> Unit
+    onDelete: (Journal) -> Unit
 ) {
     val journalNew by journalViewModel.entries.collectAsState()
 

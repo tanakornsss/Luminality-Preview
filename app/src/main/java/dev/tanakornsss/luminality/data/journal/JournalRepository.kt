@@ -3,17 +3,17 @@ package dev.tanakornsss.luminality.data.journal
 import kotlinx.coroutines.flow.Flow
 
 class JournalRepository(private val dao: JournalDao) {
-    val entries: Flow<List<JournalEntries>> = dao.getAllEntries()
+    val entries: Flow<List<Journal>> = dao.getAllEntries()
 
     suspend fun addEntry(text: String) {
-        dao.insertEntry(JournalEntries(text = text))
+        dao.insertEntry(Journal(text = text))
     }
 
-    suspend fun deleteEntry(entry: JournalEntries) {
+    suspend fun deleteEntry(entry: Journal) {
         dao.deleteEntry(entry)
     }
 
-    suspend fun updateEntry(entry: JournalEntries) {
+    suspend fun updateEntry(entry: Journal) {
         dao.updateEntry(entry)
     }
 }
