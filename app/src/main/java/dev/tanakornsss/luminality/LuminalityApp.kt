@@ -8,8 +8,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import dev.tanakornsss.luminality.data.JournalViewModel
-import dev.tanakornsss.luminality.data.JournalViewModelFactory
+import dev.tanakornsss.luminality.data.journal.JournalViewModel
+import dev.tanakornsss.luminality.data.journal.JournalViewModelFactory
 import dev.tanakornsss.luminality.setting.SettingViewModel
 import dev.tanakornsss.luminality.setting.SettingViewModelFactory
 import dev.tanakornsss.luminality.ui.LuminalityScreen

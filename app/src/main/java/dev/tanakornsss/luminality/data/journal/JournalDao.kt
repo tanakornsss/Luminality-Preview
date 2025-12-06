@@ -1,4 +1,4 @@
-package dev.tanakornsss.luminality.data
+package dev.tanakornsss.luminality.data.journal
 
 import androidx.room.Dao
 import androidx.room.Delete

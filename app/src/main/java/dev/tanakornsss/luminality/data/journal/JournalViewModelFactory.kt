@@ -1,4 +1,4 @@
-package dev.tanakornsss.luminality.data
+package dev.tanakornsss.luminality.data.journal
 
 import android.content.Context
 import androidx.lifecycle.ViewModel

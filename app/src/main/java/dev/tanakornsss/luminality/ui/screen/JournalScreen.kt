@@ -39,8 +39,8 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
-import dev.tanakornsss.luminality.data.JournalEntries
-import dev.tanakornsss.luminality.data.JournalViewModel
+import dev.tanakornsss.luminality.data.journal.JournalEntries
+import dev.tanakornsss.luminality.data.journal.JournalViewModel
 import dev.tanakornsss.luminality.notification.NotificationHandler
 import dev.tanakornsss.luminality.notification.NotificationScheduler
 import dev.tanakornsss.luminality.ui.component.CustomAlertDialog

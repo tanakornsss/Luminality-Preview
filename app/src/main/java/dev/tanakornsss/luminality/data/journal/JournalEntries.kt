@@ -1,4 +1,4 @@
-package dev.tanakornsss.luminality.data
+package dev.tanakornsss.luminality.data.journal
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
