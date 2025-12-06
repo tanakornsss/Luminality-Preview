@@ -40,7 +40,6 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import dev.tanakornsss.luminality.data.JournalViewModelNew
-import dev.tanakornsss.luminality.data.old.JournalViewModel
 import dev.tanakornsss.luminality.notification.NotificationHandler
 import dev.tanakornsss.luminality.notification.NotificationScheduler
 import dev.tanakornsss.luminality.ui.component.CustomAlertDialog
@@ -51,7 +50,6 @@ import java.time.ZoneId
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun JournalScreen(
-    journalViewModel: JournalViewModel,
     journalViewModelNew: JournalViewModelNew,
     context: Context
 ) {
@@ -126,7 +124,6 @@ fun JournalScreen(
                 }
             }
             MessageSlider(
-                journalViewModel = journalViewModel,
                 journalViewModelNew = journalViewModelNew,
                 onDelete = { }
             )
@@ -136,11 +133,9 @@ fun JournalScreen(
 
 @Composable
 private fun MessageSlider(
-    journalViewModel: JournalViewModel,
     journalViewModelNew: JournalViewModelNew,
     onDelete: () -> Unit
 ) {
-    val journal by journalViewModel.journal.collectAsState()
     val journalNew by journalViewModelNew.entries.collectAsState()
 
     Spacer(modifier = Modifier.height(20.dp))
