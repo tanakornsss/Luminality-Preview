@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import dev.tanakornsss.luminality.data.JournalEntries
 import dev.tanakornsss.luminality.data.JournalViewModelNew
 import dev.tanakornsss.luminality.notification.NotificationHandler
 import dev.tanakornsss.luminality.notification.NotificationScheduler
@@ -56,8 +57,7 @@ fun JournalScreen(
     var textFieldValue by remember { mutableStateOf("") }
 
     var showDeleteDialog by remember { mutableStateOf(false) }
-    var pendingDeleteMessage by remember { mutableStateOf<String?>(null) }
-    var pendingDeleteDate by remember { mutableStateOf<String?>(null) }
+    var pendingDeleteEntries by remember { mutableStateOf<JournalEntries?>(null) }
 
     val postNotificationPermission =
         rememberPermissionState(Manifest.permission.POST_NOTIFICATIONS)
@@ -75,6 +75,9 @@ fun JournalScreen(
                 showDeleteDialog = false
             },
             onConfirm = {
+                pendingDeleteEntries?.let { entry ->
+                    journalViewModelNew.deleteEntry(entry)
+                }
                 showDeleteDialog = false
             }
         )
@@ -125,7 +128,10 @@ fun JournalScreen(
             }
             MessageSlider(
                 journalViewModelNew = journalViewModelNew,
-                onDelete = { }
+                onDelete = { entries ->
+                    showDeleteDialog = true
+                    pendingDeleteEntries = entries
+                }
             )
         }
     }
@@ -134,7 +140,7 @@ fun JournalScreen(
 @Composable
 private fun MessageSlider(
     journalViewModelNew: JournalViewModelNew,
-    onDelete: () -> Unit
+    onDelete: (JournalEntries) -> Unit
 ) {
     val journalNew by journalViewModelNew.entries.collectAsState()
 
@@ -157,7 +163,7 @@ private fun MessageSlider(
             items(entriesOfDay) { entries ->
                 MessageCard(
                     message = entries.text,
-                    onDelete = { onDelete() },
+                    onDelete = { onDelete(entries) },
                 )
             }
             item {
