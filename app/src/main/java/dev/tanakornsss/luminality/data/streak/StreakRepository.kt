@@ -1,10 +1,12 @@
 package dev.tanakornsss.luminality.data.streak
 
+import kotlinx.coroutines.flow.first
+
 class StreakRepository(private val streakDao: StreakDao) {
     val streakFlow = streakDao.getStreakFlow()
 
     suspend fun updateStreak(today: Long) {
-        val streak = streakDao.getStreakOnce()
+        val streak = streakDao.getStreakFlow().first()
 
         if (streak == null) {
             streakDao.insertOrUpdate(
