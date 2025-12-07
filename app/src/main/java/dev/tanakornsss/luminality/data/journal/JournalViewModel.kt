@@ -17,6 +17,12 @@ class JournalViewModel(
         emptyList()
     )
 
+    val streak = streakRepository.streakFlow.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(),
+        null
+    )
+
     fun addEntry(text: String) {
         val now = System.currentTimeMillis()
 

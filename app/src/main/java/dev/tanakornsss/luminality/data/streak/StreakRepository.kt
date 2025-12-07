@@ -1,8 +1,10 @@
 package dev.tanakornsss.luminality.data.streak
 
 class StreakRepository(private val streakDao: StreakDao) {
+    val streakFlow = streakDao.getStreakFlow()
+
     suspend fun updateStreak(today: Long) {
-        val streak = streakDao.getStreak()
+        val streak = streakDao.getStreakOnce()
 
         if (streak == null) {
             streakDao.insertOrUpdate(
@@ -40,6 +42,4 @@ class StreakRepository(private val streakDao: StreakDao) {
             )
         )
     }
-
-    suspend fun getStreak(): Streak? = streakDao.getStreak()
 }
