@@ -14,7 +14,8 @@ import dev.tanakornsss.luminality.data.streak.StreakDao
         Journal::class,
         Streak::class
     ],
-    version = 3
+    exportSchema = false,
+    version = 4
 )
 abstract class AppDatabase : RoomDatabase() {
     abstract fun journalDao(): JournalDao

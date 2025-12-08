@@ -7,6 +7,5 @@ import androidx.room.PrimaryKey
 data class Streak(
     @PrimaryKey val id: Int = 1,
     val currentStreak: Int,
-    val longestStreak: Int,
     val lastUsedDate: Long
 )
