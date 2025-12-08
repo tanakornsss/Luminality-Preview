@@ -12,5 +12,5 @@ interface StreakDao {
     fun getStreak(): Flow<Streak>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun updateStreak(today: Long)
+    suspend fun updateStreak(streak: Streak)
 }
