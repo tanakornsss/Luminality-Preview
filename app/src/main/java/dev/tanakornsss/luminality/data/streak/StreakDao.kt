@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface StreakDao {
     @Query("SELECT * FROM streak_table WHERE id = 1")
-    fun getStreak(): Flow<Streak>
+    fun getStreak(): Flow<Streak?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updateStreak(streak: Streak)

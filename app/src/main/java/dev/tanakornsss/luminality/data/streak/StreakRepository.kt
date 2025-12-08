@@ -2,11 +2,18 @@ package dev.tanakornsss.luminality.data.streak
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import java.util.Calendar
 
 class StreakRepository(private val streakDao: StreakDao) {
-    val streakFlow = streakDao.getStreak()
+    val streakFlow = streakDao.getStreak().map { streak ->
+        streak ?: Streak(
+            id = 1,
+            currentStreak = 0,
+            lastUsedDate = 0
+        )
+    }
 
     suspend fun updateStreak(today: Long) = withContext(Dispatchers.IO) {
         // Check if streak is meant to be added
@@ -14,15 +21,13 @@ class StreakRepository(private val streakDao: StreakDao) {
         // If not, nothing happens
         // Streak will not be reset
 
-        val streak = streakDao.getStreak()
-
-        val data = streak.first()
+        val data = streakFlow.first()
         val lastDate = data.lastUsedDate
         val currentStreak = data.currentStreak
 
         if (isSameDay(lastDate, today)) return@withContext
 
-        if (isYesterday(lastDate, today)) {
+        if (isDayBefore(lastDate, today)) {
             val new = Streak(
                 currentStreak = currentStreak + 1,
                 lastUsedDate = today
@@ -41,10 +46,12 @@ private fun isSameDay(last: Long, today: Long): Boolean {
             cLast.get(Calendar.DAY_OF_YEAR) == cToday.get(Calendar.DAY_OF_YEAR)
 }
 
-private fun isYesterday(last: Long, today: Long): Boolean {
+private fun isDayBefore(last: Long, today: Long): Boolean {
     val cLast = Calendar.getInstance().apply { timeInMillis = last }
     val cToday = Calendar.getInstance().apply { timeInMillis = today }
-    cLast.add(Calendar.DAY_OF_YEAR, 1)
 
-    return isSameDay(cLast.timeInMillis, cToday.timeInMillis)
+    val dateLast = cLast.get(Calendar.DAY_OF_YEAR)
+    val dateToday = cToday.get(Calendar.DAY_OF_YEAR)
+
+    return dateLast < dateToday
 }

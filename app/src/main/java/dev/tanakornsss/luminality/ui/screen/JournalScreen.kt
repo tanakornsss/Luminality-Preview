@@ -42,7 +42,6 @@ import com.google.accompanist.permissions.rememberPermissionState
 import dev.tanakornsss.luminality.data.journal.Journal
 import dev.tanakornsss.luminality.data.journal.JournalViewModel
 import dev.tanakornsss.luminality.notification.NotificationHandler
-import dev.tanakornsss.luminality.notification.NotificationScheduler
 import dev.tanakornsss.luminality.ui.component.CustomAlertDialog
 import java.time.Instant
 import java.time.ZoneId
@@ -116,15 +115,9 @@ fun JournalScreen(
                     }
                 }
                 Spacer(modifier = Modifier.padding(vertical = 16.dp))
-                Button(onClick = {
-                    notificationHandler.showNotification("Hello", "Hello") }) {
-                    Text("Show notification")
-                }
-                Button(onClick = {
-                    NotificationScheduler.scheduleDailyNotification(context)
-                }) {
-                    Text("Schedule notification")
-                }
+
+                val streak by journalViewModel.streak.collectAsState()
+                Text("Current streak: ${streak.currentStreak}")
             }
             MessageSlider(
                 journalViewModel = journalViewModel,
