@@ -19,13 +19,13 @@ class JournalViewModel(private val journalRepository: JournalRepository) : ViewM
         }
     }
 
-    fun deleteEntry(entries: JournalEntries) {
+    fun deleteEntry(entries: Journal) {
         viewModelScope.launch {
             journalRepository.deleteEntry(entries)
         }
     }
 
-    fun updateEntry(entries: JournalEntries) {
+    fun updateEntry(entries: Journal) {
         viewModelScope.launch {
             journalRepository.updateEntry(entries)
         }
