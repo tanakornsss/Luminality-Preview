@@ -1,12 +1,13 @@
 package dev.tanakornsss.luminality.data.streak
 
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class StreakRepository(private val streakDao: StreakDao) {
     val streakFlow = streakDao.getStreakFlow()
 
-    suspend fun updateStreak(today: Long) {
-        val streak = streakDao.getStreakFlow().first()
+    suspend fun updateStreak(today: Long) = withContext(Dispatchers.IO) {
+        val streak = streakDao.getStreakOnce()
 
         if (streak == null) {
             streakDao.insertOrUpdate(
@@ -16,7 +17,7 @@ class StreakRepository(private val streakDao: StreakDao) {
                     longestStreak = 1
                 )
             )
-            return
+            return@withContext
         }
 
         val lastDate = streak.lastEntryDate
