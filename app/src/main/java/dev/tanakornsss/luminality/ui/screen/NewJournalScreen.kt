@@ -1,14 +1,20 @@
 package dev.tanakornsss.luminality.ui.screen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardDoubleArrowUp
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberBottomSheetScaffoldState
@@ -28,9 +34,30 @@ fun NewJournalScreen() {
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
         sheetPeekHeight = 128.dp,
+        sheetDragHandle = null,
         sheetContent = {
-            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-                Box(Modifier.fillMaxWidth().height(128.dp), contentAlignment = Alignment.Center) {
+            Column(
+                Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                ,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(Modifier.height(50.dp))
+                Column(
+                    Modifier
+                        .fillMaxWidth()
+                        .height(128.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable(onClick = {}),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(Icons.Filled.KeyboardDoubleArrowUp, null)
+                    }
                     Text("Swipe up to expand sheet")
                 }
                 Text("Sheet content")
@@ -52,7 +79,7 @@ fun NewJournalScreen() {
             modifier = Modifier.fillMaxSize().padding(innerPadding),
             contentAlignment = Alignment.Center,
         ) {
-            Text("Scaffold Content")
+            Text("App logo here")
         }
     }
 }
