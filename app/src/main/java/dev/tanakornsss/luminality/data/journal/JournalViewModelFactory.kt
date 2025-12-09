@@ -12,15 +12,15 @@ class JournalViewModelFactory(private val context: Context) : ViewModelProvider.
             val db = AppDatabase.getInstance(context)
 
             val journalDao = db.journalDao()
-            val journalRepo = JournalRepository(journalDao)
+            val journalRepository = JournalRepository(journalDao)
 
             val streakDao = db.streakDao()
-            val streakRepo = StreakRepository(streakDao)
+            val streakRepository = StreakRepository(streakDao)
 
             @Suppress("UNCHECKED_CAST")
             return JournalViewModel(
-                journalRepository = journalRepo,
-                streakRepository = streakRepo
+                journalRepository = journalRepository,
+                streakRepository = streakRepository
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")

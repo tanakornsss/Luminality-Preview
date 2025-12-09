@@ -116,17 +116,8 @@ fun JournalScreen(
                 }
                 Spacer(modifier = Modifier.padding(vertical = 16.dp))
 
-                val streak = journalViewModel.streak.collectAsState()
-                val currentStreak = streak.value?.currentStreak
-                val longestStreak = streak.value?.longestStreak
-
-                if (streak.value != null) {
-                    Text("Current streak: $currentStreak")
-                    Text("Longest streak:  $longestStreak")
-                }
-                else {
-                    Text("Type something to add your streak!")
-                }
+                val streak by journalViewModel.streak.collectAsState()
+                Text("Current streak: ${streak.currentStreak}")
             }
             MessageSlider(
                 journalViewModel = journalViewModel,
@@ -179,6 +170,7 @@ private fun MessageSlider(
 private fun MessageCard(
     message: String,
     onDelete: () -> Unit
+
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,

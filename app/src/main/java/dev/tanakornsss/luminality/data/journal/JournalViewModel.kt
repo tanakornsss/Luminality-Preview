@@ -2,6 +2,7 @@ package dev.tanakornsss.luminality.data.journal
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.tanakornsss.luminality.data.streak.Streak
 import dev.tanakornsss.luminality.data.streak.StreakRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
@@ -20,15 +21,16 @@ class JournalViewModel(
     val streak = streakRepository.streakFlow.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(),
-        null
+        Streak(
+            currentStreak = 0,
+            lastUsedDate = 0
+        )
     )
 
     fun addEntry(text: String) {
-        val now = System.currentTimeMillis()
-
         viewModelScope.launch {
             journalRepository.addEntry(text)
-            streakRepository.updateStreak(now)
+            streakRepository.updateStreak(System.currentTimeMillis())
         }
     }
 
