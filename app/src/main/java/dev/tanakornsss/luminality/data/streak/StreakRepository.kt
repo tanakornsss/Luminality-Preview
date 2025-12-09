@@ -1,10 +1,14 @@
 package dev.tanakornsss.luminality.data.streak
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import java.util.Calendar
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
 
 class StreakRepository(private val streakDao: StreakDao) {
     val streakFlow = streakDao.getStreak().map { streak ->
@@ -15,6 +19,7 @@ class StreakRepository(private val streakDao: StreakDao) {
         )
     }
 
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     suspend fun updateStreak(today: Long) = withContext(Dispatchers.IO) {
         // Check if streak is meant to be added
         // If its the first time of the day, then add the streak
@@ -22,12 +27,19 @@ class StreakRepository(private val streakDao: StreakDao) {
         // Streak will not be reset
 
         val data = streakFlow.first()
-        val lastDate = data.lastUsedDate
+        val last = data.lastUsedDate
         val currentStreak = data.currentStreak
 
-        if (isSameDay(lastDate, today)) return@withContext
+        val lastDateInstant = Instant.ofEpochMilli(last)
+        val todayInstant = Instant.ofEpochMilli(today)
 
-        if (isDayBefore(lastDate, today)) {
+        val zone = ZoneId.systemDefault()
+        val lastDate = LocalDate.ofInstant(lastDateInstant, zone)
+        val todayDate = LocalDate.ofInstant(todayInstant, zone)
+
+        if (lastDate == todayDate) return@withContext
+
+        if (lastDate.isBefore(todayDate)) {
             val new = Streak(
                 currentStreak = currentStreak + 1,
                 lastUsedDate = today
@@ -36,22 +48,4 @@ class StreakRepository(private val streakDao: StreakDao) {
             return@withContext
         }
     }
-}
-
-private fun isSameDay(last: Long, today: Long): Boolean {
-    val cLast = Calendar.getInstance().apply { timeInMillis = last }
-    val cToday = Calendar.getInstance().apply { timeInMillis = today }
-
-    return cLast.get(Calendar.YEAR) == cToday.get(Calendar.YEAR) &&
-            cLast.get(Calendar.DAY_OF_YEAR) == cToday.get(Calendar.DAY_OF_YEAR)
-}
-
-private fun isDayBefore(last: Long, today: Long): Boolean {
-    val cLast = Calendar.getInstance().apply { timeInMillis = last }
-    val cToday = Calendar.getInstance().apply { timeInMillis = today }
-
-    val dateLast = cLast.get(Calendar.DAY_OF_YEAR)
-    val dateToday = cToday.get(Calendar.DAY_OF_YEAR)
-
-    return dateLast < dateToday
 }
