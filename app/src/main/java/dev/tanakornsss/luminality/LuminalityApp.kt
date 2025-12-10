@@ -40,7 +40,7 @@ fun LuminalityApp(context: Context) {
                 )
             }
             composable(LuminalityScreen.NewJournal.name) {
-                NewJournalScreen()
+                NewJournalScreen(journalViewModel)
             }
             composable(LuminalityScreen.CreateJournal.name) {
                 CreateJournalScreen {
