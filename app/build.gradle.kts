@@ -68,6 +68,7 @@ dependencies {
     implementation(libs.accompanist.permissions)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.datastore.preferences)
+    implementation("com.google.code.gson:gson:2.8.8")
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
     coreLibraryDesugaring(libs.desugar.jdk.libs)
