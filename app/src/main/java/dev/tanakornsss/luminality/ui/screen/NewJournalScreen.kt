@@ -4,10 +4,10 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,17 +15,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Download
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Upload
-import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberBottomSheetScaffoldState
@@ -85,84 +83,51 @@ fun NewJournalScreen(
         }
     )
 
-    BottomSheetScaffold(
-        scaffoldState = scaffoldState,
-        sheetPeekHeight = 184.dp,
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
         topBar = {
             TopAppBar(
-                title =
-                    {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text("App name")
-                            Row {
-                                IconButton(onClick = { exportLauncher.launch("LuminalityBackup.json") }) {
-                                    Icon(Icons.Outlined.Upload, null)
+                title = {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text("App name")
+                        Row {
+                            IconButton(
+                                onClick = {
+                                    exportLauncher.launch("LuminalityBackup.json")
                                 }
-                                IconButton(onClick = { importLauncher.launch("application/json") }) {
-                                    Icon(Icons.Outlined.Download, null)
-                                }
-                                IconButton(onClick = { }) {
-                                    Icon(Icons.Outlined.Settings, null)
-                                }
-                            }
-                        }
-                    }
-            )
-        },
-        sheetContent = {
-            Column(Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()) {
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    OutlinedTextField(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                        ,
-                        value = textFieldValue,
-                        onValueChange = { textFieldValue = it },
-                        singleLine = true,
-                        label = {
-                            Text("Whats good today?")
-                        },
-                        trailingIcon = {
-                            IconButton(onClick = {
-                                journalViewModel.addEntry(textFieldValue)
-                                textFieldValue = ""
-                            }
                             ) {
-                                Icon(Icons.Filled.Add, null)
+                                Icon(Icons.Outlined.Upload, null)
+                            }
+                            IconButton(
+                                onClick = { importLauncher.launch("application/json") }
+                            ) {
+                                Icon(Icons.Outlined.Download, null)
+                            }
+                            IconButton(onClick = { }) {
+                                Icon(Icons.Outlined.Settings, null)
                             }
                         }
-                    )
-                    Spacer(Modifier.height(16.dp))
-                    Text("Swipe up to expand sheet")
-                }
-                BottomContent(
-                    journalViewModel = journalViewModel,
-                    onDelete = { entry ->
-                        pendingDeleteJournal = entry
-                        showDeleteDialog = true
                     }
-                )
-            }
-        },
+                }
+            )
+        }
     ) { innerPadding ->
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
         ) {
-            Text("App logo here")
-            Text("Streak: ${streak.currentStreak}")
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text("App logo here")
+                Text("Streak: ${streak.currentStreak}")
+            }
         }
     }
 }
