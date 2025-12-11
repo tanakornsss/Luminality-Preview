@@ -14,6 +14,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Delete
+import androidx.compose.material.icons.outlined.Download
+import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material.icons.outlined.Upload
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -21,6 +24,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -61,6 +65,30 @@ fun NewJournalScreen(journalViewModel: JournalViewModel) {
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
         sheetPeekHeight = 184.dp,
+        topBar = {
+            TopAppBar(
+                title =
+                    {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text("App name")
+                            Row {
+                                IconButton(onClick = { }) {
+                                    Icon(Icons.Outlined.Upload, null)
+                                }
+                                IconButton(onClick = { }) {
+                                    Icon(Icons.Outlined.Download, null)
+                                }
+                                IconButton(onClick = { }) {
+                                    Icon(Icons.Outlined.Settings, null)
+                                }
+                            }
+                        }
+                    }
+            )
+        },
         sheetContent = {
             Column(Modifier
                 .fillMaxWidth()
