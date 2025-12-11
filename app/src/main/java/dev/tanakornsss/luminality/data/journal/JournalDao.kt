@@ -3,6 +3,7 @@ package dev.tanakornsss.luminality.data.journal
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy.Companion.REPLACE
 import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
@@ -15,9 +16,18 @@ interface JournalDao {
     @Insert
     suspend fun insertEntry(entry: Journal)
 
+    @Update
+    suspend fun updateEntry(entry: Journal)
+
     @Delete
     suspend fun deleteEntry(entry: Journal)
 
-    @Update
-    suspend fun updateEntry(entry: Journal)
+    @Query("SELECT * FROM journal_table")
+    fun exportAllEntries(): List<Journal>
+
+    @Insert(onConflict = REPLACE)
+    fun replaceAllEntries(journal: List<Journal>)
+
+    @Query("DELETE from journal_table")
+    fun deleteAllEntries()
 }

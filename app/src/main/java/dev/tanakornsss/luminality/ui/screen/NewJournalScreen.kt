@@ -1,5 +1,8 @@
 package dev.tanakornsss.luminality.ui.screen
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,6 +38,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import dev.tanakornsss.luminality.data.backup.BackupViewModel
 import dev.tanakornsss.luminality.data.journal.Journal
 import dev.tanakornsss.luminality.data.journal.JournalViewModel
 import dev.tanakornsss.luminality.ui.component.CustomAlertDialog
@@ -43,7 +47,10 @@ import java.time.ZoneId
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewJournalScreen(journalViewModel: JournalViewModel) {
+fun NewJournalScreen(
+    journalViewModel: JournalViewModel,
+    backupViewModel: BackupViewModel
+) {
     val scaffoldState = rememberBottomSheetScaffoldState()
 
     var textFieldValue by remember { mutableStateOf("") }
@@ -51,6 +58,22 @@ fun NewJournalScreen(journalViewModel: JournalViewModel) {
     var showDeleteDialog by remember { mutableStateOf(false) }
 
     val streak by journalViewModel.streak.collectAsState()
+
+    val exportLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.CreateDocument("application/json")
+    ) { uri: Uri? ->
+        uri?.let {
+            backupViewModel.exportToUri(it)
+        }
+    }
+
+    val importLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let {
+            backupViewModel.importFromUri(it)
+        }
+    }
 
     if (showDeleteDialog) DeleteAlertDialog(
         onDismiss = { showDeleteDialog = false },
@@ -75,10 +98,10 @@ fun NewJournalScreen(journalViewModel: JournalViewModel) {
                         ) {
                             Text("App name")
                             Row {
-                                IconButton(onClick = { }) {
+                                IconButton(onClick = { exportLauncher.launch("LuminalityBackup.json") }) {
                                     Icon(Icons.Outlined.Upload, null)
                                 }
-                                IconButton(onClick = { }) {
+                                IconButton(onClick = { importLauncher.launch("application/json") }) {
                                     Icon(Icons.Outlined.Download, null)
                                 }
                                 IconButton(onClick = { }) {
