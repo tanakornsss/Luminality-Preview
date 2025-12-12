@@ -1,6 +1,6 @@
 [versions]
 accompanistPermissions = "0.37.3"
-agp = "8.13.1"
+agp = "8.13.2"
 datastorePreferences = "1.2.0"
 desugar_jdk_libs = "2.1.5"
 kotlin = "2.2.21"
