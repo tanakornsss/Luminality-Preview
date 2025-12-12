@@ -16,6 +16,7 @@
         android:theme="@style/Theme.Luminality">
         <activity
             android:name=".MainActivity"
+            android:windowSoftInputMode="adjustNothing"
             android:exported="true"
             android:theme="@style/Theme.Luminality">
             <intent-filter>
