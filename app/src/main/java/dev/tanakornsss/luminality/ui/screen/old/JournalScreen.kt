@@ -1,4 +1,4 @@
-package dev.tanakornsss.luminality.ui.screen
+package dev.tanakornsss.luminality.ui.screen.old
 
 import android.Manifest
 import android.content.Context
