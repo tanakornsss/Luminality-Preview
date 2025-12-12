@@ -4,10 +4,10 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Download
 import androidx.compose.material.icons.outlined.Settings
@@ -23,10 +24,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -49,8 +50,6 @@ fun NewJournalScreen(
     journalViewModel: JournalViewModel,
     backupViewModel: BackupViewModel
 ) {
-    val scaffoldState = rememberBottomSheetScaffoldState()
-
     var textFieldValue by remember { mutableStateOf("") }
     var pendingDeleteJournal by remember { mutableStateOf<Journal?>(null) }
     var showDeleteDialog by remember { mutableStateOf(false) }
@@ -85,6 +84,7 @@ fun NewJournalScreen(
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
+        contentWindowInsets = WindowInsets(),
         topBar = {
             TopAppBar(
                 title = {
@@ -115,19 +115,41 @@ fun NewJournalScreen(
             )
         }
     ) { innerPadding ->
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
         ) {
             Column(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text("App logo here")
                 Text("Streak: ${streak.currentStreak}")
             }
+            OutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        vertical = 16.dp,
+                        horizontal = 16.dp
+                    ),
+                value = textFieldValue,
+                onValueChange = {
+                    textFieldValue = it
+                },
+                label = {
+                    Text("What's good today?")
+                },
+                trailingIcon = {
+                    IconButton(onClick = {}) {
+                        Icon(Icons.Outlined.Add, null)
+                    }
+                }
+            )
         }
     }
 }
