@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import dev.tanakornsss.luminality.data.backup.BackupViewModel
@@ -39,7 +40,8 @@ import dev.tanakornsss.luminality.ui.screen.journal.JournalListScreen
 @Composable
 fun NewJournalScreen(
     journalViewModel: JournalViewModel,
-    backupViewModel: BackupViewModel
+    backupViewModel: BackupViewModel,
+    onNavigateSetting: () -> Unit
 ) {
     var textFieldValue by remember { mutableStateOf("") }
     var pendingDeleteJournal by remember { mutableStateOf<Journal?>(null) }
@@ -88,23 +90,33 @@ fun NewJournalScreen(
                 title = {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text("App name")
                         Row {
                             IconButton(
                                 onClick = {
+                                    focusManager.clearFocus()
                                     exportLauncher.launch("LuminalityBackup.json")
                                 }
                             ) {
                                 Icon(Icons.Outlined.Upload, null)
                             }
                             IconButton(
-                                onClick = { importLauncher.launch("application/json") }
+                                onClick = {
+                                    focusManager.clearFocus()
+                                    importLauncher.launch("application/json")
+                                }
                             ) {
                                 Icon(Icons.Outlined.Download, null)
                             }
-                            IconButton(onClick = { }) {
+                            IconButton(
+                                onClick = {
+                                    focusManager.clearFocus()
+                                    onNavigateSetting()
+                                }
+                            ) {
                                 Icon(Icons.Outlined.Settings, null)
                             }
                         }
