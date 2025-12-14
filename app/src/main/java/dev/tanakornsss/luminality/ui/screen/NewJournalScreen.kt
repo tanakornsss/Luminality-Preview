@@ -20,12 +20,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import dev.tanakornsss.luminality.data.backup.BackupViewModel
 import dev.tanakornsss.luminality.data.journal.Journal
 import dev.tanakornsss.luminality.data.journal.JournalViewModel
@@ -61,6 +63,12 @@ fun NewJournalScreen(
         uri?.let {
             backupViewModel.importFromUri(it)
         }
+    }
+
+    val focusManager = LocalFocusManager.current
+
+    LaunchedEffect(pagerState.currentPage) {
+        focusManager.clearFocus()
     }
 
     if (showDeleteDialog) DeleteAlertDialog(
