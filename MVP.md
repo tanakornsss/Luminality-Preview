@@ -20,3 +20,8 @@ An app where you can write positive things daily to improve your mental health
 ## Monetization (Future plans)
 * Upload to cloud storage
 * Alternative themes
+
+## TODO
+1. [ ] Implement note editing
+2. [ ] Add deletion undo
+3. [ ] Add more clear ui indication when add journal
