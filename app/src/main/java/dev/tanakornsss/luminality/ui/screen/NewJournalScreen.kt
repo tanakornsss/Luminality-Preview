@@ -30,6 +30,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
+import dev.tanakornsss.luminality.R
 import dev.tanakornsss.luminality.data.backup.BackupViewModel
 import dev.tanakornsss.luminality.data.journal.Journal
 import dev.tanakornsss.luminality.data.journal.JournalViewModel
@@ -97,7 +99,7 @@ fun NewJournalScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text("App name")
+                        Text("Luminality")
                         Row {
                             IconButton(
                                 onClick = {
@@ -167,9 +169,9 @@ private fun DeleteAlertDialog(onDismiss: () -> Unit, onConfirm: () -> Unit) {
     CustomAlertDialog(
         onDismissRequest = { onDismiss() },
         onConfirmation = { onConfirm() },
-        dialogTitle = "Delete selected journal?",
-        dialogText = "Your journal will be permanently deleted",
-        dismissText = "Cancel",
-        confirmText = "Delete",
+        dialogTitle = stringResource(R.string.delete_journal),
+        dialogText = stringResource(R.string.delete_confirm),
+        dismissText = stringResource(R.string.cancel),
+        confirmText = stringResource(R.string.delete),
     )
 }

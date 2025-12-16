@@ -23,7 +23,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dev.tanakornsss.luminality.R
 import dev.tanakornsss.luminality.data.journal.Journal
 import dev.tanakornsss.luminality.data.journal.JournalViewModel
 import java.time.Instant
@@ -57,7 +59,7 @@ private fun ListContent(
 
     Spacer(Modifier.height(16.dp))
     Text(
-        text = "Your journeys",
+        text = stringResource(R.string.your_journeys),
         style = MaterialTheme.typography.titleLarge,
         modifier = Modifier.padding(horizontal = 16.dp)
     )

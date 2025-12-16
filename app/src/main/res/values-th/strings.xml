@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Luminality</string>
+    <string name="delete_confirm">บันทึกนี้จะถูกลบถาวร</string>
+    <string name="cancel">ยกเลิก</string>
+    <string name="delete">ลบ</string>
+    <string name="delete_journal">ลบบันทึก</string>
+    <string name="greeting1">วันนี้เป็นยังไงบ้าง</string>
+    <string name="streak">ใช้แอพมาแล้ว %1$d</string>
+    <string name="your_journeys">บันทึกของตุณ</string>
+</resources>

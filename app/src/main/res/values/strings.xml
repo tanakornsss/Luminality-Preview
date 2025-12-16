@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Luminality</string>
+    <string name="delete_journal">Delete selected journal?</string>
+    <string name="delete_confirm">Your journal will be permanently deleted</string>
+    <string name="cancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="greeting1">What\'s good today?</string>
+    <string name="streak">ํYou used this app for %1$d</string>
+    <string name="your_journeys">Your journeys</string>
 </resources>

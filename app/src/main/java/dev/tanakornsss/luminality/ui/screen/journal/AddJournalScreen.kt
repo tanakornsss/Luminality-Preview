@@ -16,7 +16,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dev.tanakornsss.luminality.R
 import dev.tanakornsss.luminality.data.streak.Streak
 
 @Composable
@@ -40,7 +42,7 @@ fun AddJournalScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text("App logo here")
-            Text("Streak: ${streak.currentStreak}")
+            Text(stringResource(R.string.streak, streak.currentStreak))
         }
         OutlinedTextField(
             modifier = Modifier
@@ -55,7 +57,7 @@ fun AddJournalScreen(
                 textFieldUpdate(it)
             },
             label = {
-                Text("What's good today?")
+                Text(stringResource(R.string.greeting1))
             },
             trailingIcon = {
                 IconButton(onClick = {
