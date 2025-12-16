@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import dev.tanakornsss.luminality.data.journal.Journal
+import dev.tanakornsss.luminality.data.model.Journal
 import dev.tanakornsss.luminality.data.journal.JournalDao
 import dev.tanakornsss.luminality.data.streak.Streak
 import dev.tanakornsss.luminality.data.streak.StreakDao

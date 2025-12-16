@@ -26,7 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.tanakornsss.luminality.R
-import dev.tanakornsss.luminality.data.journal.Journal
+import dev.tanakornsss.luminality.data.model.Journal
 import dev.tanakornsss.luminality.data.journal.JournalViewModel
 import java.time.Instant
 import java.time.ZoneId

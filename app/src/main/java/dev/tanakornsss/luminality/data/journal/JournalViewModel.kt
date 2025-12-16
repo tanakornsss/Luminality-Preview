@@ -2,6 +2,7 @@ package dev.tanakornsss.luminality.data.journal
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dev.tanakornsss.luminality.data.model.Journal
 import dev.tanakornsss.luminality.data.streak.Streak
 import dev.tanakornsss.luminality.data.streak.StreakRepository
 import kotlinx.coroutines.flow.SharingStarted

@@ -1,6 +1,5 @@
-package dev.tanakornsss.luminality.data.backup
+package dev.tanakornsss.luminality.data.model
 
-import dev.tanakornsss.luminality.data.journal.Journal
 import dev.tanakornsss.luminality.data.streak.Streak
 
 data class Backup(

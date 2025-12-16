@@ -29,3 +29,23 @@
     public static *** e(...);
     public static *** wtf(...);
 }
+
+# 1. Debug-friendly
+-keepattributes SourceFile,LineNumberTable
+
+# 2. Annotations
+-keepattributes *Annotation*
+-keepattributes Signature
+
+# 3. Models
+-keep class dev.tanakornsss.luminality.data.model.** { *; }
+
+# 4. JSON
+-keep class com.google.gson.** { *; }
+
+# 5. DI
+-keep class dagger.** { *; }
+-keep class javax.inject.** { *; }
+
+# 6. App entry
+-keep class dev.tanakornsss.luminality.MainActivity { *; }
