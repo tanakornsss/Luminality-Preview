@@ -61,7 +61,7 @@ fun AddJournalScreen(
             },
             trailingIcon = {
                 IconButton(onClick = {
-                    addEntry()
+                    if (textFieldValue.isNotEmpty()) addEntry()
                 }
                 ) {
                     Icon(Icons.Outlined.Add, null)

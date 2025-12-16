@@ -5,6 +5,7 @@
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
     <string name="greeting1">What\'s good today?</string>
-    <string name="streak">ํYou used this app for %1$d</string>
+    <string name="streak">ํYou used this app for %1$d day(s)</string>
     <string name="your_journeys">Your journeys</string>
+    <string name="settings">Settings</string>
 </resources>

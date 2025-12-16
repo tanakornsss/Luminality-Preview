@@ -6,6 +6,7 @@
     <string name="delete">ลบ</string>
     <string name="delete_journal">ลบบันทึก</string>
     <string name="greeting1">วันนี้เป็นยังไงบ้าง</string>
-    <string name="streak">ใช้แอพมาแล้ว %1$d</string>
-    <string name="your_journeys">บันทึกของตุณ</string>
+    <string name="streak">ใช้แอพมาแล้ว %1$d วัน</string>
+    <string name="your_journeys">บันทึกของคุณ</string>
+    <string name="settings">การคั้งค่า</string>
 </resources>
