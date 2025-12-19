@@ -1,6 +1,6 @@
 package dev.tanakornsss.luminality.ui.screen.journal
 
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -11,7 +11,11 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -79,8 +83,7 @@ private fun ListContent(
             items(entriesOfDay) { entries ->
                 MessageCard(
                     modifier = Modifier.padding(horizontal = 16.dp),
-                    message = entries.text,
-                    onLongPress = { },
+                    message = entries.text
                 )
             }
             item {
@@ -94,22 +97,21 @@ private fun ListContent(
 private fun MessageCard(
     modifier: Modifier = Modifier,
     message: String,
-    onLongPress: () -> Unit
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
             .fillMaxWidth()
             .height(48.dp)
-            .combinedClickable(
-                onClick = { },
-                onLongClick = { onLongPress() }
-            )
     ) {
         Text(
             modifier = modifier,
             text = message,
             style = MaterialTheme.typography.bodyLarge,
         )
+        IconButton(onClick = {  }) {
+            Icon(Icons.Filled.MoreVert, null)
+        }
     }
 }
