@@ -26,8 +26,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import dev.tanakornsss.luminality.R
-import dev.tanakornsss.luminality.data.model.Journal
 import dev.tanakornsss.luminality.data.journal.JournalViewModel
+import dev.tanakornsss.luminality.data.model.Journal
 import java.time.Instant
 import java.time.ZoneId
 
@@ -72,16 +72,19 @@ private fun ListContent(
             .toLocalDate()
     }
 
-    LazyColumn(modifier = Modifier.padding(horizontal = 16.dp)) {
+    LazyColumn {
         grouped.forEach { (date, entriesOfDay) ->
             item {
-                Text(date.toString())
-                Spacer(modifier = Modifier.height(12.dp))
+                Column(modifier = Modifier.padding(horizontal = 16.dp)) {
+                    Text(date.toString())
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
             }
             items(entriesOfDay) { entries ->
                 MessageCard(
+                    modifier = Modifier.padding(horizontal = 16.dp),
                     message = entries.text,
-                    onDelete = { onDelete(entries) },
+                    onDelete = { onDelete(entries) }
                 )
             }
             item {
@@ -89,18 +92,18 @@ private fun ListContent(
             }
         }
     }
-
 }
 
 @Composable
 private fun MessageCard(
+    modifier: Modifier = Modifier,
     message: String,
     onDelete: () -> Unit,
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(48.dp)
     ) {
