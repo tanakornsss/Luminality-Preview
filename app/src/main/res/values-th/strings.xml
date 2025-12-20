@@ -9,4 +9,5 @@
     <string name="streak">ใช้แอพมาแล้ว %1$d วัน</string>
     <string name="your_journeys">บันทึกของคุณ</string>
     <string name="settings">การคั้งค่า</string>
+    <string name="edit">แก้ไข</string>
 </resources>
