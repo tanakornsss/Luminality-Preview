@@ -1,13 +1,10 @@
 package dev.tanakornsss.luminality.data.streak
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import java.time.Instant
-import java.time.LocalDate
 import java.time.ZoneId
 
 class StreakRepository(private val streakDao: StreakDao) {
@@ -19,7 +16,6 @@ class StreakRepository(private val streakDao: StreakDao) {
         )
     }
 
-    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     suspend fun updateStreak(today: Long) = withContext(Dispatchers.IO) {
         // Check if streak is meant to be added
         // If its the first time of the day, then add the streak
@@ -34,8 +30,8 @@ class StreakRepository(private val streakDao: StreakDao) {
         val todayInstant = Instant.ofEpochMilli(today)
 
         val zone = ZoneId.systemDefault()
-        val lastDate = LocalDate.ofInstant(lastDateInstant, zone)
-        val todayDate = LocalDate.ofInstant(todayInstant, zone)
+        val lastDate = lastDateInstant.atZone(zone).toLocalDate()
+        val todayDate = todayInstant.atZone(zone).toLocalDate()
 
         if (lastDate == todayDate) return@withContext
 
