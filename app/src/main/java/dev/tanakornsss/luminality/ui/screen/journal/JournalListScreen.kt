@@ -91,7 +91,9 @@ private fun ListContent(
             items(entriesOfDay) { entries ->
                 MessageCard(
                     modifier = Modifier.padding(horizontal = 16.dp),
-                    message = entries.text
+                    message = entries.text,
+                    onEdit = {  },
+                    onDelete = { onDelete(entries) }
                 )
             }
             item {
@@ -105,6 +107,8 @@ private fun ListContent(
 private fun MessageCard(
     modifier: Modifier = Modifier,
     message: String,
+    onEdit: () -> Unit,
+    onDelete: () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false ) }
 
@@ -150,7 +154,10 @@ private fun MessageCard(
                                 Icon(Icons.Filled.Close, null)
                             }
                         },
-                        onClick = { expanded = false }
+                        onClick = {
+                            onDelete()
+                            expanded = false
+                        }
                     )
                 }
             }
