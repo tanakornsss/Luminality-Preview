@@ -22,6 +22,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -80,6 +81,9 @@ private fun ListContent(
             .toLocalDate()
     }
 
+    var journalToEdit by remember { mutableStateOf<Journal?>(null) }
+    var textFieldValue by remember { mutableStateOf("") }
+
     LazyColumn {
         grouped.forEach { (date, entriesOfDay) ->
             item {
@@ -89,12 +93,40 @@ private fun ListContent(
                 }
             }
             items(entriesOfDay) { entries ->
-                MessageCard(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    message = entries.text,
-                    onEdit = {  },
-                    onDelete = { onDelete(entries) }
-                )
+                val isEditingSpecific = (entries == journalToEdit)
+
+                if (isEditingSpecific) {
+                    OutlinedTextField(
+                        value = textFieldValue,
+                        onValueChange = {
+                            textFieldValue = it
+                        },
+                        label = {
+                            Text("Edit your journal")
+                        },
+                        trailingIcon = {
+                            IconButton(
+                                onClick = {
+                                    journalToEdit = null
+                                    textFieldValue = ""
+                                }
+                            ) {
+                                Icon(Icons.Filled.Edit, null)
+                            }
+                        }
+                    )
+                }
+                else {
+                    MessageCard(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        message = entries.text,
+                        onEdit = {
+                            journalToEdit = entries
+                            textFieldValue = entries.text
+                        },
+                        onDelete = { onDelete(entries) }
+                    )
+                }
             }
             item {
                 Spacer(modifier = Modifier.height(24.dp))
@@ -142,7 +174,10 @@ private fun MessageCard(
                                 Icon(Icons.Filled.Edit, null)
                             }
                         },
-                        onClick = { expanded = false }
+                        onClick = {
+                            onEdit()
+                            expanded = false
+                        }
                     )
                     DropdownMenuItem(
                         text = {
