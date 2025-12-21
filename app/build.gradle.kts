@@ -18,8 +18,8 @@ android {
         applicationId = "dev.tanakornsss.luminality"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1
-        versionName = "prerelease-0.0.1"
+        versionCode = 2
+        versionName = "prerelease-0.0.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
