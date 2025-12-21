@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material.icons.outlined.Cancel
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -45,16 +46,23 @@ fun JournalListScreen(
     innerPadding: PaddingValues,
     journalViewModel: JournalViewModel,
     pendingDeleteJournal: (Journal) -> Unit,
+    journalToEdit: (Journal) -> Unit,
     deleteDialogTrigger: (Boolean) -> Unit,
 ) {
     Column(modifier = Modifier
         .padding(innerPadding)
         .fillMaxSize()
     ) {
-        ListContent(journalViewModel) {
-            deleteDialogTrigger(true)
-            pendingDeleteJournal(it)
-        }
+        ListContent(
+            journalViewModel = journalViewModel,
+            onDelete = {
+                deleteDialogTrigger(true)
+                pendingDeleteJournal(it)
+            },
+            onEdit = { journal ->
+                journalToEdit(journal)
+            }
+        )
     }
 }
 
@@ -62,7 +70,8 @@ fun JournalListScreen(
 @Composable
 private fun ListContent(
     journalViewModel: JournalViewModel,
-    onDelete: (Journal) -> Unit
+    onDelete: (Journal) -> Unit,
+    onEdit: (Journal) -> Unit
 ) {
     val journalNew by journalViewModel.entries.collectAsState()
 
@@ -97,6 +106,9 @@ private fun ListContent(
 
                 if (isEditingSpecific) {
                     OutlinedTextField(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp),
                         value = textFieldValue,
                         onValueChange = {
                             textFieldValue = it
@@ -105,13 +117,30 @@ private fun ListContent(
                             Text("Edit your journal")
                         },
                         trailingIcon = {
-                            IconButton(
-                                onClick = {
-                                    journalToEdit = null
-                                    textFieldValue = ""
+                            Row {
+                                IconButton(
+                                    onClick = {
+                                        journalToEdit = null
+                                        textFieldValue = ""
+                                    }
+                                ) {
+                                    Icon(Icons.Outlined.Cancel, null)
                                 }
-                            ) {
-                                Icon(Icons.Filled.Edit, null)
+                                IconButton(
+                                    onClick = {
+                                        val newEntries = Journal(
+                                            id = entries.id,
+                                            createdAt = entries.createdAt,
+                                            text = textFieldValue
+                                        )
+                                        onEdit(newEntries)
+                                        journalToEdit = null
+                                        textFieldValue = ""
+                                    },
+                                    enabled = textFieldValue.isNotEmpty()
+                                ) {
+                                    Icon(Icons.Filled.Edit, null)
+                                }
                             }
                         }
                     )

@@ -33,8 +33,8 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import dev.tanakornsss.luminality.R
 import dev.tanakornsss.luminality.data.backup.BackupViewModel
-import dev.tanakornsss.luminality.data.model.Journal
 import dev.tanakornsss.luminality.data.journal.JournalViewModel
+import dev.tanakornsss.luminality.data.model.Journal
 import dev.tanakornsss.luminality.ui.component.CustomAlertDialog
 import dev.tanakornsss.luminality.ui.screen.journal.AddJournalScreen
 import dev.tanakornsss.luminality.ui.screen.journal.JournalListScreen
@@ -156,6 +156,9 @@ fun NewJournalScreen(
                     },
                     deleteDialogTrigger = {
                         showDeleteDialog = it
+                    },
+                    journalToEdit = { journal ->
+                        journalViewModel.updateEntry(journal)
                     }
                 )
             }
