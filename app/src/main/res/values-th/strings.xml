@@ -10,4 +10,5 @@
     <string name="your_journeys">บันทึกของคุณ</string>
     <string name="settings">การคั้งค่า</string>
     <string name="edit">แก้ไข</string>
+    <string name="advice">แอพนี้ไม่สามารภให้ความช่วยเหลือทางการแพทย์ได้\n โปรดติดต่อสถาบันหากต้องการรับความช่วยเหลือ</string>
 </resources>

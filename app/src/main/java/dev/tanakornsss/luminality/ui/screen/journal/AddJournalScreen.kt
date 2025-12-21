@@ -16,7 +16,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import dev.tanakornsss.luminality.R
 import dev.tanakornsss.luminality.data.streak.Streak
@@ -44,29 +46,49 @@ fun AddJournalScreen(
             Text("App logo here")
             Text(stringResource(R.string.streak, streak.currentStreak))
         }
-        OutlinedTextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    vertical = 16.dp,
-                    horizontal = 16.dp
-                )
-                .imePadding(),
-            value = textFieldValue,
-            onValueChange = {
-                textFieldUpdate(it)
-            },
-            label = {
-                Text(stringResource(R.string.greeting1))
-            },
-            trailingIcon = {
-                IconButton(onClick = {
-                    if (textFieldValue.isNotEmpty()) addEntry()
-                }
-                ) {
-                    Icon(Icons.Outlined.Add, null)
-                }
-            }
+        TextFieldSection(
+            textFieldValue = textFieldValue,
+            textFieldUpdate = { textFieldUpdate(it) },
+            addEntry = { addEntry() }
         )
     }
+}
+
+@Composable
+private fun TextFieldSection(
+    textFieldValue: String,
+    textFieldUpdate: (String) -> Unit,
+    addEntry: () -> Unit
+) {
+    Text(
+        text = stringResource(R.string.advice),
+        textAlign = TextAlign.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .alpha(0.7f)
+    )
+    OutlinedTextField(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(
+                vertical = 16.dp,
+                horizontal = 16.dp
+            )
+            .imePadding(),
+        value = textFieldValue,
+        onValueChange = {
+            textFieldUpdate(it)
+        },
+        label = {
+            Text(stringResource(R.string.greeting1))
+        },
+        trailingIcon = {
+            IconButton(onClick = {
+                if (textFieldValue.isNotEmpty()) addEntry()
+            }
+            ) {
+                Icon(Icons.Outlined.Add, null)
+            }
+        }
+    )
 }
