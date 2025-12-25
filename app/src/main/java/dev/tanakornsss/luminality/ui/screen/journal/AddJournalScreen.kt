@@ -67,6 +67,20 @@ private fun TextFieldSection(
             .fillMaxWidth()
             .alpha(0.7f)
     )
+    Text(
+        text = stringResource(R.string.analytics_msg),
+        textAlign = TextAlign.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .alpha(0.7f)
+    )
+    Text(
+        text = stringResource(R.string.analytics_opt_out),
+        textAlign = TextAlign.Center,
+        modifier = Modifier
+            .fillMaxWidth()
+            .alpha(0.7f)
+    )
     OutlinedTextField(
         modifier = Modifier
             .fillMaxWidth()
