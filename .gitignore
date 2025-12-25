@@ -16,3 +16,4 @@ local.properties
 /ref/ref.blend1
 /app/release/
 /app/google-services.json
+/app/src/debug/google-services.json
