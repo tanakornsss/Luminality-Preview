@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AppInsightsSettings">
-    <option name="selectedTabId" value="Android Vitals" />
+    <option name="selectedTabId" value="Firebase Crashlytics" />
     <option name="tabSettings">
       <map>
         <entry key="Android Vitals">
@@ -23,8 +23,8 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="dev.tanakornsss.luminality" />
-                  <option name="mobileSdkAppId" value="1:937383434808:android:aa7f1be202d9b26bd8a4cd" />
+                  <option name="appId" value="dev.tanakornsss.luminality.debug" />
+                  <option name="mobileSdkAppId" value="1:937383434808:android:ea59b915277e8c3fd8a4cd" />
                   <option name="projectId" value="luminality-33193" />
                   <option name="projectNumber" value="937383434808" />
                 </ConnectionSetting>
