@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.unit.dp
 
 private const val LIST_HEIGHT = 50
@@ -18,6 +19,7 @@ private const val LIST_HEIGHT = 50
 fun CustomListItem(
     modifier: Modifier = Modifier,
     label: String,
+    enabled: Boolean = true,
     onClick: () -> Unit = { },
     trailingContent: @Composable () -> Unit = { }
 ) {
@@ -25,14 +27,16 @@ fun CustomListItem(
         modifier = modifier
             .fillMaxWidth()
             .height(LIST_HEIGHT.dp)
-            .clickable { onClick() }
+            .clickable { if (enabled) onClick() }
         ,
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
             text = label,
-            modifier = Modifier.padding(horizontal = 16.dp)
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .alpha(if (enabled) 1f else 0.6f)
         )
         trailingContent()
     }

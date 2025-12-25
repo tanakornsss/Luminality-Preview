@@ -1,6 +1,5 @@
 package dev.tanakornsss.luminality.ui.screen
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -58,30 +57,21 @@ fun SettingScreen(onNavigateBack: () -> Unit) {
                         SettingItems.NOTIFICATIONS -> {
                             CustomListItem(
                                 label = settings.label,
-                                modifier = Modifier.clickable(
-                                    onClick = { }
-                                ),
+                                enabled = false,
+                                onClick = { }
                             )
                         }
                         SettingItems.THEME_PREFS -> {
                             CustomListItem(
                                 label = settings.label,
-                                modifier = Modifier
-                                    .clickable(
-                                        onClick = { }
-                                    )
+                                enabled = false,
+                                onClick = { }
                             )
                         }
-
                         SettingItems.CRASH -> {
                             CustomListItem(
                                 label = settings.label,
-                                modifier = Modifier
-                                    .clickable(
-                                        onClick = {
-                                            throw RuntimeException("Test crash")
-                                        }
-                                    )
+                                onClick = { throw RuntimeException("Test crash") }
                             )
                         }
                     }
