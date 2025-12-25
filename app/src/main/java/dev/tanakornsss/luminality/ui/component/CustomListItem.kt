@@ -1,5 +1,6 @@
 package dev.tanakornsss.luminality.ui.component
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -11,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 
 private const val LIST_HEIGHT = 50
@@ -18,7 +20,7 @@ private const val LIST_HEIGHT = 50
 @Composable
 fun CustomListItem(
     modifier: Modifier = Modifier,
-    label: String,
+    @StringRes label: Int,
     enabled: Boolean = true,
     onClick: () -> Unit = { },
     trailingContent: @Composable () -> Unit = { }
@@ -33,7 +35,7 @@ fun CustomListItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = label,
+            text = stringResource(label),
             modifier = Modifier
                 .padding(horizontal = 16.dp)
                 .alpha(if (enabled) 1f else 0.6f)

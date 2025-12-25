@@ -1,7 +1,10 @@
 package dev.tanakornsss.luminality.setting
 
-enum class SettingItems(val label: String) {
-    NOTIFICATIONS(label = "Enable notifications"),
-    THEME_PREFS(label = "Change theme preferences"),
-    CRASH(label = "Crash (TESTING)")
+import androidx.annotation.StringRes
+import dev.tanakornsss.luminality.R
+
+enum class SettingItems(@StringRes val label: Int) {
+    NOTIFICATIONS(label = R.string.enable_notifications),
+    THEME_PREFS(label = R.string.theme_prefs),
+    CRASH(label = R.string.crash)
 }
