@@ -5,6 +5,5 @@ import dev.tanakornsss.luminality.R
 
 enum class SettingItems(@StringRes val label: Int) {
     NOTIFICATIONS(label = R.string.enable_notifications),
-    THEME_PREFS(label = R.string.theme_prefs),
-    CRASH(label = R.string.crash)
+    THEME_PREFS(label = R.string.theme_prefs)
 }

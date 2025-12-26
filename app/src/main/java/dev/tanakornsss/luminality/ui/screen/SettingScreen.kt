@@ -68,12 +68,6 @@ fun SettingScreen(onNavigateBack: () -> Unit) {
                                 onClick = { }
                             )
                         }
-                        SettingItems.CRASH -> {
-                            CustomListItem(
-                                label = settings.label,
-                                onClick = { throw RuntimeException("Test crash") }
-                            )
-                        }
                     }
                 }
             }
