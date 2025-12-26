@@ -17,9 +17,16 @@ class SettingViewModel(context: Context) : ViewModel() {
 
     init {
         viewModelScope.launch {
-            repository.readThemeState().collect { theme ->
+            repository.readThemeState().collect { state ->
                 _setting.update {
-                    it.copy(themeState = theme)
+                    it.copy(themeState = state)
+                }
+            }
+        }
+        viewModelScope.launch {
+            repository.readTelemetryState().collect { state ->
+                _setting.update {
+                    it.copy(telemetryState = state)
                 }
             }
         }
@@ -28,6 +35,12 @@ class SettingViewModel(context: Context) : ViewModel() {
     fun updateTheme(themeState: ThemeState) {
         viewModelScope.launch {
             repository.updateThemeState(themeState)
+        }
+    }
+
+    fun updateTelemetry(state: Boolean) {
+        viewModelScope.launch {
+            repository.updateTelemetryState(state)
         }
     }
 

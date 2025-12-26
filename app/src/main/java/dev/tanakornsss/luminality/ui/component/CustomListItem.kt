@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -30,16 +31,19 @@ fun CustomListItem(
             .fillMaxWidth()
             .height(LIST_HEIGHT.dp)
             .clickable { if (enabled) onClick() }
-        ,
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(
-            text = stringResource(label),
+        Row(
             modifier = Modifier
-                .padding(horizontal = 16.dp)
-                .alpha(if (enabled) 1f else 0.6f)
-        )
-        trailingContent()
+                .fillMaxSize()
+                .padding(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = stringResource(label),
+                modifier = Modifier.alpha(if (enabled) 1f else 0.6f)
+            )
+            trailingContent()
+        }
     }
 }

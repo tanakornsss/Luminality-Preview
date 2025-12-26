@@ -54,7 +54,8 @@ fun LuminalityApp(context: Context) {
             }
             composable(LuminalityScreen.Setting.name) {
                 SettingScreen(
-                    onNavigateBack = { navController.popBackStack() }
+                    onNavigateBack = { navController.popBackStack() },
+                    settingViewModel = settingViewModel
                 )
             }
         }

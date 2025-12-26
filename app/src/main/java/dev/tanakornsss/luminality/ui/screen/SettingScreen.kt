@@ -13,19 +13,26 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import dev.tanakornsss.luminality.R
 import dev.tanakornsss.luminality.setting.SettingItems
+import dev.tanakornsss.luminality.setting.SettingViewModel
 import dev.tanakornsss.luminality.ui.component.CustomListItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingScreen(onNavigateBack: () -> Unit) {
+fun SettingScreen(
+    onNavigateBack: () -> Unit,
+    settingViewModel: SettingViewModel
+) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -51,6 +58,10 @@ fun SettingScreen(onNavigateBack: () -> Unit) {
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
+            val settingValue by settingViewModel.setting.collectAsState()
+
+            val telemetryState = settingValue.telemetryState
+
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(SettingItems.entries.toList()) { settings ->
                     when (settings) {
@@ -66,6 +77,20 @@ fun SettingScreen(onNavigateBack: () -> Unit) {
                                 label = settings.label,
                                 enabled = false,
                                 onClick = { }
+                            )
+                        }
+                        SettingItems.TELEMETRY -> {
+                            CustomListItem(
+                                label = settings.label,
+                                onClick = { },
+                                trailingContent = {
+                                    Switch(
+                                        checked = telemetryState,
+                                        onCheckedChange = { state ->
+                                            settingViewModel.updateTelemetry(state)
+                                        }
+                                    )
+                                }
                             )
                         }
                     }
