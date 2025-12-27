@@ -51,38 +51,14 @@ fun JournalScreen(
     backupViewModel: BackupViewModel,
     onNavigateSetting: () -> Unit
 ) {
-    var textFieldValue by remember { mutableStateOf("") }
-    var pendingDeleteJournal by remember { mutableStateOf<Journal?>(null) }
-    var showDeleteDialog by remember { mutableStateOf(false) }
-
-    val streak by journalViewModel.streak.collectAsState()
-
     val pagerState = rememberPagerState(pageCount = { 2 })
-
-    val scope = rememberCoroutineScope()
-
-    val exportLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.CreateDocument("application/json")
-    ) { uri: Uri? ->
-        uri?.let {
-            backupViewModel.exportToUri(it)
-        }
-    }
-
-    val importLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        uri?.let {
-            backupViewModel.importFromUri(it)
-        }
-    }
-
     val focusManager = LocalFocusManager.current
-
     LaunchedEffect(pagerState.currentPage) {
         focusManager.clearFocus()
     }
 
+    var pendingDeleteJournal by remember { mutableStateOf<Journal?>(null) }
+    var showDeleteDialog by remember { mutableStateOf(false) }
     if (showDeleteDialog) DeleteAlertDialog(
         onDismiss = { showDeleteDialog = false },
         onConfirm = {
@@ -101,6 +77,22 @@ fun JournalScreen(
 //            postNotificationPermission.launchPermissionRequest()
 //        }
 //    }
+
+    val exportLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.CreateDocument("application/json")
+    ) { uri: Uri? ->
+        uri?.let {
+            backupViewModel.exportToUri(it)
+        }
+    }
+
+    val importLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let {
+            backupViewModel.importFromUri(it)
+        }
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -144,6 +136,9 @@ fun JournalScreen(
             )
         }
     ) { innerPadding ->
+        val streak by journalViewModel.streak.collectAsState()
+        val scope = rememberCoroutineScope()
+        var textFieldValue by remember { mutableStateOf("") }
         HorizontalPager(state = pagerState) { page ->
             when (page) {
                 0 -> AddJournalScreen(
