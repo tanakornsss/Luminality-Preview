@@ -25,6 +25,7 @@ import androidx.compose.ui.res.stringResource
 import dev.tanakornsss.luminality.R
 import dev.tanakornsss.luminality.setting.SettingItems
 import dev.tanakornsss.luminality.setting.SettingViewModel
+import dev.tanakornsss.luminality.ui.component.CustomAlertDialog
 import dev.tanakornsss.luminality.ui.component.CustomListItem
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -76,7 +77,9 @@ fun SettingScreen(
                             CustomListItem(
                                 label = settings.label,
                                 enabled = false,
-                                onClick = { }
+                                onClick = {
+
+                                }
                             )
                         }
                         SettingItems.TELEMETRY -> {
@@ -98,4 +101,14 @@ fun SettingScreen(
             }
         }
     }
+}
+
+@Composable
+private fun ThemeSelectDialog() {
+    CustomAlertDialog(
+        onDismissRequest = { },
+        onConfirmation = { },
+        dialogTitle = "",
+        dialogText = "",
+    )
 }

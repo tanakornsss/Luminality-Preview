@@ -1,8 +1,10 @@
 package dev.tanakornsss.luminality.ui.screen
 
 import android.net.Uri
+import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -31,6 +33,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import dev.tanakornsss.luminality.R
 import dev.tanakornsss.luminality.data.backup.BackupViewModel
 import dev.tanakornsss.luminality.data.journal.JournalViewModel
@@ -40,9 +43,10 @@ import dev.tanakornsss.luminality.ui.screen.journal.AddJournalScreen
 import dev.tanakornsss.luminality.ui.screen.journal.JournalListScreen
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
-fun NewJournalScreen(
+fun JournalScreen(
     journalViewModel: JournalViewModel,
     backupViewModel: BackupViewModel,
     onNavigateSetting: () -> Unit
@@ -88,6 +92,15 @@ fun NewJournalScreen(
             showDeleteDialog = false
         }
     )
+
+//    val postNotificationPermission =
+//        rememberPermissionState(Manifest.permission.POST_NOTIFICATIONS)
+//
+//    LaunchedEffect(true) {
+//        if (!postNotificationPermission.status.isGranted) {
+//            postNotificationPermission.launchPermissionRequest()
+//        }
+//    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),

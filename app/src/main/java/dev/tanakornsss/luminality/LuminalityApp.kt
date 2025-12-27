@@ -20,9 +20,8 @@ import dev.tanakornsss.luminality.data.journal.JournalViewModelFactory
 import dev.tanakornsss.luminality.setting.SettingViewModel
 import dev.tanakornsss.luminality.setting.SettingViewModelFactory
 import dev.tanakornsss.luminality.ui.LuminalityScreen
-import dev.tanakornsss.luminality.ui.screen.NewJournalScreen
+import dev.tanakornsss.luminality.ui.screen.JournalScreen
 import dev.tanakornsss.luminality.ui.screen.SettingScreen
-import dev.tanakornsss.luminality.ui.screen.old.JournalScreen
 import dev.tanakornsss.luminality.ui.theme.LuminalityTheme
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -52,14 +51,8 @@ fun LuminalityApp(context: Context) {
             navController = navController,
             startDestination = LuminalityScreen.NewJournal.name
         ) {
-            composable(LuminalityScreen.Journal.name) {
-                JournalScreen(
-                    journalViewModel = journalViewModel,
-                    context = context
-                )
-            }
             composable(LuminalityScreen.NewJournal.name) {
-                NewJournalScreen(
+                JournalScreen(
                     journalViewModel = journalViewModel,
                     backupViewModel = backupViewModel,
                     onNavigateSetting = {
