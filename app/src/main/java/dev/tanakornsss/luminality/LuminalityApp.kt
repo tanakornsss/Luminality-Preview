@@ -4,10 +4,15 @@ import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dev.tanakornsss.luminality.data.backup.BackupViewModel
 import dev.tanakornsss.luminality.data.backup.BackupViewModelFactory
 import dev.tanakornsss.luminality.data.journal.JournalViewModel
@@ -29,6 +34,16 @@ fun LuminalityApp(context: Context) {
         viewModel(factory = BackupViewModelFactory(context))
     val settingViewModel: SettingViewModel =
         viewModel(factory = SettingViewModelFactory(context))
+
+    val settingState by settingViewModel.setting.collectAsState()
+    val telemetryState = settingState.telemetryState
+
+    LaunchedEffect(telemetryState) {
+        FirebaseAnalytics.getInstance(context)
+            .setAnalyticsCollectionEnabled(telemetryState)
+        FirebaseCrashlytics.getInstance()
+            .isCrashlyticsCollectionEnabled = telemetryState
+    }
 
     val navController = rememberNavController()
 
