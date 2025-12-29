@@ -17,6 +17,8 @@ import dev.tanakornsss.luminality.data.backup.BackupViewModel
 import dev.tanakornsss.luminality.data.backup.BackupViewModelFactory
 import dev.tanakornsss.luminality.data.journal.JournalViewModel
 import dev.tanakornsss.luminality.data.journal.JournalViewModelFactory
+import dev.tanakornsss.luminality.launch.LaunchViewModel
+import dev.tanakornsss.luminality.launch.LaunchViewModelFactory
 import dev.tanakornsss.luminality.setting.SettingViewModel
 import dev.tanakornsss.luminality.setting.SettingViewModelFactory
 import dev.tanakornsss.luminality.ui.LuminalityScreen
@@ -33,6 +35,8 @@ fun LuminalityApp(context: Context) {
         viewModel(factory = BackupViewModelFactory(context))
     val settingViewModel: SettingViewModel =
         viewModel(factory = SettingViewModelFactory(context))
+    val launchViewModel: LaunchViewModel =
+        viewModel(factory = LaunchViewModelFactory(context))
 
     val settingState by settingViewModel.setting.collectAsState()
     val telemetryState = settingState.telemetryState
