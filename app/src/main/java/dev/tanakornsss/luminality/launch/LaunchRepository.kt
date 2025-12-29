@@ -15,8 +15,11 @@ class LaunchRepository(private val context: Context) {
     // There will be a tooltip whenever the app updates or the app was newly installed
 
     object LaunchPrefs {
+        // True when IS FIRST LAUNCH. Otherwise False.
         val IS_FIRST_LAUNCH = booleanPreferencesKey("is_first_launch")
+        // True when IS FIRST LAUNCH AFTER UPDATE. Otherwise False.
         val IS_FIRST_LAUNCH_AFTER_UPDATE = booleanPreferencesKey("is_first_launch_after_update")
+        // To compare current app version from DataStore with the new one from build config.
         val LAST_LAUNCHED_VERSION = stringPreferencesKey("last_launched_version")
     }
 
