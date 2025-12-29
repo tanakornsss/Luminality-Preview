@@ -9,7 +9,7 @@ import dev.tanakornsss.luminality.ui.theme.ThemeState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-val Context.settingDatastore by preferencesDataStore(name = "setting_prefs")
+private val Context.settingDatastore by preferencesDataStore(name = "setting_prefs")
 
 class SettingRepository(private val context: Context) {
 
