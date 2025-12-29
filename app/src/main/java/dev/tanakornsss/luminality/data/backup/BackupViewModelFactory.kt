@@ -13,13 +13,10 @@ class BackupViewModelFactory(private val context: Context) : ViewModelProvider.F
             val journalDao = db.journalDao()
             val streakDao = db.streakDao()
 
-            val backupRepository = BackupRepository(journalDao, streakDao)
+            val backupRepository = BackupRepository(journalDao, streakDao, context)
 
             @Suppress("UNCHECKED_CAST")
-            return BackupViewModel(
-                context = context,
-                backupRepository = backupRepository
-            ) as T
+            return BackupViewModel(backupRepository = backupRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
