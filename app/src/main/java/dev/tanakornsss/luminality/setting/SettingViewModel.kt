@@ -1,46 +1,43 @@
 package dev.tanakornsss.luminality.setting
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.tanakornsss.luminality.ui.theme.ThemeState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class SettingViewModel(context: Context) : ViewModel() {
-    private val repository = SettingRepository(context)
-
+class SettingViewModel(private val settingRepository: SettingRepository) : ViewModel() {
     private val _setting = MutableStateFlow(Setting())
     val setting = _setting.asStateFlow()
 
     init {
         viewModelScope.launch {
-            repository.readThemeState().collect { state ->
-                _setting.update {
-                    it.copy(themeState = state)
-                }
-            }
-        }
-        viewModelScope.launch {
-            repository.readTelemetryState().collect { state ->
-                _setting.update {
-                    it.copy(telemetryState = state)
-                }
+            combine(
+                settingRepository.readThemeState(),
+                settingRepository.readTelemetryState()
+            ) { theme, telemetry ->
+                Setting(
+                    telemetryState = telemetry,
+                    themeState = theme
+                )
+            }.collect { setting ->
+                _setting.value = setting
             }
         }
     }
 
     fun updateTheme(themeState: ThemeState) {
         viewModelScope.launch {
-            repository.updateThemeState(themeState)
+            settingRepository.updateThemeState(themeState)
         }
     }
 
     fun updateTelemetry(state: Boolean) {
         viewModelScope.launch {
-            repository.updateTelemetryState(state)
+            settingRepository.updateTelemetryState(state)
         }
     }
 
