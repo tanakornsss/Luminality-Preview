@@ -3,7 +3,7 @@ package dev.tanakornsss.luminality.launch
 import android.content.Context
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -20,7 +20,7 @@ class LaunchRepository(private val context: Context) {
         // True when IS FIRST LAUNCH AFTER UPDATE. Otherwise False.
         val IS_FIRST_LAUNCH_AFTER_UPDATE = booleanPreferencesKey("is_first_launch_after_update")
         // To compare current app version from DataStore with the new one from build config.
-        val LAST_LAUNCHED_VERSION = stringPreferencesKey("last_launched_version")
+        val LAST_LAUNCHED_VERSION = intPreferencesKey("last_launched_version")
     }
 
 
@@ -48,15 +48,15 @@ class LaunchRepository(private val context: Context) {
         }
     }
 
-    suspend fun updateLastVersionName(name: String) {
+    suspend fun updateLastVersionName(ver: Int) {
         context.launchDatastore.edit { prefs ->
-            prefs[LaunchPrefs.LAST_LAUNCHED_VERSION] = name
+            prefs[LaunchPrefs.LAST_LAUNCHED_VERSION] = ver
         }
     }
 
-    fun readLastVersionName() : Flow<String> {
+    fun readLastVersionCode() : Flow<Int> {
         return context.launchDatastore.data.map { prefs ->
-            prefs[LaunchPrefs.LAST_LAUNCHED_VERSION] ?: ""
+            prefs[LaunchPrefs.LAST_LAUNCHED_VERSION] ?: 0
         }
     }
 }
