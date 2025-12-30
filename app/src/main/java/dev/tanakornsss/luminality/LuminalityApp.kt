@@ -2,11 +2,13 @@ package dev.tanakornsss.luminality
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -17,6 +19,7 @@ import dev.tanakornsss.luminality.data.backup.BackupViewModel
 import dev.tanakornsss.luminality.data.backup.BackupViewModelFactory
 import dev.tanakornsss.luminality.data.journal.JournalViewModel
 import dev.tanakornsss.luminality.data.journal.JournalViewModelFactory
+import dev.tanakornsss.luminality.launch.LaunchType
 import dev.tanakornsss.luminality.launch.LaunchViewModel
 import dev.tanakornsss.luminality.launch.LaunchViewModelFactory
 import dev.tanakornsss.luminality.setting.SettingViewModel
@@ -46,6 +49,14 @@ fun LuminalityApp(context: Context) {
             .setAnalyticsCollectionEnabled(telemetryState)
         FirebaseCrashlytics.getInstance()
             .isCrashlyticsCollectionEnabled = telemetryState
+    }
+
+    val tag = "Launch State"
+    val launchType by launchViewModel.launchType.collectAsStateWithLifecycle()
+    when (launchType) {
+        LaunchType.FIRST_INSTALL -> Log.d(tag, "First install")
+        LaunchType.FIRST_AFTER_UPDATE -> Log.d(tag, "First after update")
+        LaunchType.NORMAL -> Log.d(tag, "Normal")
     }
 
     val navController = rememberNavController()
