@@ -14,11 +14,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.tooling.preview.Preview
+import dev.tanakornsss.luminality.setting.SettingItem
 import dev.tanakornsss.luminality.ui.APP_SIDE_PADDING
 import dev.tanakornsss.luminality.ui.SETTING_SELECTION_HEIGHT
 import dev.tanakornsss.luminality.ui.SUBTITLE_TEXT_OPACITY
-import dev.tanakornsss.luminality.ui.theme.LuminalityTheme
 
 @Composable
 private fun BaseSettingComponent(
@@ -57,58 +56,24 @@ private fun BaseSettingComponent(
 }
 
 @Composable
-fun SettingToggle(
-    title: String,
-    subtitle: String,
-    checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit
-) {
+fun SettingToggle(item: SettingItem.Toggle) {
     BaseSettingComponent(
-        title = title,
-        subtitle = subtitle,
+        title = item.title,
+        subtitle = item.desc,
         trailingContent = {
             Switch(
-                checked = checked,
-                onCheckedChange = { onCheckedChange(it) }
+                checked = item.value,
+                onCheckedChange = { item.onChange(it) }
             )
         }
     )
 }
 
 @Composable
-fun SettingInteract(
-    title: String,
-    subtitle: String,
-    onClick: () -> Unit
-) {
+fun SettingNavigate(item: SettingItem.Navigation) {
     BaseSettingComponent(
-        title = title,
-        subtitle = subtitle,
-        modifier = Modifier.clickable(onClick = { onClick() })
+        title = item.title,
+        subtitle = item.desc,
+        modifier = Modifier.clickable(onClick = { item.onClick() })
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun SettingTogglePreview() {
-    LuminalityTheme {
-        SettingToggle(
-            title = "Title",
-            subtitle = "Subtitle",
-            checked = false,
-            onCheckedChange = { }
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun SettingInteractPreview() {
-    LuminalityTheme {
-        SettingInteract(
-            title = "Title",
-            subtitle = "Subtitle",
-            onClick = { }
-        )
-    }
 }

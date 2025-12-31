@@ -6,7 +6,7 @@ import dev.tanakornsss.luminality.setting.SettingItem
 @Composable
 fun SettingRouter(item: SettingItem) {
     when (item) {
-        is SettingItem.Navigation -> TODO()
-        is SettingItem.Toggle -> TODO()
+        is SettingItem.Navigation -> SettingNavigate(item)
+        is SettingItem.Toggle -> SettingToggle(item)
     }
 }

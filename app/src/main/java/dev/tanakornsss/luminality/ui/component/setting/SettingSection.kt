@@ -9,6 +9,6 @@ fun SettingSection(section: SettingsSection) {
     Text(section.title)
 
     section.items.forEach { items ->
-
+        SettingRouter(items)
     }
 }

@@ -13,14 +13,14 @@ sealed class SettingItem {
     data class Toggle(
         val key: String,
         val title: String,
-        val desc: String? = null,
+        val desc: String,
         val value: Boolean,
         val onChange: (Boolean) -> Unit
     ) : SettingItem()
 
     data class Navigation(
         val title: String,
-        val desc: String? = null,
+        val desc: String,
         val onClick: () -> Unit
     ) : SettingItem()
 }
