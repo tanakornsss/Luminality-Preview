@@ -11,7 +11,6 @@ enum class SettingItems(@StringRes val label: Int) {
 
 sealed class SettingItem {
     data class Toggle(
-        val key: String,
         val title: String,
         val desc: String,
         val value: Boolean,

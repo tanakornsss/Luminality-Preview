@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import dev.tanakornsss.luminality.setting.SettingsSection
 
 @Composable
-fun SettingSection(section: SettingsSection) {
+fun SettingScrollList(section: SettingsSection) {
     Text(section.title)
 
     section.items.forEach { items ->

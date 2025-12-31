@@ -13,7 +13,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -23,10 +22,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import dev.tanakornsss.luminality.R
-import dev.tanakornsss.luminality.setting.SettingItems
 import dev.tanakornsss.luminality.setting.SettingViewModel
 import dev.tanakornsss.luminality.ui.component.CustomAlertDialog
-import dev.tanakornsss.luminality.ui.component.CustomListItem
+import dev.tanakornsss.luminality.ui.component.setting.SettingScrollList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,40 +61,11 @@ fun SettingScreen(
 
             val telemetryState = settingValue.telemetryState
 
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(SettingItems.entries.toList()) { settings ->
-                    when (settings) {
-                        SettingItems.NOTIFICATIONS -> {
-                            CustomListItem(
-                                label = settings.label,
-                                enabled = false,
-                                onClick = { }
-                            )
-                        }
-                        SettingItems.THEME_PREFS -> {
-                            CustomListItem(
-                                label = settings.label,
-                                enabled = false,
-                                onClick = {
+            val sections = settingViewModel.settingSection
 
-                                }
-                            )
-                        }
-                        SettingItems.TELEMETRY -> {
-                            CustomListItem(
-                                label = settings.label,
-                                onClick = { },
-                                trailingContent = {
-                                    Switch(
-                                        checked = telemetryState,
-                                        onCheckedChange = { state ->
-                                            settingViewModel.updateTelemetry(state)
-                                        }
-                                    )
-                                }
-                            )
-                        }
-                    }
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(sections) { section ->
+                    SettingScrollList(section)
                 }
             }
         }
