@@ -4,5 +4,6 @@ enum class LuminalityScreen {
     JOURNAL,
     SETTING,
     ONBOARD,
-    WHATS_NEW
+    WHATS_NEW,
+    SPLASH
 }

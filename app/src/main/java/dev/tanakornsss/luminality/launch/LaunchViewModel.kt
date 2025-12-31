@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 sealed class LaunchEvent {
     object ShowOnboarding : LaunchEvent()
     object ShowWhatsNew : LaunchEvent()
+    object Normal : LaunchEvent()
 }
 
 class LaunchViewModel(private val launchRepository: LaunchRepository) : ViewModel() {
@@ -23,7 +24,8 @@ class LaunchViewModel(private val launchRepository: LaunchRepository) : ViewMode
                     _event.emit(LaunchEvent.ShowOnboarding)
                 LaunchType.FIRST_AFTER_UPDATE ->
                     _event.emit(LaunchEvent.ShowWhatsNew)
-                LaunchType.NORMAL -> Unit
+                LaunchType.NORMAL ->
+                    _event.emit(LaunchEvent.Normal)
             }
             launchRepository.markLaunched()
         }

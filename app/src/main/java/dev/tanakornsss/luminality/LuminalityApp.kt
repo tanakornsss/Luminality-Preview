@@ -26,6 +26,7 @@ import dev.tanakornsss.luminality.ui.LuminalityScreen
 import dev.tanakornsss.luminality.ui.screen.JournalScreen
 import dev.tanakornsss.luminality.ui.screen.OnboardScreen
 import dev.tanakornsss.luminality.ui.screen.SettingScreen
+import dev.tanakornsss.luminality.ui.screen.SplashScreen
 import dev.tanakornsss.luminality.ui.screen.WhatsNewScreen
 import dev.tanakornsss.luminality.ui.theme.LuminalityTheme
 
@@ -64,6 +65,10 @@ fun LuminalityApp(context: Context) {
                     navController.navigate(LuminalityScreen.WHATS_NEW.name) {
                         popUpTo(0)
                     }
+                LaunchEvent.Normal ->
+                    navController.navigate(LuminalityScreen.JOURNAL.name) {
+                        popUpTo(0)
+                    }
             }
         }
     }
@@ -71,7 +76,7 @@ fun LuminalityApp(context: Context) {
     LuminalityTheme {
         NavHost(
             navController = navController,
-            startDestination = LuminalityScreen.JOURNAL.name
+            startDestination = LuminalityScreen.SPLASH.name
         ) {
             composable(LuminalityScreen.JOURNAL.name) {
                 JournalScreen(
@@ -101,6 +106,9 @@ fun LuminalityApp(context: Context) {
                         popUpTo(0)
                     }
                 }
+            }
+            composable(LuminalityScreen.SPLASH.name) {
+                SplashScreen()
             }
         }
     }
