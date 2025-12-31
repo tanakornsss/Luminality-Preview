@@ -8,3 +8,24 @@ enum class SettingItems(@StringRes val label: Int) {
     THEME_PREFS(label = R.string.theme_prefs),
     TELEMETRY(label = R.string.analytics_toggle)
 }
+
+sealed class SettingItem {
+    data class Toggle(
+        val key: String,
+        val title: String,
+        val desc: String? = null,
+        val value: Boolean,
+        val onChange: (Boolean) -> Unit
+    ) : SettingItem()
+
+    data class Navigation(
+        val title: String,
+        val desc: String? = null,
+        val onClick: () -> Unit
+    ) : SettingItem()
+}
+
+data class SettingsSection(
+    val title: String,
+    val items: List<SettingItem>
+)
