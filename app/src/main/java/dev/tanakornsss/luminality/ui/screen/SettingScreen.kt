@@ -22,7 +22,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import dev.tanakornsss.luminality.R
+import dev.tanakornsss.luminality.setting.SettingItem
 import dev.tanakornsss.luminality.setting.SettingViewModel
+import dev.tanakornsss.luminality.setting.SettingsSection
 import dev.tanakornsss.luminality.ui.component.CustomAlertDialog
 import dev.tanakornsss.luminality.ui.component.setting.SettingScrollList
 
@@ -58,13 +60,24 @@ fun SettingScreen(
                 .padding(innerPadding)
         ) {
             val settingValue by settingViewModel.setting.collectAsState()
-
             val telemetryState = settingValue.telemetryState
 
-            val sections = settingViewModel.settingSection
+            val settingSection = listOf(
+                SettingsSection(
+                    title = "Analytics",
+                    items = listOf(
+                        SettingItem.Toggle(
+                            title = "Telemetry",
+                            desc = "Enable telemetry",
+                            value = telemetryState,
+                            onChange = { settingViewModel.updateTelemetry(it) },
+                        )
+                    )
+                )
+            )
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(sections) { section ->
+                items(settingSection) { section ->
                     SettingScrollList(section)
                 }
             }

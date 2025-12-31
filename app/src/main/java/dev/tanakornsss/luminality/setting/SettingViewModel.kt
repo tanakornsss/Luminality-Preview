@@ -29,20 +29,6 @@ class SettingViewModel(private val settingRepository: SettingRepository) : ViewM
         }
     }
 
-    val settingSection = listOf(
-        SettingsSection(
-            title = "Analytics",
-            items = listOf(
-                SettingItem.Toggle(
-                    title = "Telemetry",
-                    desc = "Enable telemetry",
-                    value = _setting.value.telemetryState,
-                    onChange = { updateTelemetry(it) },
-                )
-            )
-        )
-    )
-
     fun updateTheme(themeState: ThemeState) {
         viewModelScope.launch {
             settingRepository.updateThemeState(themeState)

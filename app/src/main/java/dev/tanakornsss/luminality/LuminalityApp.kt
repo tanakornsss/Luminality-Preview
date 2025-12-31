@@ -2,6 +2,7 @@ package dev.tanakornsss.luminality
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -50,6 +51,7 @@ fun LuminalityApp(context: Context) {
             .setAnalyticsCollectionEnabled(telemetryState)
         FirebaseCrashlytics.getInstance()
             .isCrashlyticsCollectionEnabled = telemetryState
+        Log.d("Telemetry", telemetryState.toString())
     }
 
     val navController = rememberNavController()
