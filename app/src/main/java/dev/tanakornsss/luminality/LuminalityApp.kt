@@ -2,13 +2,11 @@ package dev.tanakornsss.luminality
 
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -19,14 +17,16 @@ import dev.tanakornsss.luminality.data.backup.BackupViewModel
 import dev.tanakornsss.luminality.data.backup.BackupViewModelFactory
 import dev.tanakornsss.luminality.data.journal.JournalViewModel
 import dev.tanakornsss.luminality.data.journal.JournalViewModelFactory
-import dev.tanakornsss.luminality.launch.LaunchType
+import dev.tanakornsss.luminality.launch.LaunchEvent
 import dev.tanakornsss.luminality.launch.LaunchViewModel
 import dev.tanakornsss.luminality.launch.LaunchViewModelFactory
 import dev.tanakornsss.luminality.setting.SettingViewModel
 import dev.tanakornsss.luminality.setting.SettingViewModelFactory
 import dev.tanakornsss.luminality.ui.LuminalityScreen
 import dev.tanakornsss.luminality.ui.screen.JournalScreen
+import dev.tanakornsss.luminality.ui.screen.OnboardScreen
 import dev.tanakornsss.luminality.ui.screen.SettingScreen
+import dev.tanakornsss.luminality.ui.screen.WhatsNewScreen
 import dev.tanakornsss.luminality.ui.theme.LuminalityTheme
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -51,35 +51,56 @@ fun LuminalityApp(context: Context) {
             .isCrashlyticsCollectionEnabled = telemetryState
     }
 
-    val tag = "Launch State"
-    val launchType by launchViewModel.launchType.collectAsStateWithLifecycle()
-    when (launchType) {
-        LaunchType.FIRST_INSTALL -> Log.d(tag, "First install")
-        LaunchType.FIRST_AFTER_UPDATE -> Log.d(tag, "First after update")
-        LaunchType.NORMAL -> Log.d(tag, "Normal")
-    }
-
     val navController = rememberNavController()
+
+    LaunchedEffect(Unit) {
+        launchViewModel.event.collect { event ->
+            when (event) {
+                LaunchEvent.ShowOnboarding ->
+                    navController.navigate(LuminalityScreen.ONBOARD.name) {
+                        popUpTo(0)
+                    }
+                LaunchEvent.ShowWhatsNew ->
+                    navController.navigate(LuminalityScreen.WHATS_NEW.name) {
+                        popUpTo(0)
+                    }
+            }
+        }
+    }
 
     LuminalityTheme {
         NavHost(
             navController = navController,
-            startDestination = LuminalityScreen.NewJournal.name
+            startDestination = LuminalityScreen.JOURNAL.name
         ) {
-            composable(LuminalityScreen.NewJournal.name) {
+            composable(LuminalityScreen.JOURNAL.name) {
                 JournalScreen(
                     journalViewModel = journalViewModel,
                     backupViewModel = backupViewModel,
                     onNavigateSetting = {
-                        navController.navigate(LuminalityScreen.Setting.name)
+                        navController.navigate(LuminalityScreen.SETTING.name)
                     }
                 )
             }
-            composable(LuminalityScreen.Setting.name) {
+            composable(LuminalityScreen.SETTING.name) {
                 SettingScreen(
                     onNavigateBack = { navController.popBackStack() },
                     settingViewModel = settingViewModel
                 )
+            }
+            composable(LuminalityScreen.ONBOARD.name) {
+                OnboardScreen {
+                    navController.navigate(LuminalityScreen.JOURNAL.name) {
+                        popUpTo(0)
+                    }
+                }
+            }
+            composable(LuminalityScreen.WHATS_NEW.name) {
+                WhatsNewScreen {
+                    navController.navigate(LuminalityScreen.JOURNAL.name) {
+                        popUpTo(0)
+                    }
+                }
             }
         }
     }

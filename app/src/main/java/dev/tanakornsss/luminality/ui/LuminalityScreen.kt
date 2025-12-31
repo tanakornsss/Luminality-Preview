@@ -1,6 +1,8 @@
 package dev.tanakornsss.luminality.ui
 
 enum class LuminalityScreen {
-    NewJournal,
-    Setting
+    JOURNAL,
+    SETTING,
+    ONBOARD,
+    WHATS_NEW
 }
