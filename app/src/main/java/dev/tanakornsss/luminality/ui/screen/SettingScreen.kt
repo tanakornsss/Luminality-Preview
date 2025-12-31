@@ -1,5 +1,6 @@
 package dev.tanakornsss.luminality.ui.screen
 
+import android.os.Build
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import dev.tanakornsss.luminality.BuildConfig
 import dev.tanakornsss.luminality.R
 import dev.tanakornsss.luminality.setting.SettingItem
 import dev.tanakornsss.luminality.setting.SettingViewModel
@@ -77,8 +79,16 @@ fun SettingScreen(
                     title = stringResource(R.string.about),
                     items = listOf(
                         SettingItem.ViewOnly(
-                            title = "Disclaimer",
+                            title = stringResource(R.string.disclaimer),
                             desc = stringResource(R.string.advice)
+                        ),
+                        SettingItem.ViewOnly(
+                            title = "App info",
+                            desc = stringResource(
+                                R.string.app_info,
+                                BuildConfig.VERSION_NAME,
+                                Build.VERSION.SDK_INT
+                            )
                         )
                     )
                 )
