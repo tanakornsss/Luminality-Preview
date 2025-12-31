@@ -64,11 +64,11 @@ fun SettingScreen(
 
             val settingSection = listOf(
                 SettingsSection(
-                    title = "Analytics",
+                    title = stringResource(R.string.analytics),
                     items = listOf(
                         SettingItem.Toggle(
-                            title = "Telemetry",
-                            desc = "Enable telemetry",
+                            title = stringResource(R.string.telemetry),
+                            desc = stringResource(R.string.analytics_toggle),
                             value = telemetryState,
                             onChange = { settingViewModel.updateTelemetry(it) },
                         )

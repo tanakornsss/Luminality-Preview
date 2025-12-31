@@ -17,4 +17,6 @@
     <string name="analytics_msg">เวอร์ขันของระบบปฏิบัติการและรุ่นของเครื่อง\\nจะถูกเก็บไว้\\nเพื่อทำให้ประสบการณ์ใช้งานของแอพดีขึ้น</string>
     <string name="analytics_opt_out">คุณสามารถหยุดการส่งข้อมูลเหล่านี้ได้ในหน้า \"การตั้งค่า\"</string>
     <string name="analytics_toggle">เปิดการส่งข้อมูลวิเคราะห์</string>
+    <string name="telemetry">ข้อมูลการวิเคราะห์</string>
+    <string name="analytics">การส่งข้อมูลวิเคราะห์</string>
 </resources>

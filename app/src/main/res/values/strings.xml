@@ -16,4 +16,6 @@
     <string name="analytics_msg">Your Android version and the model of your\nphone will be collected to improve the app stability.</string>
     <string name="analytics_opt_out">You can opt-out in Settings page.</string>
     <string name="analytics_toggle">Enable telemetry</string>
+    <string name="telemetry">Telemetry</string>
+    <string name="analytics">Analytics</string>
 </resources>
