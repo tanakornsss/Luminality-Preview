@@ -12,7 +12,7 @@ import dev.tanakornsss.luminality.ui.CATEGORY_TEXT_OPACITY
 
 @Composable
 fun SettingScrollList(section: SettingsSection) {
-    Column {
+    Column(modifier = Modifier.padding(bottom = APP_SIDE_PADDING)) {
         Text(
             text = section.title,
             modifier = Modifier

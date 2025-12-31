@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
@@ -16,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import dev.tanakornsss.luminality.setting.SettingItem
 import dev.tanakornsss.luminality.ui.APP_SIDE_PADDING
-import dev.tanakornsss.luminality.ui.SETTING_SELECTION_HEIGHT
+import dev.tanakornsss.luminality.ui.SETTING_SELECTION_PADDING
 import dev.tanakornsss.luminality.ui.SUBTITLE_TEXT_OPACITY
 
 @Composable
@@ -28,7 +27,7 @@ private fun BaseSettingComponent(
 ) {
     Column(
         modifier = modifier
-            .height(SETTING_SELECTION_HEIGHT)
+            .padding(vertical = SETTING_SELECTION_PADDING)
             .fillMaxWidth(),
         verticalArrangement = Arrangement.Center
     ) {
@@ -53,6 +52,15 @@ private fun BaseSettingComponent(
             trailingContent()
         }
     }
+}
+
+
+@Composable
+fun DisclaimerRow(item: SettingItem.ViewOnly) {
+    BaseSettingComponent(
+        title = item.title,
+        subtitle = item.desc,
+    )
 }
 
 @Composable

@@ -18,4 +18,5 @@
     <string name="analytics_toggle">Enable telemetry</string>
     <string name="telemetry">Telemetry</string>
     <string name="analytics">Analytics</string>
+    <string name="about">About</string>
 </resources>

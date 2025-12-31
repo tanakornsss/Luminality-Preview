@@ -8,5 +8,6 @@ fun SettingRouter(item: SettingItem) {
     when (item) {
         is SettingItem.Navigation -> SettingNavigate(item)
         is SettingItem.Toggle -> SettingToggle(item)
+        is SettingItem.ViewOnly -> DisclaimerRow(item)
     }
 }

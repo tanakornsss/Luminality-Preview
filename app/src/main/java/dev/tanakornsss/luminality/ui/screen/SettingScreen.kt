@@ -25,7 +25,6 @@ import dev.tanakornsss.luminality.R
 import dev.tanakornsss.luminality.setting.SettingItem
 import dev.tanakornsss.luminality.setting.SettingViewModel
 import dev.tanakornsss.luminality.setting.SettingsSection
-import dev.tanakornsss.luminality.ui.component.CustomAlertDialog
 import dev.tanakornsss.luminality.ui.component.setting.SettingScrollList
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -73,9 +72,17 @@ fun SettingScreen(
                             onChange = { settingViewModel.updateTelemetry(it) },
                         )
                     )
+                ),
+                SettingsSection(
+                    title = stringResource(R.string.about),
+                    items = listOf(
+                        SettingItem.ViewOnly(
+                            title = "Disclaimer",
+                            desc = stringResource(R.string.advice)
+                        )
+                    )
                 )
             )
-
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(settingSection) { section ->
                     SettingScrollList(section)
@@ -83,14 +90,4 @@ fun SettingScreen(
             }
         }
     }
-}
-
-@Composable
-private fun ThemeSelectDialog() {
-    CustomAlertDialog(
-        onDismissRequest = { },
-        onConfirmation = { },
-        dialogTitle = "",
-        dialogText = "",
-    )
 }
