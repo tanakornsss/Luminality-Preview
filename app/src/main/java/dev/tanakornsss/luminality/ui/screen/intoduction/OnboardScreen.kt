@@ -1,4 +1,4 @@
-package dev.tanakornsss.luminality.ui.screen
+package dev.tanakornsss.luminality.ui.screen.intoduction
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

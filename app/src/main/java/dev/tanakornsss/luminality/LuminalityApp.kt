@@ -24,8 +24,8 @@ import dev.tanakornsss.luminality.launch.LaunchViewModelFactory
 import dev.tanakornsss.luminality.setting.SettingViewModel
 import dev.tanakornsss.luminality.setting.SettingViewModelFactory
 import dev.tanakornsss.luminality.ui.LuminalityScreen
-import dev.tanakornsss.luminality.ui.screen.JournalScreen
-import dev.tanakornsss.luminality.ui.screen.OnboardScreen
+import dev.tanakornsss.luminality.ui.screen.intoduction.JournalScreen
+import dev.tanakornsss.luminality.ui.screen.intoduction.OnboardScreen
 import dev.tanakornsss.luminality.ui.screen.SettingScreen
 import dev.tanakornsss.luminality.ui.screen.SplashScreen
 import dev.tanakornsss.luminality.ui.screen.WhatsNewScreen

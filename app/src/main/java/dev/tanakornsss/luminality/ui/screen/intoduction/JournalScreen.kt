@@ -1,4 +1,4 @@
-package dev.tanakornsss.luminality.ui.screen
+package dev.tanakornsss.luminality.ui.screen.intoduction
 
 import android.net.Uri
 import android.os.Build
