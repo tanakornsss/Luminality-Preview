@@ -41,7 +41,8 @@
 -keep class dev.tanakornsss.luminality.data.model.** { *; }
 
 # 4. JSON
--keep class com.google.gson.** { *; }
+-keep class com.google.gson.stream.** { *; }
+-keep class com.google.gson.annotations.** { *; }
 
 # 5. DI
 -keep class dagger.** { *; }
