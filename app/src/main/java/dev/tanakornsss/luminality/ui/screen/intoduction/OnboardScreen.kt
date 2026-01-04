@@ -8,15 +8,42 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Devices.PIXEL_9
-import androidx.compose.ui.tooling.preview.Preview
 import dev.tanakornsss.luminality.R
-import dev.tanakornsss.luminality.ui.theme.LuminalityTheme
+import dev.tanakornsss.luminality.setting.SettingViewModel
+import dev.tanakornsss.luminality.ui.component.CustomAlertDialog
 
 @Composable
-fun OnboardScreen(onClose: () -> Unit) {
+fun OnboardScreen(
+    settingViewModel: SettingViewModel,
+    onReturn: () -> Unit
+) {
+    val settingValue = settingViewModel.setting.value
+    val analyticsValue = settingValue.telemetryState
+
+    var showDialog by remember { mutableStateOf(false) }
+    if (showDialog) {
+        AnalyticsConsentDialog(
+            onDismiss = {
+                @Suppress("AssignedValueIsNeverRead")
+                showDialog = false
+                settingViewModel.updateTelemetry(false)
+                onReturn()
+            },
+            onConfirm = {
+                @Suppress("AssignedValueIsNeverRead")
+                showDialog = false
+                settingViewModel.updateTelemetry(true)
+                onReturn()
+            }
+        )
+    }
+
     IntroductionTemplate(stringResource(R.string.welcome)) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -29,7 +56,11 @@ fun OnboardScreen(onClose: () -> Unit) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End
             ) {
-                Button(onClick = { onClose() }) {
+                Button(onClick = {
+                    @Suppress("AssignedValueIsNeverRead")
+                    if (analyticsValue) onReturn() else showDialog = true
+                }
+                ) {
                     Text(stringResource(R.string.ok))
                 }
             }
@@ -37,10 +68,17 @@ fun OnboardScreen(onClose: () -> Unit) {
     }
 }
 
-@Preview(showSystemUi = true, device = PIXEL_9)
 @Composable
-fun OnboardScreenPreview() {
-    LuminalityTheme {
-        OnboardScreen { }
-    }
+fun AnalyticsConsentDialog(
+    onDismiss: () -> Unit,
+    onConfirm: () -> Unit
+) {
+    CustomAlertDialog(
+        dialogTitle = stringResource(R.string.analytics_dialog_header),
+        dialogText = stringResource(R.string.analytics_disclaimer),
+        dismissText = stringResource(R.string.not_now),
+        onDismissRequest = { onDismiss() },
+        confirmText = stringResource(R.string.enable_analytics),
+        onConfirmation = { onConfirm() }
+    )
 }

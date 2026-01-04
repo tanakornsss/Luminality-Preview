@@ -21,7 +21,7 @@
     <string name="analytics">การส่งข้อมูลวิเคราะห์</string>
     <string name="about">เกี่ยวกับ</string>
     <string name="disclaimer">คำชี้แจง</string>
-    <string name="app_info">ชื่อเวอร์ชัน: %1$s\nเลเวล API: %2$d</string>
+    <string name="app_info_details">ชื่อเวอร์ชัน: %1$s\nเลเวล API: %2$d</string>
     <string name="what_s_new">มีอะไรใหม่บ้าง</string>
     <string name="version">เวอร์ชัน: %1$s</string>
     <string name="changelog">อัพเดทนี้มี...</string>
@@ -29,4 +29,9 @@
     <string name="changelog_content">ปรับปรุงหน้าการตั้งค่า</string>
     <string name="welcome">ยินดีต้อนรับ</string>
     <string name="welcome_to_luminality_app">ยินดีต้อนรับสู่แอพ Luminality</string>
+    <string name="analytics_disclaimer">เรานำข้อมูลการแครชของแอพเพื่อพัฒนาให้แอพมีประสิทธิภาพมากขึ้น</string>
+    <string name="analytics_dialog_header">การเก็บข้อมูล</string>
+    <string name="not_now">ยังไม่ใช่ตอนนี้</string>
+    <string name="enable_analytics">เปิดการเก็บข้อมูล</string>
+    <string name="app_info">ข้อมูลของแอพ</string>
 </resources>

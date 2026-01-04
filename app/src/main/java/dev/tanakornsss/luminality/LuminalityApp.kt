@@ -24,11 +24,11 @@ import dev.tanakornsss.luminality.launch.LaunchViewModelFactory
 import dev.tanakornsss.luminality.setting.SettingViewModel
 import dev.tanakornsss.luminality.setting.SettingViewModelFactory
 import dev.tanakornsss.luminality.ui.LuminalityScreen
-import dev.tanakornsss.luminality.ui.screen.intoduction.JournalScreen
-import dev.tanakornsss.luminality.ui.screen.intoduction.OnboardScreen
 import dev.tanakornsss.luminality.ui.screen.SettingScreen
 import dev.tanakornsss.luminality.ui.screen.SplashScreen
 import dev.tanakornsss.luminality.ui.screen.WhatsNewScreen
+import dev.tanakornsss.luminality.ui.screen.intoduction.JournalScreen
+import dev.tanakornsss.luminality.ui.screen.intoduction.OnboardScreen
 import dev.tanakornsss.luminality.ui.theme.LuminalityTheme
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -96,11 +96,14 @@ fun LuminalityApp(context: Context) {
                 )
             }
             composable(LuminalityScreen.ONBOARD.name) {
-                OnboardScreen {
-                    navController.navigate(LuminalityScreen.JOURNAL.name) {
-                        popUpTo(0)
+                OnboardScreen(
+                    settingViewModel = settingViewModel,
+                    onReturn = {
+                        navController.navigate(LuminalityScreen.JOURNAL.name) {
+                            popUpTo(0)
+                        }
                     }
-                }
+                )
             }
             composable(LuminalityScreen.WHATS_NEW.name) {
                 WhatsNewScreen {

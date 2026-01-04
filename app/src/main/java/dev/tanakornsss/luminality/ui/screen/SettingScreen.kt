@@ -85,9 +85,9 @@ fun SettingScreen(
                             desc = stringResource(R.string.advice)
                         ),
                         SettingItem.ViewOnly(
-                            title = "App info",
+                            title = stringResource(R.string.app_info),
                             desc = stringResource(
-                                R.string.app_info,
+                                R.string.app_info_details,
                                 BuildConfig.VERSION_NAME,
                                 Build.VERSION.SDK_INT
                             )

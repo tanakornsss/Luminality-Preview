@@ -18,7 +18,7 @@ fun CustomAlertDialog(
     AlertDialog(
         title = { Text(text = dialogTitle) },
         text = { Text(text = dialogText) },
-        onDismissRequest = { onDismissRequest() },
+        onDismissRequest = { },
         confirmButton = {
             TextButton(
                 onClick = { onConfirmation() }
