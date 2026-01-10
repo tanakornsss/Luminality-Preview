@@ -8,7 +8,6 @@
     <string name="streak">You used this app for %1$d day(s)</string>
     <string name="your_journeys">Your journeys</string>
     <string name="edit">Edit</string>
-    <string name="advice">This app does not provide medical advice.\n Please seek professional help when needed.</string>
     <string name="what_s_new">What\'s new</string>
     <string name="version">Version: %1$s</string>
     <string name="changelog">Changelog</string>
@@ -20,5 +19,4 @@
     <string name="analytics_dialog_header">Data collection</string>
     <string name="not_now">Not now</string>
     <string name="enable_analytics">Enable Analytics</string>
-    <string name="app_info">App info</string>
 </resources>

@@ -9,7 +9,6 @@
     <string name="streak">ใช้แอพมาแล้ว %1$d วัน</string>
     <string name="your_journeys">บันทึกของคุณ</string>
     <string name="edit">แก้ไข</string>
-    <string name="advice">แอพนี้ไม่สามารภให้ความช่วยเหลือทางการแพทย์ได้\n โปรดติดต่อสถาบันหากต้องการรับความช่วยเหลือ</string>
     <string name="what_s_new">มีอะไรใหม่บ้าง</string>
     <string name="version">เวอร์ชัน: %1$s</string>
     <string name="changelog">อัพเดทนี้มี…</string>
@@ -21,5 +20,4 @@
     <string name="analytics_dialog_header">การเก็บข้อมูล</string>
     <string name="not_now">ยังไม่ใช่ตอนนี้</string>
     <string name="enable_analytics">เปิดการเก็บข้อมูล</string>
-    <string name="app_info">ข้อมูลของแอพ</string>
 </resources>
