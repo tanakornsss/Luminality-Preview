@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings">Settings</string>
+    <string name="setting_header_analytics">Analytics</string>
+    <string name="telemetry">Telemetry</string>
+    <string name="analytics_toggle">Enable telemetry</string>
+    <string name="about">About</string>
+    <string name="disclaimer">Disclaimer</string>
+    <string name="app_info_details">App version name: %1$s\nAPI Level: %2$d</string>
+    <string name="enable_notifications">Enable notifications</string>
+    <string name="theme_prefs">Change theme preferences</string>
+</resources>

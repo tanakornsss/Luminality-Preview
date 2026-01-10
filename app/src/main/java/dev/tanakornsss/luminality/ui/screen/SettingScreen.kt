@@ -67,7 +67,7 @@ fun SettingScreen(
 
             val settingSection = listOf(
                 SettingsSection(
-                    title = stringResource(R.string.analytics),
+                    title = stringResource(R.string.setting_header_analytics),
                     items = listOf(
                         SettingItem.Toggle(
                             title = stringResource(R.string.telemetry),

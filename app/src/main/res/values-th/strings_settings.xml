@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings">การตั้งค่า</string>
+    <string name="telemetry">การเก็บข้อมูล</string>
+    <string name="setting_header_analytics">ข้อมูลการวิเคราะห์</string>
+    <string name="analytics_toggle">เปิดการส่งข้อมูลวิเคราะห์</string>
+    <string name="about">เกี่ยวกับแอพ</string>
+    <string name="disclaimer">คำชี้แจง</string>
+    <string name="app_info_details">เวอร์ชันของแอพ: %1$s\nเลเวล API: %2$d</string>
+    <string name="enable_notifications">เปิดการแจ้งเตือน</string>
+    <string name="theme_prefs">เปลี่ยนธีม</string>
+</resources>
