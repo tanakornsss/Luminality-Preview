@@ -1,10 +1,7 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-android.buildFeatures.buildConfig = true
-
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     id("com.google.devtools.ksp")
@@ -57,14 +54,16 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlin {
-        compilerOptions {
-            freeCompilerArgs.add("-Xannotation-default-target=param-property")
-            jvmTarget.set(JvmTarget.JVM_17)
-        }
-    }
     buildFeatures {
         compose = true
+        buildConfig = true
+    }
+}
+
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.add("-Xannotation-default-target=param-property")
+        jvmTarget.set(JvmTarget.JVM_17)
     }
 }
 
