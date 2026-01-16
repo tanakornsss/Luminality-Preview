@@ -12,11 +12,11 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "dev.tanakornsss.luminality"
+        applicationId = "dev.tanakornsss.luminality.preview"
         minSdk = 26
         targetSdk = 36
-        versionCode = 4
-        versionName = "prerelease-0.0.4"
+        versionCode = 1
+        versionName = "preview-0.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

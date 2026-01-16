@@ -23,10 +23,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="dev.tanakornsss.luminality.debug" />
-                  <option name="mobileSdkAppId" value="1:937383434808:android:ea59b915277e8c3fd8a4cd" />
-                  <option name="projectId" value="luminality-33193" />
-                  <option name="projectNumber" value="937383434808" />
+                  <option name="appId" value="PLACEHOLDER" />
+                  <option name="mobileSdkAppId" value="" />
+                  <option name="projectId" value="" />
+                  <option name="projectNumber" value="" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
