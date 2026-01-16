@@ -41,7 +41,6 @@ fun AddJournalScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("App logo here")
             Text(stringResource(R.string.streak, streak.currentStreak))
         }
         TextFieldSection(

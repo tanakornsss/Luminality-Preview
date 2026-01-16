@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import dev.tanakornsss.luminality.ui.theme.ThemeState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -13,31 +12,14 @@ class SettingViewModel(private val settingRepository: SettingRepository) : ViewM
     private val _setting = MutableStateFlow(Setting())
     val setting = _setting.asStateFlow()
 
+    // Placeholder WIP
     init {
-        viewModelScope.launch {
-            combine(
-                settingRepository.readThemeState(),
-                settingRepository.readTelemetryState()
-            ) { theme, telemetry ->
-                Setting(
-                    telemetryState = telemetry,
-                    themeState = theme
-                )
-            }.collect { setting ->
-                _setting.value = setting
-            }
-        }
+        viewModelScope.launch {  }
     }
 
     fun updateTheme(themeState: ThemeState) {
         viewModelScope.launch {
             settingRepository.updateThemeState(themeState)
-        }
-    }
-
-    fun updateTelemetry(state: Boolean) {
-        viewModelScope.launch {
-            settingRepository.updateTelemetryState(state)
         }
     }
 

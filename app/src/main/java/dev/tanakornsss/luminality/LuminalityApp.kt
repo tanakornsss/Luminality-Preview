@@ -3,7 +3,6 @@ package dev.tanakornsss.luminality
 import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.AnimatedContent
@@ -12,7 +11,6 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,8 +20,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dev.tanakornsss.luminality.data.backup.BackupViewModel
 import dev.tanakornsss.luminality.data.backup.BackupViewModelFactory
 import dev.tanakornsss.luminality.data.journal.JournalViewModel
@@ -31,8 +27,6 @@ import dev.tanakornsss.luminality.data.journal.JournalViewModelFactory
 import dev.tanakornsss.luminality.launch.LaunchEvent
 import dev.tanakornsss.luminality.launch.LaunchViewModel
 import dev.tanakornsss.luminality.launch.LaunchViewModelFactory
-import dev.tanakornsss.luminality.setting.SettingViewModel
-import dev.tanakornsss.luminality.setting.SettingViewModelFactory
 import dev.tanakornsss.luminality.ui.LuminalityScreen
 import dev.tanakornsss.luminality.ui.screen.SettingScreen
 import dev.tanakornsss.luminality.ui.screen.SplashScreen
@@ -49,21 +43,8 @@ fun LuminalityApp(context: Context) {
         viewModel(factory = JournalViewModelFactory(context))
     val backupViewModel: BackupViewModel =
         viewModel(factory = BackupViewModelFactory(context))
-    val settingViewModel: SettingViewModel =
-        viewModel(factory = SettingViewModelFactory(context))
     val launchViewModel: LaunchViewModel =
         viewModel(factory = LaunchViewModelFactory(context))
-
-    val settingState by settingViewModel.setting.collectAsState()
-    val telemetryState = settingState.telemetryState
-
-    LaunchedEffect(telemetryState) {
-        FirebaseAnalytics.getInstance(context)
-            .setAnalyticsCollectionEnabled(telemetryState)
-        FirebaseCrashlytics.getInstance()
-            .isCrashlyticsCollectionEnabled = telemetryState
-        Log.d("Telemetry", telemetryState.toString())
-    }
 
     val navController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
@@ -129,13 +110,11 @@ fun LuminalityApp(context: Context) {
                         onNavigateBack = {
                             navDirection = NavDirection.Pop
                             navController.popBackStack()
-                        },
-                        settingViewModel = settingViewModel
+                        }
                     )
                 }
                 composable(LuminalityScreen.ONBOARD.name) {
                     OnboardScreen(
-                        settingViewModel = settingViewModel,
                         onReturn = {
                             navDirection = NavDirection.Push
                             navController.navigate(LuminalityScreen.JOURNAL.name) {
