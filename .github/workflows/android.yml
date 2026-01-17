@@ -43,15 +43,11 @@ jobs:
           name: app-release
           path: app/build/outputs/apk/release/*.apk
 
-      - name: Create a Release in a GitHub Action
-        uses: comnoco/create-release-action@v2.0.5
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload APK to GitHub Release
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.ref_name }}
-          release_name: Release ${{ github.ref_name }}
-          body: |
-            Changes in this Release
-            - Initial upload
-          draft: false
-          prerelease: false
+          name: Release ${{ github.ref_name }}
+          files: app/build/outputs/apk/release/*.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
