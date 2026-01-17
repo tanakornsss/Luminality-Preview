@@ -40,8 +40,8 @@ jobs:
           name: app-release
           path: app/build/outputs/apk/release/*.apk
 
-      - name: Create Release
-        uses: comnoco/create-release-action@v2
+      - name: Create a Release in a GitHub Action
+        uses: comnoco/create-release-action@v2.0.5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
