@@ -1,8 +1,9 @@
 name: Android CI
 
 on:
-  pull_request:
-    branches: [ "master", "development" ]
+  push:
+    branches:
+      - "demo/**"
 
 jobs:
   build:
@@ -23,18 +24,31 @@ jobs:
         run: chmod +x gradlew
 
       - name: Decode Keystore
-        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > $GITHUB_WORKSPACE/debug.keystore
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > $GITHUB_WORKSPACE/keystore.jks
 
-      - name: Build Debug APK
-        run: |
-          ./gradlew :app:assembleDebug \
-            -Pandroid.injected.signing.store.file=$GITHUB_WORKSPACE/debug.keystore \
-            -Pandroid.injected.signing.store.password=${{ secrets.KEYSTORE_PASSWORD }} \
-            -Pandroid.injected.signing.key.alias=${{ secrets.KEY_ALIAS }} \
-            -Pandroid.injected.signing.key.password=${{ secrets.KEY_PASSWORD }}
+      - name: Build release
+        env:
+          ANDROID_PREVIEW_KEYSTORE_PATH: ${{ github.workspace }}/keystore.jks
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_PREVIEW_DEMO_RELEASE_KEY_ALIAS: ${{ secrets.ANDROID_PREVIEW_DEMO_RELEASE_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: ./gradlew assembleRelease
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug
-          path: app/build/outputs/apk/debug/*.apk
+          name: app-release
+          path: app/build/outputs/apk/release/*.apk
+
+      - name: Create Release
+        uses: comnoco/create-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: Release ${{ github.ref_name }}
+          body: |
+            Changes in this Release
+            - Initial upload
+          draft: false
+          prerelease: false
