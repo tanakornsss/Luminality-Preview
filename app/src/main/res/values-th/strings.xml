@@ -6,7 +6,9 @@
     <string name="delete">ลบ</string>
     <string name="delete_journal">ลบบันทึก</string>
     <string name="greeting1">วันนี้เป็นยังไงบ้าง</string>
-    <string name="streak">ใช้แอพมาแล้ว %1$d วัน</string>
+    <plurals name="streak">
+        <item quantity="other">ใช้แอพมาแล้ว %d วัน</item>
+    </plurals>
     <string name="your_journeys">บันทึกของคุณ</string>
     <string name="edit">แก้ไข</string>
     <string name="what_s_new">มีอะไรใหม่บ้าง</string>
