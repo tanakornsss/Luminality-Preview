@@ -2,8 +2,8 @@ name: Android CI
 
 on:
   push:
-    branches:
-      - "demo/**"
+    tags:
+      - "preview-*"
 
 permissions:
   contents: write
