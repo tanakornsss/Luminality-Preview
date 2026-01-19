@@ -11,12 +11,12 @@ An app where you can write your Journal daily
 ## Screenshots
 
 <p style="text-align: center;">
-    <img alt="" src="assets/1.png" />
-    <img alt="" src="assets/2.png" />
-    <img alt="" src="assets/3.png" />
-    <img alt="" src="assets/4.png" />
-    <img alt="" src="assets/5.png" />
-    <img alt="" src="assets/6.png" />
-    <img alt="" src="assets/7.png" />
-    <img alt="" src="assets/8.png" />
+    <img alt="" src="assets/1.png" width="200"/>
+    <img alt="" src="assets/2.png" width="200"/>
+    <img alt="" src="assets/3.png" width="200"/>
+    <img alt="" src="assets/4.png" width="200"/>
+    <img alt="" src="assets/5.png" width="200"/>
+    <img alt="" src="assets/6.png" width="200"/>
+    <img alt="" src="assets/7.png" width="200"/>
+    <img alt="" src="assets/8.png" width="200"/>
 </p>
