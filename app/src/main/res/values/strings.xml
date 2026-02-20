@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Luminality</string>
+    <string name="app_name" translatable="false">Luminality</string>
     <string name="delete_journal">Delete selected journal?</string>
     <string name="delete_confirm">Your journal will be permanently deleted</string>
     <string name="cancel">Cancel</string>
