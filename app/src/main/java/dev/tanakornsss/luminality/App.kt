@@ -26,7 +26,6 @@ import dev.tanakornsss.luminality.data.journal.JournalViewModel
 import dev.tanakornsss.luminality.data.journal.JournalViewModelFactory
 import dev.tanakornsss.luminality.launch.LaunchEvent
 import dev.tanakornsss.luminality.launch.LaunchViewModel
-import dev.tanakornsss.luminality.launch.LaunchViewModelFactory
 import dev.tanakornsss.luminality.ui.LuminalityScreen
 import dev.tanakornsss.luminality.ui.screen.SettingScreen
 import dev.tanakornsss.luminality.ui.screen.SplashScreen
@@ -34,6 +33,7 @@ import dev.tanakornsss.luminality.ui.screen.WhatsNewScreen
 import dev.tanakornsss.luminality.ui.screen.intoduction.JournalScreen
 import dev.tanakornsss.luminality.ui.screen.intoduction.OnboardScreen
 import dev.tanakornsss.luminality.ui.theme.LuminalityTheme
+import org.koin.androidx.compose.koinViewModel
 
 @SuppressLint("UnusedContentLambdaTargetStateParameter")
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -43,8 +43,7 @@ fun LuminalityApp(context: Context) {
         viewModel(factory = JournalViewModelFactory(context))
     val backupViewModel: BackupViewModel =
         viewModel(factory = BackupViewModelFactory(context))
-    val launchViewModel: LaunchViewModel =
-        viewModel(factory = LaunchViewModelFactory(context))
+    val launchViewModel: LaunchViewModel = koinViewModel()
 
     val navController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()

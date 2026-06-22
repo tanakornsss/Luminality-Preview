@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 
 private val Context.settingDatastore by preferencesDataStore(name = "setting_prefs")
 
-class SettingRepository(private val context: Context) {
+class SettingRepositoryImpl(private val context: Context) {
 
     object SettingPrefs {
         val THEME_STATE = stringPreferencesKey("theme_state")

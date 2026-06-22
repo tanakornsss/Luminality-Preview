@@ -8,7 +8,7 @@ class SettingViewModelFactory(private val context: Context) : ViewModelProvider.
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SettingViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return SettingViewModel(SettingRepository(context)) as T
+            return SettingViewModel(SettingRepositoryImpl(context)) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

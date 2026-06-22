@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class SettingViewModel(private val settingRepository: SettingRepository) : ViewModel() {
+class SettingViewModel(private val settingRepository: SettingRepositoryImpl) : ViewModel() {
     private val _setting = MutableStateFlow(Setting())
     val setting = _setting.asStateFlow()
 

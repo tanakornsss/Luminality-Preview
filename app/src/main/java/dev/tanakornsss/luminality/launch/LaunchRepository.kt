@@ -1,37 +1,8 @@
 package dev.tanakornsss.luminality.launch
 
-import android.content.Context
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.intPreferencesKey
-import androidx.datastore.preferences.preferencesDataStore
-import dev.tanakornsss.luminality.BuildConfig
-import kotlinx.coroutines.flow.first
+interface LaunchRepository {
+    suspend fun getLaunchTypeOnce(): LaunchType
 
-private val Context.launchDatastore by preferencesDataStore(name = "launch_prefs")
+    suspend fun markLaunched()
 
-class LaunchRepository(private val context: Context) {
-
-    // There will be a tooltip whenever the app updates or the app was newly installed
-
-    object LaunchPrefs {
-        val VERSION_KEY = intPreferencesKey("installed_version")
-    }
-
-    suspend fun getLaunchTypeOnce(): LaunchType {
-        val prefs = context.launchDatastore.data.first()
-        val saved = prefs[LaunchPrefs.VERSION_KEY]
-        val current = BuildConfig.VERSION_CODE
-
-        return when {
-            (saved == null) -> LaunchType.FIRST_INSTALL
-            (saved < current) -> LaunchType.FIRST_AFTER_UPDATE
-            else -> LaunchType.NORMAL
-        }
-    }
-
-    suspend fun markLaunched() {
-        context.launchDatastore.edit { prefs ->
-            prefs[LaunchPrefs.VERSION_KEY] = BuildConfig.VERSION_CODE
-        }
-    }
 }
