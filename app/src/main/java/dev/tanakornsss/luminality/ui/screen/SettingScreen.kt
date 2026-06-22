@@ -85,14 +85,14 @@ fun SettingScreen(
                     items = listOf(
                         SettingItem.Navigation(
                             title = "Create Backup",
-                            desc = "...",
+                            desc = "Create the backup of journals",
                             onClick = {
                                 exportLauncher.launch("LuminalityBackup.json")
                             }
                         ),
                         SettingItem.Navigation(
                             title = "Restore Backup",
-                            desc = "...",
+                            desc = "Restore backup from file system",
                             onClick = {
                                 importLauncher.launch("application/json")
                             }
