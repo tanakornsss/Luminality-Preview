@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class BackupViewModel(private val backupRepository: BackupRepository) : ViewModel() {
+class BackupViewModel(private val backupRepository: BackupRepositoryImpl) : ViewModel() {
     fun exportToUri(uri: Uri) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {

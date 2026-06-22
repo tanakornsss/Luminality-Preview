@@ -3,14 +3,14 @@ package dev.tanakornsss.luminality.data.journal
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.tanakornsss.luminality.data.streak.Streak
-import dev.tanakornsss.luminality.data.streak.StreakRepository
+import dev.tanakornsss.luminality.data.streak.StreakRepositoryImpl
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class JournalViewModel(
-    private val journalRepository: JournalRepository,
-    private val streakRepository: StreakRepository,
+    private val journalRepository: JournalRepositoryImpl,
+    private val streakRepository: StreakRepositoryImpl,
 ) : ViewModel() {
     val entries = journalRepository.entries.stateIn(
         viewModelScope,

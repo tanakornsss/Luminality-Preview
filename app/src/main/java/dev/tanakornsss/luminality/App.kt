@@ -15,15 +15,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dev.tanakornsss.luminality.data.backup.BackupViewModel
-import dev.tanakornsss.luminality.data.backup.BackupViewModelFactory
 import dev.tanakornsss.luminality.data.journal.JournalViewModel
-import dev.tanakornsss.luminality.data.journal.JournalViewModelFactory
 import dev.tanakornsss.luminality.launch.LaunchEvent
 import dev.tanakornsss.luminality.launch.LaunchViewModel
 import dev.tanakornsss.luminality.ui.LuminalityScreen
@@ -39,10 +36,8 @@ import org.koin.androidx.compose.koinViewModel
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun LuminalityApp(context: Context) {
-    val journalViewModel: JournalViewModel =
-        viewModel(factory = JournalViewModelFactory(context))
-    val backupViewModel: BackupViewModel =
-        viewModel(factory = BackupViewModelFactory(context))
+    val journalViewModel: JournalViewModel = koinViewModel()
+    val backupViewModel: BackupViewModel = koinViewModel()
     val launchViewModel: LaunchViewModel = koinViewModel()
 
     val navController = rememberNavController()
