@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace = "dev.tanakornsss.luminality"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "dev.tanakornsss.luminality.preview"
         minSdk = 26
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 1
         versionName = "preview-0.0.1"
 
