@@ -1,9 +1,6 @@
 package dev.tanakornsss.luminality.ui.screen.intoduction
 
-import android.net.Uri
 import android.os.Build
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -12,9 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Download
 import androidx.compose.material.icons.outlined.Settings
-import androidx.compose.material.icons.outlined.Upload
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -36,7 +31,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import dev.tanakornsss.luminality.R
-import dev.tanakornsss.luminality.data.backup.BackupViewModel
 import dev.tanakornsss.luminality.data.journal.JournalViewModel
 import dev.tanakornsss.luminality.data.model.Journal
 import dev.tanakornsss.luminality.ui.component.CustomAlertDialog
@@ -49,7 +43,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun JournalScreen(
     journalViewModel: JournalViewModel,
-    backupViewModel: BackupViewModel,
     onNavigateSetting: () -> Unit
 ) {
     val pagerState = rememberPagerState(pageCount = { 2 })
@@ -79,22 +72,6 @@ fun JournalScreen(
 //        }
 //    }
 
-    val exportLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.CreateDocument("application/json")
-    ) { uri: Uri? ->
-        uri?.let {
-            backupViewModel.exportToUri(it)
-        }
-    }
-
-    val importLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.GetContent()
-    ) { uri: Uri? ->
-        uri?.let {
-            backupViewModel.importFromUri(it)
-        }
-    }
-
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -111,22 +88,6 @@ fun JournalScreen(
 
                         )
                         Row {
-                            IconButton(
-                                onClick = {
-                                    focusManager.clearFocus()
-                                    exportLauncher.launch("LuminalityBackup.json")
-                                }
-                            ) {
-                                Icon(Icons.Outlined.Upload, null)
-                            }
-                            IconButton(
-                                onClick = {
-                                    focusManager.clearFocus()
-                                    importLauncher.launch("application/json")
-                                }
-                            ) {
-                                Icon(Icons.Outlined.Download, null)
-                            }
                             IconButton(
                                 onClick = {
                                     focusManager.clearFocus()

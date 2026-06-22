@@ -98,7 +98,6 @@ fun LuminalityApp(context: Context) {
                 composable(LuminalityScreen.JOURNAL.name) {
                     JournalScreen(
                         journalViewModel = journalViewModel,
-                        backupViewModel = backupViewModel,
                         onNavigateSetting = {
                             navDirection = NavDirection.Push
                             navController.navigate(LuminalityScreen.SETTING.name)
@@ -107,6 +106,7 @@ fun LuminalityApp(context: Context) {
                 }
                 composable(LuminalityScreen.SETTING.name) {
                     SettingScreen(
+                        backupViewModel = backupViewModel,
                         onNavigateBack = {
                             navDirection = NavDirection.Pop
                             navController.popBackStack()

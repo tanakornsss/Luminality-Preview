@@ -1,6 +1,9 @@
 package dev.tanakornsss.luminality.ui.screen
 
+import android.net.Uri
 import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -23,13 +26,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import dev.tanakornsss.luminality.BuildConfig
 import dev.tanakornsss.luminality.R
+import dev.tanakornsss.luminality.data.backup.BackupViewModel
 import dev.tanakornsss.luminality.setting.SettingItem
 import dev.tanakornsss.luminality.setting.SettingsSection
 import dev.tanakornsss.luminality.ui.component.setting.SettingScrollList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingScreen(onNavigateBack: () -> Unit) {
+fun SettingScreen(
+    onNavigateBack: () -> Unit,
+    backupViewModel: BackupViewModel
+) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -56,7 +63,42 @@ fun SettingScreen(onNavigateBack: () -> Unit) {
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
+            val exportLauncher = rememberLauncherForActivityResult(
+                ActivityResultContracts.CreateDocument("application/json")
+            ) { uri: Uri? ->
+                uri?.let {
+                    backupViewModel.exportToUri(it)
+                }
+            }
+
+            val importLauncher = rememberLauncherForActivityResult(
+                ActivityResultContracts.GetContent()
+            ) { uri: Uri? ->
+                uri?.let {
+                    backupViewModel.importFromUri(it)
+                }
+            }
+
             val settingSection = listOf(
+                SettingsSection(
+                    title = "Backup",
+                    items = listOf(
+                        SettingItem.Navigation(
+                            title = "Create Backup",
+                            desc = "...",
+                            onClick = {
+                                exportLauncher.launch("LuminalityBackup.json")
+                            }
+                        ),
+                        SettingItem.Navigation(
+                            title = "Restore Backup",
+                            desc = "...",
+                            onClick = {
+                                importLauncher.launch("application/json")
+                            }
+                        )
+                    )
+                ),
                 SettingsSection(
                     title = stringResource(R.string.about),
                     items = listOf(
