@@ -1,6 +1,5 @@
 package dev.tanakornsss.luminality.data.journal
 
-import dev.tanakornsss.luminality.data.model.Journal
 import kotlinx.coroutines.flow.Flow
 
 class JournalRepository(private val dao: JournalDao) {

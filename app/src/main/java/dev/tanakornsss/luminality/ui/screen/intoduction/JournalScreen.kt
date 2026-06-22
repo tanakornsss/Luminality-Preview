@@ -32,7 +32,7 @@ import androidx.compose.ui.res.stringResource
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import dev.tanakornsss.luminality.R
 import dev.tanakornsss.luminality.data.journal.JournalViewModel
-import dev.tanakornsss.luminality.data.model.Journal
+import dev.tanakornsss.luminality.data.journal.Journal
 import dev.tanakornsss.luminality.ui.component.CustomAlertDialog
 import dev.tanakornsss.luminality.ui.screen.journal.AddJournalScreen
 import dev.tanakornsss.luminality.ui.screen.journal.JournalListScreen

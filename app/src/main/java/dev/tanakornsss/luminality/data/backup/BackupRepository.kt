@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.Uri
 import com.google.gson.GsonBuilder
 import dev.tanakornsss.luminality.data.journal.JournalDao
-import dev.tanakornsss.luminality.data.model.Backup
 import dev.tanakornsss.luminality.data.streak.StreakDao
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
