@@ -10,19 +10,19 @@ import kotlinx.coroutines.flow.map
 
 private val Context.settingDatastore by preferencesDataStore(name = "setting_prefs")
 
-class SettingRepositoryImpl(private val context: Context) {
+class SettingRepositoryImpl(private val context: Context): SettingRepository {
 
     object SettingPrefs {
         val THEME_STATE = stringPreferencesKey("theme_state")
     }
 
-    suspend fun updateThemeState(themeState: ThemeState) {
+    override suspend fun updateThemeState(themeState: ThemeState) {
         context.settingDatastore.edit { prefs ->
             prefs[SettingPrefs.THEME_STATE] = themeState.name
         }
     }
 
-    fun readThemeState() : Flow<ThemeState> {
+    override fun readThemeState() : Flow<ThemeState> {
         return context.settingDatastore.data.map { prefs ->
             ThemeState.valueOf(prefs[SettingPrefs.THEME_STATE] ?: ThemeState.DEFAULT.name)
         }
